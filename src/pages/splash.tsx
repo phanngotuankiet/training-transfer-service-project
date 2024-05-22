@@ -18,8 +18,6 @@ const HomePage: React.FunctionComponent = () => {
     fetchPolicy: 'no-cache',
   });
 
-  console.log('fasfdsafds');
-
   const savePhoneAccessToken = async () => {
     getPhoneNumber({
       success: async (data) => {
@@ -56,8 +54,6 @@ const HomePage: React.FunctionComponent = () => {
   };
 
   const handleLogin = async () => {
-    console.log('fasdfs');
-
     const { data } = await loginActionMutation({
       variables: { token: accessToken, tokenGetPhone: phoneToken },
     });

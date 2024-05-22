@@ -9,6 +9,7 @@ import Footer from './layout/Footer';
 import screenUrl from '../constants/screenUrl';
 import RouteCity from '../pages/RouteCity';
 import { useFooterStore, useSplashStore } from '../store';
+import { ToastContainer } from 'react-toastify';
 
 const configRouter = [
   {
@@ -55,6 +56,7 @@ const MyApp = () => {
                 })}
               </AnimationRoutes>
               {!splashActive && footerActive && <Footer />}
+              <ToastContainer />
             </ZMPRouter>
           </SnackbarProvider>
         </App>

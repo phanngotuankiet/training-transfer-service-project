@@ -21,11 +21,6 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.page {
-  /* padding: 10px; */
-  /* margin-top: calc(var(--zaui-safe-area-inset-top, 0px) + 44px); */
-}
-
 .section-container {
   padding: 16px;
   background: #ffffff;
@@ -63,4 +58,21 @@ body {
 
 .zaui-bottom-navigation-item:active {
   transform: scale(0.95);
+}
+
+.Toastify__toast {
+  border-radius: 20px !important;
+  left: 20%;
+  top: 40px;
+  max-width: 220px;
+  color: white !important;
+  font-weight: 600;
+  background: linear-gradient(
+    90deg,
+    rgba(230, 230, 230, 1) 0%,
+    rgba(9, 178, 235, 0.39957990031950286) 12%,
+    rgba(92, 223, 62, 0.3799720571822479) 60%,
+    rgba(118, 237, 8, 0.47521015242034315) 75%,
+    rgba(0, 212, 255, 0.34075637090773814) 100%
+  ) !important;
 }

@@ -9,6 +9,8 @@ import 'zmp-ui/zaui.css';
 
 import './css/app.css';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 // Import App Component
 import App from './components/app';
 import appConfig from '../app-config.json';

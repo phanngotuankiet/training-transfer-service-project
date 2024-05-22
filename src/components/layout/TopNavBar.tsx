@@ -1,6 +1,6 @@
 import React from 'react';
 import { Header, useNavigate } from 'zmp-ui';
-import { useFooterStore, useSplashStore } from '../../store';
+import { useFooterStore } from '../../store';
 
 interface IProps {
   footerActive: boolean;
