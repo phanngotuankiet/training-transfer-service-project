@@ -1,0 +1,22 @@
+{
+  "app": {
+    "title": "car source base",
+    "headerTitle": "car source base",
+    "headerColor": "#fafafa",
+    "textColor": "black",
+    "textAlign": "left",
+    "statusBarColor": "#610000",
+    "leftButton": "back",
+    "statusBar": "normal",
+    "actionBarHidden": true,
+    "hideAndroidBottomNavigationBar": false,
+    "hideIOSSafeAreaBottom": false,
+    "selfControlLoading": false
+  },
+  "debug": false,
+  "pages": [],
+  "listCSS": [],
+  "listSyncJS": [],
+  "listAsyncJS": [],
+  "template": {}
+}

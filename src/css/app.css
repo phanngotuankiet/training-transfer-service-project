@@ -1,0 +1,23 @@
+.page {
+  padding: 10px;
+  margin-top: calc(var(--zaui-safe-area-inset-top, 0px) + 44px);
+}
+
+.section-container {
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.zaui-list-item {
+  cursor: pointer;
+}
+
+.zaui-bottom-navigation-content {
+  height: auto;
+  padding: 7px;
+}
+#app {
+  background-color: #ffffff;
+}
