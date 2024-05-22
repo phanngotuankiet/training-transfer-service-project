@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('./fonts/Roboto-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.roboto {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
 .page {
   padding: 10px;
   margin-top: calc(var(--zaui-safe-area-inset-top, 0px) + 44px);
@@ -16,8 +30,28 @@
 
 .zaui-bottom-navigation-content {
   height: auto;
-  padding: 7px;
+  padding: 10px;
+  box-shadow: -3px -3px 3px #cccccc8c;
 }
+
 #app {
   background-color: #ffffff;
+}
+
+.zaui-bottom-navigation-item .zaui-bottom-navigation-item-label {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.zaui-bottom-navigation-item.zaui-bottom-navigation-item-active
+  .zaui-bottom-navigation-item-label {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+  color: #006af5;
+}
+
+.zaui-bottom-navigation-item:active {
+  transform: scale(0.95);
 }
