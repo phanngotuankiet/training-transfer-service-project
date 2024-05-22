@@ -12,11 +12,13 @@ const HomePage: React.FunctionComponent = () => {
   const [accessToken, setAccessToken] = useState('');
   const [phoneToken, setPhoneToken] = useState('');
   const navigate = useNavigate();
-  const { offSpash } = useSplashStore();
+  const { offSplash } = useSplashStore();
   const { turnFooter } = useFooterStore();
   const [loginActionMutation] = useLoginMutation({
     fetchPolicy: 'no-cache',
   });
+
+  console.log('fasfdsafds');
 
   const savePhoneAccessToken = async () => {
     getPhoneNumber({
@@ -48,12 +50,14 @@ const HomePage: React.FunctionComponent = () => {
   };
 
   const offSplashAndNextScreen = () => {
-    offSpash();
+    offSplash();
     turnFooter();
     navigate(screenUrl.selectCity);
   };
 
   const handleLogin = async () => {
+    console.log('fasdfs');
+
     const { data } = await loginActionMutation({
       variables: { token: accessToken, tokenGetPhone: phoneToken },
     });

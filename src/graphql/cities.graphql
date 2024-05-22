@@ -6,3 +6,11 @@ query GetAllCities {
     isactive
   }
 }
+
+query GetCityById($cityId: Int!) {
+  cities(where: { id: { _eq: $cityId } }) {
+    img
+    name
+    descr
+  }
+}

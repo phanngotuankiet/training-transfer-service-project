@@ -2,14 +2,16 @@ import { create } from 'zustand';
 
 interface SplashState {
   splashActive: boolean;
-  offSpash: () => void;
-  turnSpash: () => void;
+  offSplash: () => void;
+  turnSplash: () => void;
+  setSplash: (active: boolean) => void;
 }
 
 const useSplashStore = create<SplashState>((set) => ({
   splashActive: false,
-  offSpash: () => set(() => ({ splashActive: false })),
-  turnSpash: () => set(() => ({ splashActive: true })),
+  offSplash: () => set(() => ({ splashActive: false })),
+  turnSplash: () => set(() => ({ splashActive: true })),
+  setSplash: (active: boolean) => set(() => ({ splashActive: active })),
 }));
 
 export default useSplashStore;

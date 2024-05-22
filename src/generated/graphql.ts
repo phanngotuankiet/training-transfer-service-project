@@ -113,6 +113,7 @@ export type Bookings = {
   /** An object relationship */
   itinerary: Itinerary;
   itinerary_id: Scalars['Int']['output'];
+  note?: Maybe<Scalars['String']['output']>;
   status: Scalars['String']['output'];
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
   /** An object relationship */
@@ -198,6 +199,7 @@ export type Bookings_Bool_Exp = {
   id?: InputMaybe<Int_Comparison_Exp>;
   itinerary?: InputMaybe<Itinerary_Bool_Exp>;
   itinerary_id?: InputMaybe<Int_Comparison_Exp>;
+  note?: InputMaybe<String_Comparison_Exp>;
   status?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
@@ -225,6 +227,7 @@ export type Bookings_Insert_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   itinerary?: InputMaybe<Itinerary_Obj_Rel_Insert_Input>;
   itinerary_id?: InputMaybe<Scalars['Int']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
@@ -239,6 +242,7 @@ export type Bookings_Max_Fields = {
   deleted_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   itinerary_id?: Maybe<Scalars['Int']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
   user_id?: Maybe<Scalars['Int']['output']>;
@@ -251,6 +255,7 @@ export type Bookings_Max_Order_By = {
   deleted_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   itinerary_id?: InputMaybe<Order_By>;
+  note?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
@@ -264,6 +269,7 @@ export type Bookings_Min_Fields = {
   deleted_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   itinerary_id?: Maybe<Scalars['Int']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
   user_id?: Maybe<Scalars['Int']['output']>;
@@ -276,6 +282,7 @@ export type Bookings_Min_Order_By = {
   deleted_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   itinerary_id?: InputMaybe<Order_By>;
+  note?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
@@ -305,6 +312,7 @@ export type Bookings_Order_By = {
   id?: InputMaybe<Order_By>;
   itinerary?: InputMaybe<Itinerary_Order_By>;
   itinerary_id?: InputMaybe<Order_By>;
+  note?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
@@ -329,6 +337,8 @@ export enum Bookings_Select_Column {
   /** column name */
   ItineraryId = 'itinerary_id',
   /** column name */
+  Note = 'note',
+  /** column name */
   Status = 'status',
   /** column name */
   UpdatedAt = 'updated_at',
@@ -343,6 +353,7 @@ export type Bookings_Set_Input = {
   deleted_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
   itinerary_id?: InputMaybe<Scalars['Int']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   user_id?: InputMaybe<Scalars['Int']['input']>;
@@ -420,6 +431,8 @@ export enum Bookings_Update_Column {
   Id = 'id',
   /** column name */
   ItineraryId = 'itinerary_id',
+  /** column name */
+  Note = 'note',
   /** column name */
   Status = 'status',
   /** column name */
@@ -4280,6 +4293,20 @@ export type GetAllCitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllCitiesQuery = { __typename?: 'query_root', cities: Array<{ __typename?: 'cities', img?: string | null, id: number, name: string, isactive?: boolean | null }> };
 
+export type GetCityByIdQueryVariables = Exact<{
+  cityId: Scalars['Int']['input'];
+}>;
+
+
+export type GetCityByIdQuery = { __typename?: 'query_root', cities: Array<{ __typename?: 'cities', img?: string | null, name: string, descr?: string | null }> };
+
+export type GetRouteByCityIdAnd4SeaterVehicleQueryVariables = Exact<{
+  cityId: Scalars['Int']['input'];
+}>;
+
+
+export type GetRouteByCityIdAnd4SeaterVehicleQuery = { __typename?: 'query_root', routes: Array<{ __typename?: 'routes', id: number, startlocation: { __typename?: 'locations', name: string }, endlocation: { __typename?: 'locations', name: string }, one_way: Array<{ __typename?: 'itinerary', price: any }>, round_trip: Array<{ __typename?: 'itinerary', price: any }> }> };
+
 export type LoginMutationVariables = Exact<{
   token: Scalars['String']['input'];
   tokenGetPhone?: InputMaybe<Scalars['String']['input']>;
@@ -4331,6 +4358,104 @@ export type GetAllCitiesQueryHookResult = ReturnType<typeof useGetAllCitiesQuery
 export type GetAllCitiesLazyQueryHookResult = ReturnType<typeof useGetAllCitiesLazyQuery>;
 export type GetAllCitiesSuspenseQueryHookResult = ReturnType<typeof useGetAllCitiesSuspenseQuery>;
 export type GetAllCitiesQueryResult = Apollo.QueryResult<GetAllCitiesQuery, GetAllCitiesQueryVariables>;
+export const GetCityByIdDocument = gql`
+    query GetCityById($cityId: Int!) {
+  cities(where: {id: {_eq: $cityId}}) {
+    img
+    name
+    descr
+  }
+}
+    `;
+
+/**
+ * __useGetCityByIdQuery__
+ *
+ * To run a query within a React component, call `useGetCityByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCityByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCityByIdQuery({
+ *   variables: {
+ *      cityId: // value for 'cityId'
+ *   },
+ * });
+ */
+export function useGetCityByIdQuery(baseOptions: Apollo.QueryHookOptions<GetCityByIdQuery, GetCityByIdQueryVariables> & ({ variables: GetCityByIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCityByIdQuery, GetCityByIdQueryVariables>(GetCityByIdDocument, options);
+      }
+export function useGetCityByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCityByIdQuery, GetCityByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCityByIdQuery, GetCityByIdQueryVariables>(GetCityByIdDocument, options);
+        }
+export function useGetCityByIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCityByIdQuery, GetCityByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCityByIdQuery, GetCityByIdQueryVariables>(GetCityByIdDocument, options);
+        }
+export type GetCityByIdQueryHookResult = ReturnType<typeof useGetCityByIdQuery>;
+export type GetCityByIdLazyQueryHookResult = ReturnType<typeof useGetCityByIdLazyQuery>;
+export type GetCityByIdSuspenseQueryHookResult = ReturnType<typeof useGetCityByIdSuspenseQuery>;
+export type GetCityByIdQueryResult = Apollo.QueryResult<GetCityByIdQuery, GetCityByIdQueryVariables>;
+export const GetRouteByCityIdAnd4SeaterVehicleDocument = gql`
+    query GetRouteByCityIdAnd4SeaterVehicle($cityId: Int!) {
+  routes(where: {from_city: {_eq: $cityId}}) {
+    startlocation {
+      name
+    }
+    endlocation {
+      name
+    }
+    one_way: itineraries(
+      where: {option_id: {_eq: 1}, _and: {vehicle_types_id: {_eq: 1}}}
+    ) {
+      price
+    }
+    round_trip: itineraries(
+      where: {option_id: {_eq: 2}, _and: {vehicle_types_id: {_eq: 1}}}
+    ) {
+      price
+    }
+    id
+  }
+}
+    `;
+
+/**
+ * __useGetRouteByCityIdAnd4SeaterVehicleQuery__
+ *
+ * To run a query within a React component, call `useGetRouteByCityIdAnd4SeaterVehicleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRouteByCityIdAnd4SeaterVehicleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRouteByCityIdAnd4SeaterVehicleQuery({
+ *   variables: {
+ *      cityId: // value for 'cityId'
+ *   },
+ * });
+ */
+export function useGetRouteByCityIdAnd4SeaterVehicleQuery(baseOptions: Apollo.QueryHookOptions<GetRouteByCityIdAnd4SeaterVehicleQuery, GetRouteByCityIdAnd4SeaterVehicleQueryVariables> & ({ variables: GetRouteByCityIdAnd4SeaterVehicleQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRouteByCityIdAnd4SeaterVehicleQuery, GetRouteByCityIdAnd4SeaterVehicleQueryVariables>(GetRouteByCityIdAnd4SeaterVehicleDocument, options);
+      }
+export function useGetRouteByCityIdAnd4SeaterVehicleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRouteByCityIdAnd4SeaterVehicleQuery, GetRouteByCityIdAnd4SeaterVehicleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRouteByCityIdAnd4SeaterVehicleQuery, GetRouteByCityIdAnd4SeaterVehicleQueryVariables>(GetRouteByCityIdAnd4SeaterVehicleDocument, options);
+        }
+export function useGetRouteByCityIdAnd4SeaterVehicleSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetRouteByCityIdAnd4SeaterVehicleQuery, GetRouteByCityIdAnd4SeaterVehicleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetRouteByCityIdAnd4SeaterVehicleQuery, GetRouteByCityIdAnd4SeaterVehicleQueryVariables>(GetRouteByCityIdAnd4SeaterVehicleDocument, options);
+        }
+export type GetRouteByCityIdAnd4SeaterVehicleQueryHookResult = ReturnType<typeof useGetRouteByCityIdAnd4SeaterVehicleQuery>;
+export type GetRouteByCityIdAnd4SeaterVehicleLazyQueryHookResult = ReturnType<typeof useGetRouteByCityIdAnd4SeaterVehicleLazyQuery>;
+export type GetRouteByCityIdAnd4SeaterVehicleSuspenseQueryHookResult = ReturnType<typeof useGetRouteByCityIdAnd4SeaterVehicleSuspenseQuery>;
+export type GetRouteByCityIdAnd4SeaterVehicleQueryResult = Apollo.QueryResult<GetRouteByCityIdAnd4SeaterVehicleQuery, GetRouteByCityIdAnd4SeaterVehicleQueryVariables>;
 export const LoginDocument = gql`
     mutation Login($token: String!, $tokenGetPhone: String) {
   actionLogin(token: $token, tokenGetPhone: $tokenGetPhone) {

@@ -15,7 +15,7 @@ const City: React.FC<IProps> = ({ imageUrl, name, id }) => {
 
   const handleClick = () => {
     offFooter();
-    navigate(`${screenUrl.routeCity}?id=${id}`);
+    navigate(`${screenUrl.routeCity}?cityId=${id}`);
   };
 
   return (
