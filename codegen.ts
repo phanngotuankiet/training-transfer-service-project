@@ -3,14 +3,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const {
-  CODEGEN_HASURA_ENDPOINT: endpoint,
+  VITE_CODEGEN_HASURA_ENDPOINT: endpoint,
   CODEGEN_HASURA_GRAPHQL_ADMIN_SECRET: secret,
 } = process.env;
 
 module.exports = {
   overwrite: true,
   schema: {
-    [endpoint]: {
+    [endpoint || '']: {
       headers: {
         'x-hasura-admin-secret': secret,
       },

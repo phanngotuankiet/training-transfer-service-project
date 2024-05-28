@@ -13,8 +13,8 @@ body {
 }
 
 .page {
-  padding: 10px;
-  margin-top: calc(var(--zaui-safe-area-inset-top, 0px) + 44px);
+  /* padding: 10px; */
+  /* margin-top: calc(var(--zaui-safe-area-inset-top, 0px) + 44px); */
 }
 
 .section-container {

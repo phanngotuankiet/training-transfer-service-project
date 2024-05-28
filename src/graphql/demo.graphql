@@ -1,5 +1,0 @@
-query MyQuery {
-  test_db {
-    test_name
-  }
-}

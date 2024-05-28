@@ -33,26 +33,26 @@ const MyApp = () => {
 
   return (
     <RecoilRoot>
-      {/* <ApolloProvider client={client}> */}
-      <App>
-        <SnackbarProvider>
-          <ZMPRouter>
-            <AnimationRoutes>
-              {configRouter.map((route, index) => {
-                return (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    element={route.component}
-                  />
-                );
-              })}
-            </AnimationRoutes>
-            {splashActive && <Footer />}
-          </ZMPRouter>
-        </SnackbarProvider>
-      </App>
-      {/* </ApolloProvider> */}
+      <ApolloProvider client={client}>
+        <App>
+          <SnackbarProvider>
+            <ZMPRouter>
+              <AnimationRoutes>
+                {configRouter.map((route, index) => {
+                  return (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      element={route.component}
+                    />
+                  );
+                })}
+              </AnimationRoutes>
+              {splashActive && <Footer />}
+            </ZMPRouter>
+          </SnackbarProvider>
+        </App>
+      </ApolloProvider>
     </RecoilRoot>
   );
 };

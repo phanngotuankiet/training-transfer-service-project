@@ -1,0 +1,7 @@
+mutation Login($token: String!, $tokenGetPhone: String!) {
+  actionLogin(token: $token, tokenGetPhone: $tokenGetPhone) {
+    name
+    token
+    userId
+  }
+}

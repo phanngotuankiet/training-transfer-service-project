@@ -2,17 +2,16 @@ import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
 const httpLink = new HttpLink({
-  uri: 'https://hasura-transfer-services-develop.onrender.com/v1/graphql',
+  uri: import.meta.env.VITE_CODEGEN_HASURA_ENDPOINT as string,
 });
 
 const authLink = setContext((_, { headers }) => {
-  const zsData = JSON.parse(localStorage.getItem('userData') ?? '');
-  if (!zsData) return {};
+  const token = localStorage.getItem('token') ?? '';
 
   return {
     headers: {
       ...headers,
-      Authorization: zsData.token ? `Bearer ${zsData.token}` : '',
+      Authorization: `Bearer ${token}`,
     },
   };
 });
