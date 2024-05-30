@@ -7,7 +7,8 @@ import { ApolloProvider } from '@apollo/client';
 import client from '../appoloClient';
 import Footer from './layout/Footer';
 import screenUrl from '../constants/screenUrl';
-import useSplashStore from '../store/splashStore';
+import RouteCity from '../pages/RouteCity';
+import { useFooterStore, useSplashStore } from '../store';
 
 const configRouter = [
   {
@@ -26,10 +27,15 @@ const configRouter = [
     path: screenUrl.account,
     component: <AccountPage />,
   },
+  {
+    path: screenUrl.routeCity,
+    component: <RouteCity />,
+  },
 ];
 
 const MyApp = () => {
   const { splashActive } = useSplashStore();
+  const { footerActive } = useFooterStore();
 
   return (
     <RecoilRoot>
@@ -48,7 +54,7 @@ const MyApp = () => {
                   );
                 })}
               </AnimationRoutes>
-              {splashActive && <Footer />}
+              {!splashActive && footerActive && <Footer />}
             </ZMPRouter>
           </SnackbarProvider>
         </App>

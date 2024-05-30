@@ -92,6 +92,17 @@ export type String_Comparison_Exp = {
   _similar?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type UpdateBookingOutput = {
+  __typename?: 'UpdateBookingOutput';
+  message?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type UserUpdateData = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+};
+
 /** columns and relationships of "bookings" */
 export type Bookings = {
   __typename?: 'bookings';
@@ -102,7 +113,6 @@ export type Bookings = {
   /** An object relationship */
   itinerary: Itinerary;
   itinerary_id: Scalars['Int']['output'];
-  note?: Maybe<Scalars['String']['output']>;
   status: Scalars['String']['output'];
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
   /** An object relationship */
@@ -188,7 +198,6 @@ export type Bookings_Bool_Exp = {
   id?: InputMaybe<Int_Comparison_Exp>;
   itinerary?: InputMaybe<Itinerary_Bool_Exp>;
   itinerary_id?: InputMaybe<Int_Comparison_Exp>;
-  note?: InputMaybe<String_Comparison_Exp>;
   status?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
@@ -216,7 +225,6 @@ export type Bookings_Insert_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   itinerary?: InputMaybe<Itinerary_Obj_Rel_Insert_Input>;
   itinerary_id?: InputMaybe<Scalars['Int']['input']>;
-  note?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
@@ -231,7 +239,6 @@ export type Bookings_Max_Fields = {
   deleted_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   itinerary_id?: Maybe<Scalars['Int']['output']>;
-  note?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
   user_id?: Maybe<Scalars['Int']['output']>;
@@ -244,7 +251,6 @@ export type Bookings_Max_Order_By = {
   deleted_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   itinerary_id?: InputMaybe<Order_By>;
-  note?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
@@ -258,7 +264,6 @@ export type Bookings_Min_Fields = {
   deleted_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   itinerary_id?: Maybe<Scalars['Int']['output']>;
-  note?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
   user_id?: Maybe<Scalars['Int']['output']>;
@@ -271,7 +276,6 @@ export type Bookings_Min_Order_By = {
   deleted_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   itinerary_id?: InputMaybe<Order_By>;
-  note?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
@@ -301,7 +305,6 @@ export type Bookings_Order_By = {
   id?: InputMaybe<Order_By>;
   itinerary?: InputMaybe<Itinerary_Order_By>;
   itinerary_id?: InputMaybe<Order_By>;
-  note?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
@@ -326,8 +329,6 @@ export enum Bookings_Select_Column {
   /** column name */
   ItineraryId = 'itinerary_id',
   /** column name */
-  Note = 'note',
-  /** column name */
   Status = 'status',
   /** column name */
   UpdatedAt = 'updated_at',
@@ -342,7 +343,6 @@ export type Bookings_Set_Input = {
   deleted_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
   itinerary_id?: InputMaybe<Scalars['Int']['input']>;
-  note?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   user_id?: InputMaybe<Scalars['Int']['input']>;
@@ -421,8 +421,6 @@ export enum Bookings_Update_Column {
   /** column name */
   ItineraryId = 'itinerary_id',
   /** column name */
-  Note = 'note',
-  /** column name */
   Status = 'status',
   /** column name */
   UpdatedAt = 'updated_at',
@@ -483,6 +481,7 @@ export type Cities = {
   descr?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
   img?: Maybe<Scalars['String']['output']>;
+  isactive?: Maybe<Scalars['Boolean']['output']>;
   /** fetch data from the table: "locations" */
   locations: Array<Locations>;
   /** An aggregate relationship */
@@ -581,6 +580,7 @@ export type Cities_Bool_Exp = {
   descr?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
   img?: InputMaybe<String_Comparison_Exp>;
+  isactive?: InputMaybe<Boolean_Comparison_Exp>;
   locations?: InputMaybe<Locations_Bool_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   routes?: InputMaybe<Routes_Bool_Exp>;
@@ -605,6 +605,7 @@ export type Cities_Insert_Input = {
   descr?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
   img?: InputMaybe<Scalars['String']['input']>;
+  isactive?: InputMaybe<Scalars['Boolean']['input']>;
   locations?: InputMaybe<Locations_Arr_Rel_Insert_Input>;
   name?: InputMaybe<Scalars['String']['input']>;
   routes?: InputMaybe<Routes_Arr_Rel_Insert_Input>;
@@ -665,6 +666,7 @@ export type Cities_Order_By = {
   descr?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   img?: InputMaybe<Order_By>;
+  isactive?: InputMaybe<Order_By>;
   locations_aggregate?: InputMaybe<Locations_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
   routes_aggregate?: InputMaybe<Routes_Aggregate_Order_By>;
@@ -689,6 +691,8 @@ export enum Cities_Select_Column {
   /** column name */
   Img = 'img',
   /** column name */
+  Isactive = 'isactive',
+  /** column name */
   Name = 'name',
   /** column name */
   UpdatedAt = 'updated_at'
@@ -701,6 +705,7 @@ export type Cities_Set_Input = {
   descr?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
   img?: InputMaybe<Scalars['String']['input']>;
+  isactive?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
@@ -742,6 +747,8 @@ export enum Cities_Update_Column {
   /** column name */
   Img = 'img',
   /** column name */
+  Isactive = 'isactive',
+  /** column name */
   Name = 'name',
   /** column name */
   UpdatedAt = 'updated_at'
@@ -775,6 +782,7 @@ export type Itinerary = {
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   deleted_at?: Maybe<Scalars['timestamptz']['output']>;
   id: Scalars['Int']['output'];
+  isactive?: Maybe<Scalars['Boolean']['output']>;
   note?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
   option: Options;
@@ -894,6 +902,7 @@ export type Itinerary_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   deleted_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
+  isactive?: InputMaybe<Boolean_Comparison_Exp>;
   note?: InputMaybe<String_Comparison_Exp>;
   option?: InputMaybe<Options_Bool_Exp>;
   option_id?: InputMaybe<Int_Comparison_Exp>;
@@ -929,6 +938,7 @@ export type Itinerary_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   deleted_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  isactive?: InputMaybe<Scalars['Boolean']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
   option?: InputMaybe<Options_Obj_Rel_Insert_Input>;
   option_id?: InputMaybe<Scalars['Int']['input']>;
@@ -1029,6 +1039,7 @@ export type Itinerary_Order_By = {
   created_at?: InputMaybe<Order_By>;
   deleted_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  isactive?: InputMaybe<Order_By>;
   note?: InputMaybe<Order_By>;
   option?: InputMaybe<Options_Order_By>;
   option_id?: InputMaybe<Order_By>;
@@ -1056,6 +1067,8 @@ export enum Itinerary_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Isactive = 'isactive',
+  /** column name */
   Note = 'note',
   /** column name */
   OptionId = 'option_id',
@@ -1076,6 +1089,7 @@ export type Itinerary_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   deleted_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  isactive?: InputMaybe<Scalars['Boolean']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
   option_id?: InputMaybe<Scalars['Int']['input']>;
   price?: InputMaybe<Scalars['numeric']['input']>;
@@ -1177,6 +1191,8 @@ export enum Itinerary_Update_Column {
   DeletedAt = 'deleted_at',
   /** column name */
   Id = 'id',
+  /** column name */
+  Isactive = 'isactive',
   /** column name */
   Note = 'note',
   /** column name */
@@ -1727,6 +1743,7 @@ export type Mutation_Root = {
   insert_vehicle_types_one?: Maybe<Vehicle_Types>;
   /** loginAdmin */
   loginAdmin: AuthAdminOutput;
+  updateBookingAction?: Maybe<UpdateBookingOutput>;
   /** update data of the table: "bookings" */
   update_bookings?: Maybe<Bookings_Mutation_Response>;
   /** update single row of the table: "bookings" */
@@ -2015,6 +2032,12 @@ export type Mutation_RootLoginAdminArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdateBookingActionArgs = {
+  userUpdateData: UserUpdateData;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_BookingsArgs = {
   _inc?: InputMaybe<Bookings_Inc_Input>;
   _set?: InputMaybe<Bookings_Set_Input>;
@@ -2176,6 +2199,7 @@ export type Options = {
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   deleted_at?: Maybe<Scalars['timestamptz']['output']>;
   id: Scalars['Int']['output'];
+  isactive?: Maybe<Scalars['Boolean']['output']>;
   /** An array relationship */
   itineraries: Array<Itinerary>;
   /** An aggregate relationship */
@@ -2248,6 +2272,7 @@ export type Options_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   deleted_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
+  isactive?: InputMaybe<Boolean_Comparison_Exp>;
   itineraries?: InputMaybe<Itinerary_Bool_Exp>;
   round_type?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
@@ -2269,6 +2294,7 @@ export type Options_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   deleted_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  isactive?: InputMaybe<Scalars['Boolean']['input']>;
   itineraries?: InputMaybe<Itinerary_Arr_Rel_Insert_Input>;
   round_type?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -2322,6 +2348,7 @@ export type Options_Order_By = {
   created_at?: InputMaybe<Order_By>;
   deleted_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  isactive?: InputMaybe<Order_By>;
   itineraries_aggregate?: InputMaybe<Itinerary_Aggregate_Order_By>;
   round_type?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
@@ -2341,6 +2368,8 @@ export enum Options_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Isactive = 'isactive',
+  /** column name */
   RoundType = 'round_type',
   /** column name */
   UpdatedAt = 'updated_at'
@@ -2351,6 +2380,7 @@ export type Options_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   deleted_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  isactive?: InputMaybe<Scalars['Boolean']['input']>;
   round_type?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
@@ -2387,6 +2417,8 @@ export enum Options_Update_Column {
   DeletedAt = 'deleted_at',
   /** column name */
   Id = 'id',
+  /** column name */
+  Isactive = 'isactive',
   /** column name */
   RoundType = 'round_type',
   /** column name */
@@ -2434,6 +2466,7 @@ export type Providers = {
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   deleted_at?: Maybe<Scalars['timestamptz']['output']>;
   id: Scalars['Int']['output'];
+  isactive: Scalars['Boolean']['output'];
   /** An array relationship */
   itineraries: Array<Itinerary>;
   /** An aggregate relationship */
@@ -2510,6 +2543,7 @@ export type Providers_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   deleted_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
+  isactive?: InputMaybe<Boolean_Comparison_Exp>;
   itineraries?: InputMaybe<Itinerary_Bool_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   note?: InputMaybe<String_Comparison_Exp>;
@@ -2535,6 +2569,7 @@ export type Providers_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   deleted_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  isactive?: InputMaybe<Scalars['Boolean']['input']>;
   itineraries?: InputMaybe<Itinerary_Arr_Rel_Insert_Input>;
   name?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
@@ -2600,6 +2635,7 @@ export type Providers_Order_By = {
   created_at?: InputMaybe<Order_By>;
   deleted_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  isactive?: InputMaybe<Order_By>;
   itineraries_aggregate?: InputMaybe<Itinerary_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
   note?: InputMaybe<Order_By>;
@@ -2624,6 +2660,8 @@ export enum Providers_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Isactive = 'isactive',
+  /** column name */
   Name = 'name',
   /** column name */
   Note = 'note',
@@ -2641,6 +2679,7 @@ export type Providers_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   deleted_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  isactive?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
   phone_number?: InputMaybe<Scalars['String']['input']>;
@@ -2682,6 +2721,8 @@ export enum Providers_Update_Column {
   DeletedAt = 'deleted_at',
   /** column name */
   Id = 'id',
+  /** column name */
+  Isactive = 'isactive',
   /** column name */
   Name = 'name',
   /** column name */
@@ -2985,18 +3026,18 @@ export type Routes = {
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   deleted_at?: Maybe<Scalars['timestamptz']['output']>;
   end_location: Scalars['Int']['output'];
+  /** An object relationship */
+  endlocation: Locations;
   from_city: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
-  is_enable?: Maybe<Scalars['Boolean']['output']>;
+  isactive?: Maybe<Scalars['Boolean']['output']>;
   /** An array relationship */
   itineraries: Array<Itinerary>;
   /** An aggregate relationship */
   itineraries_aggregate: Itinerary_Aggregate;
-  /** An object relationship */
-  location: Locations;
-  /** An object relationship */
-  locationByStartLocation: Locations;
   start_location: Scalars['Int']['output'];
+  /** An object relationship */
+  startlocation: Locations;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
@@ -3098,13 +3139,13 @@ export type Routes_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   deleted_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   end_location?: InputMaybe<Int_Comparison_Exp>;
+  endlocation?: InputMaybe<Locations_Bool_Exp>;
   from_city?: InputMaybe<Int_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
-  is_enable?: InputMaybe<Boolean_Comparison_Exp>;
+  isactive?: InputMaybe<Boolean_Comparison_Exp>;
   itineraries?: InputMaybe<Itinerary_Bool_Exp>;
-  location?: InputMaybe<Locations_Bool_Exp>;
-  locationByStartLocation?: InputMaybe<Locations_Bool_Exp>;
   start_location?: InputMaybe<Int_Comparison_Exp>;
+  startlocation?: InputMaybe<Locations_Bool_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -3128,13 +3169,13 @@ export type Routes_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   deleted_at?: InputMaybe<Scalars['timestamptz']['input']>;
   end_location?: InputMaybe<Scalars['Int']['input']>;
+  endlocation?: InputMaybe<Locations_Obj_Rel_Insert_Input>;
   from_city?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
-  is_enable?: InputMaybe<Scalars['Boolean']['input']>;
+  isactive?: InputMaybe<Scalars['Boolean']['input']>;
   itineraries?: InputMaybe<Itinerary_Arr_Rel_Insert_Input>;
-  location?: InputMaybe<Locations_Obj_Rel_Insert_Input>;
-  locationByStartLocation?: InputMaybe<Locations_Obj_Rel_Insert_Input>;
   start_location?: InputMaybe<Scalars['Int']['input']>;
+  startlocation?: InputMaybe<Locations_Obj_Rel_Insert_Input>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
@@ -3213,13 +3254,13 @@ export type Routes_Order_By = {
   created_at?: InputMaybe<Order_By>;
   deleted_at?: InputMaybe<Order_By>;
   end_location?: InputMaybe<Order_By>;
+  endlocation?: InputMaybe<Locations_Order_By>;
   from_city?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  is_enable?: InputMaybe<Order_By>;
+  isactive?: InputMaybe<Order_By>;
   itineraries_aggregate?: InputMaybe<Itinerary_Aggregate_Order_By>;
-  location?: InputMaybe<Locations_Order_By>;
-  locationByStartLocation?: InputMaybe<Locations_Order_By>;
   start_location?: InputMaybe<Order_By>;
+  startlocation?: InputMaybe<Locations_Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
 
@@ -3241,7 +3282,7 @@ export enum Routes_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  IsEnable = 'is_enable',
+  Isactive = 'isactive',
   /** column name */
   StartLocation = 'start_location',
   /** column name */
@@ -3255,7 +3296,7 @@ export type Routes_Set_Input = {
   end_location?: InputMaybe<Scalars['Int']['input']>;
   from_city?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
-  is_enable?: InputMaybe<Scalars['Boolean']['input']>;
+  isactive?: InputMaybe<Scalars['Boolean']['input']>;
   start_location?: InputMaybe<Scalars['Int']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
@@ -3341,7 +3382,7 @@ export enum Routes_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  IsEnable = 'is_enable',
+  Isactive = 'isactive',
   /** column name */
   StartLocation = 'start_location',
   /** column name */
@@ -3688,6 +3729,7 @@ export type Users = {
   deleted_at?: Maybe<Scalars['timestamptz']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
+  isactive?: Maybe<Scalars['Boolean']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   password?: Maybe<Scalars['String']['output']>;
   phone_number?: Maybe<Scalars['String']['output']>;
@@ -3762,6 +3804,7 @@ export type Users_Bool_Exp = {
   deleted_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   email?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
+  isactive?: InputMaybe<Boolean_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   password?: InputMaybe<String_Comparison_Exp>;
   phone_number?: InputMaybe<String_Comparison_Exp>;
@@ -3790,6 +3833,7 @@ export type Users_Insert_Input = {
   deleted_at?: InputMaybe<Scalars['timestamptz']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  isactive?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<Scalars['String']['input']>;
   phone_number?: InputMaybe<Scalars['String']['input']>;
@@ -3858,6 +3902,7 @@ export type Users_Order_By = {
   deleted_at?: InputMaybe<Order_By>;
   email?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  isactive?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
   password?: InputMaybe<Order_By>;
   phone_number?: InputMaybe<Order_By>;
@@ -3882,6 +3927,8 @@ export enum Users_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Isactive = 'isactive',
+  /** column name */
   Name = 'name',
   /** column name */
   Password = 'password',
@@ -3901,6 +3948,7 @@ export type Users_Set_Input = {
   deleted_at?: InputMaybe<Scalars['timestamptz']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  isactive?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<Scalars['String']['input']>;
   phone_number?: InputMaybe<Scalars['String']['input']>;
@@ -3944,6 +3992,8 @@ export enum Users_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Isactive = 'isactive',
+  /** column name */
   Name = 'name',
   /** column name */
   Password = 'password',
@@ -3981,6 +4031,7 @@ export type Vehicle_Types = {
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   deleted_at?: Maybe<Scalars['timestamptz']['output']>;
   id: Scalars['Int']['output'];
+  isactive?: Maybe<Scalars['Boolean']['output']>;
   /** An array relationship */
   itineraries: Array<Itinerary>;
   /** An aggregate relationship */
@@ -4053,6 +4104,7 @@ export type Vehicle_Types_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   deleted_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
+  isactive?: InputMaybe<Boolean_Comparison_Exp>;
   itineraries?: InputMaybe<Itinerary_Bool_Exp>;
   type?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
@@ -4074,6 +4126,7 @@ export type Vehicle_Types_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   deleted_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  isactive?: InputMaybe<Scalars['Boolean']['input']>;
   itineraries?: InputMaybe<Itinerary_Arr_Rel_Insert_Input>;
   type?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -4127,6 +4180,7 @@ export type Vehicle_Types_Order_By = {
   created_at?: InputMaybe<Order_By>;
   deleted_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  isactive?: InputMaybe<Order_By>;
   itineraries_aggregate?: InputMaybe<Itinerary_Aggregate_Order_By>;
   type?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
@@ -4146,6 +4200,8 @@ export enum Vehicle_Types_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Isactive = 'isactive',
+  /** column name */
   Type = 'type',
   /** column name */
   UpdatedAt = 'updated_at'
@@ -4156,6 +4212,7 @@ export type Vehicle_Types_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   deleted_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  isactive?: InputMaybe<Scalars['Boolean']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
@@ -4193,6 +4250,8 @@ export enum Vehicle_Types_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Isactive = 'isactive',
+  /** column name */
   Type = 'type',
   /** column name */
   UpdatedAt = 'updated_at'
@@ -4216,17 +4275,64 @@ export type Vehicle_Types_Variance_Fields = {
   id?: Maybe<Scalars['Float']['output']>;
 };
 
+export type GetAllCitiesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllCitiesQuery = { __typename?: 'query_root', cities: Array<{ __typename?: 'cities', img?: string | null, id: number, name: string, isactive?: boolean | null }> };
+
 export type LoginMutationVariables = Exact<{
   token: Scalars['String']['input'];
-  tokenGetPhone: Scalars['String']['input'];
+  tokenGetPhone?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type LoginMutation = { __typename?: 'mutation_root', actionLogin?: { __typename?: 'AuthOutput', name: string, token: string, userId: string } | null };
 
 
+export const GetAllCitiesDocument = gql`
+    query GetAllCities {
+  cities {
+    img
+    id
+    name
+    isactive
+  }
+}
+    `;
+
+/**
+ * __useGetAllCitiesQuery__
+ *
+ * To run a query within a React component, call `useGetAllCitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllCitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllCitiesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllCitiesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllCitiesQuery, GetAllCitiesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllCitiesQuery, GetAllCitiesQueryVariables>(GetAllCitiesDocument, options);
+      }
+export function useGetAllCitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllCitiesQuery, GetAllCitiesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllCitiesQuery, GetAllCitiesQueryVariables>(GetAllCitiesDocument, options);
+        }
+export function useGetAllCitiesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllCitiesQuery, GetAllCitiesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllCitiesQuery, GetAllCitiesQueryVariables>(GetAllCitiesDocument, options);
+        }
+export type GetAllCitiesQueryHookResult = ReturnType<typeof useGetAllCitiesQuery>;
+export type GetAllCitiesLazyQueryHookResult = ReturnType<typeof useGetAllCitiesLazyQuery>;
+export type GetAllCitiesSuspenseQueryHookResult = ReturnType<typeof useGetAllCitiesSuspenseQuery>;
+export type GetAllCitiesQueryResult = Apollo.QueryResult<GetAllCitiesQuery, GetAllCitiesQueryVariables>;
 export const LoginDocument = gql`
-    mutation Login($token: String!, $tokenGetPhone: String!) {
+    mutation Login($token: String!, $tokenGetPhone: String) {
   actionLogin(token: $token, tokenGetPhone: $tokenGetPhone) {
     name
     token

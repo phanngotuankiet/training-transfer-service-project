@@ -1,0 +1,8 @@
+query GetAllCities {
+  cities {
+    img
+    id
+    name
+    isactive
+  }
+}

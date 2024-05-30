@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Page, useNavigate } from 'zmp-ui';
-import useSplashStore from '../store/splashStore';
 import screenUrl from '../constants/screenUrl';
 import { getPhoneNumber, getAccessToken, authorize } from 'zmp-sdk/apis';
 import { RightArrow } from '../assets/svgs';
 import CarImg from '../assets/images/car.png';
 import SplashImage from '../assets/images/SplashBg.png';
 import { useLoginMutation } from '../generated/graphql';
+import { useFooterStore, useSplashStore } from '../store';
 
 const HomePage: React.FunctionComponent = () => {
   const [accessToken, setAccessToken] = useState('');
   const [phoneToken, setPhoneToken] = useState('');
   const navigate = useNavigate();
   const { offSpash } = useSplashStore();
+  const { turnFooter } = useFooterStore();
   const [loginActionMutation] = useLoginMutation({
     fetchPolicy: 'no-cache',
   });
@@ -48,6 +49,7 @@ const HomePage: React.FunctionComponent = () => {
 
   const offSplashAndNextScreen = () => {
     offSpash();
+    turnFooter();
     navigate(screenUrl.selectCity);
   };
 
@@ -110,7 +112,7 @@ const HomePage: React.FunctionComponent = () => {
                 shadow-md transition duration-300 ease-in-out transform
                 hover:bg-white hover:shadow-lg hover:scale-105
                 active:bg-white active:scale-95
-                focus:outline-none focus:ring-4 
+                focus:outline-none focus:ring-4
               "
               onClick={handleClickButton}
             >
