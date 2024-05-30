@@ -1,7 +1,10 @@
-import React from 'react'
+import React from 'react';
 import BookingCard from '../components/BookingCard';
+import profileImage from '../../assets-src/images/path-to-danang.png';
 
-const HistoryPage = () => {
+
+
+const BookingHistoryPage = () => {
   const bookings = [
     {
       from: 'Ga Đà Nẵng',
@@ -19,13 +22,17 @@ const HistoryPage = () => {
       time: '12h00 | 14/05/2024',
       note: 'Đón ở trước sân khách sạn'
     },
-    // Thêm các booking khác nếu cần
   ];
   return (
     <div className="bg-gray-100 min-h-screen">
-      <div className="bg-blue-600 text-white p-4 rounded-b-lg">
+      <div className="relative bg-blue-600 text-white p-4 rounded-b-lg">
         <h1 className="text-xl font-bold">Lịch sử chuyến đi</h1>
         <p>Tra cứu thông tin về chuyến đi</p>
+        <img 
+          src={profileImage} 
+          alt="Profile" 
+          className="absolute top-4 right-4 w-12 h-12 rounded-full object-cover"
+        />
       </div>
       <div className="p-4">
         {bookings.map((booking, index) => (
@@ -44,4 +51,4 @@ const HistoryPage = () => {
   );
 };
 
-export default HistoryPage;
+export default BookingHistoryPage;
