@@ -9,6 +9,7 @@ import {
   SplashPage,
   BookingPage,
   RouteCityPage,
+  BookingDetail,
 } from '../pages';
 import { ApolloProvider } from '@apollo/client';
 import client from '../appoloClient';
@@ -17,6 +18,7 @@ import screenUrl from '../constants/screenUrl';
 import useSplashStore from '../store/splashStore';
 import { useFooterStore } from '../store';
 import { ToastContainer } from 'react-toastify';
+import RouteCity from '../pages/RouteCity';
 
 const configRouter = [
   {
@@ -42,6 +44,10 @@ const configRouter = [
   {
     path: screenUrl.booking,
     component: <BookingPage />,
+  },
+  {
+    path: screenUrl.bookingDetail,
+    component: <BookingDetail />,
   },
 ];
 

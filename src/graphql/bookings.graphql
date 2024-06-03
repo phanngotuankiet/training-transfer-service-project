@@ -1,0 +1,89 @@
+query getBooking($id: Int!) {
+  bookings_by_pk(id: $id) {
+    booking_date
+    created_at
+    deleted_at
+    id
+    itinerary_id
+    note
+    status
+    updated_at
+    itinerary {
+      created_at
+      deleted_at
+      id
+      isactive
+      note
+      price
+      provider_id
+      route_id
+      updated_at
+      vehicle_types_id
+      option {
+        round_type
+        id
+      }
+      provider {
+        name
+        note
+        phone_number
+      }
+      route {
+        city {
+          name
+          routes {
+            id
+            end_location
+            start_location
+            from_city
+            startlocation {
+              name
+            }
+            endlocation {
+              name
+            }
+          }
+        }
+      }
+      vehicle_type {
+        type
+      }
+    }
+    user {
+      name
+      phone_number
+    }
+  }
+}
+
+mutation MutationCancelBooking($bookingId: Int!, $reason: String!) {
+  cancelBooking(bookingId: $bookingId, reason: $reason) {
+    id
+    note
+    status
+    createdAt
+    updatedAt
+  }
+}
+
+mutation MutationUpdateBooking(
+  $bookingDate: timestamptz
+  $id: Int
+  $note: String
+  $status: String
+) {
+  updateBookingAction(
+    updateBookingData: {
+      bookingDate: $bookingDate
+      id: $id
+      note: $note
+      status: $status
+    }
+  ) {
+    id
+    note
+    bookingDate
+    status
+    updatedAt
+  }
+}

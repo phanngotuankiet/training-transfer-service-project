@@ -4,3 +4,4 @@ export { default as HistoryPage } from './history';
 export { default as SelectCityPage } from './SelectCity';
 export { default as BookingPage } from './booking';
 export { default as RouteCityPage } from './RouteCity';
+export { default as BookingDetail } from './BookingDetail';

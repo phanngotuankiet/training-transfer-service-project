@@ -1,0 +1,8 @@
+.Toastify__toast--success {
+  background-color: #c9fcbf !important; /* Màu nền */
+  color: white !important; /* Màu chữ */
+}
+.Toastify__toast--error {
+  background-color: #f39f9b !important;
+  color: white !important;
+}
