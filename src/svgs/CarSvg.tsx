@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const CarSvg = () => {
   return (
@@ -74,7 +74,7 @@ const CarSvg = () => {
         />
       </defs>
     </svg>
-  )
-}
+  );
+};
 
-export default CarSvg
+export default CarSvg;

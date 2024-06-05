@@ -4,6 +4,7 @@ const screenUrl = {
   selectCity: '/selectCity',
   account: '/account',
   routeCity: '/routeCity',
+  booking: '/booking',
 };
 
 export default screenUrl;

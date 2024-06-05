@@ -2,13 +2,20 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { App, ZMPRouter, AnimationRoutes, SnackbarProvider } from 'zmp-ui';
 import { RecoilRoot } from 'recoil';
-import { AccountPage, HistoryPage, SelectCityPage, SplashPage } from '../pages';
+import {
+  AccountPage,
+  HistoryPage,
+  SelectCityPage,
+  SplashPage,
+  BookingPage,
+  RouteCityPage,
+} from '../pages';
 import { ApolloProvider } from '@apollo/client';
 import client from '../appoloClient';
 import Footer from './layout/Footer';
 import screenUrl from '../constants/screenUrl';
-import RouteCity from '../pages/RouteCity';
-import { useFooterStore, useSplashStore } from '../store';
+import useSplashStore from '../store/splashStore';
+import { useFooterStore } from '../store';
 import { ToastContainer } from 'react-toastify';
 
 const configRouter = [
@@ -30,7 +37,11 @@ const configRouter = [
   },
   {
     path: screenUrl.routeCity,
-    component: <RouteCity />,
+    component: <RouteCityPage />,
+  },
+  {
+    path: screenUrl.booking,
+    component: <BookingPage />,
   },
 ];
 

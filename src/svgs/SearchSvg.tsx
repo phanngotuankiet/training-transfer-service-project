@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const SearchSvg = ({ color = '#AAB9C5' }: { color?: string }) => {
   return (
@@ -16,7 +16,7 @@ const SearchSvg = ({ color = '#AAB9C5' }: { color?: string }) => {
         fill={color}
       />
     </svg>
-  )
-}
+  );
+};
 
-export default SearchSvg
+export default SearchSvg;

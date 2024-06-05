@@ -1,31 +1,128 @@
-import React from 'react'
-import ImageGallery from '../components/ImageGallery';
-import CarSvg from '../svgs/CarSvg';
+import React, { useEffect, useState } from 'react';
+import { Page, useNavigate } from 'zmp-ui';
+import screenUrl from '../constants/screenUrl';
+import { getPhoneNumber, getAccessToken, authorize } from 'zmp-sdk/apis';
+import { RightArrow } from '../assets/svgs';
+import CarImg from '../assets/images/car.png';
+import SplashImage from '../assets/images/SplashBg.png';
+import { useLoginMutation } from '../generated/graphql';
+import { useFooterStore, useSplashStore } from '../store';
 
-const SelectCityPage = () => {
+const HomePage: React.FunctionComponent = () => {
+  const [accessToken, setAccessToken] = useState('');
+  const [phoneToken, setPhoneToken] = useState('');
+  const navigate = useNavigate();
+  const { offSplash } = useSplashStore();
+  const { turnFooter } = useFooterStore();
+  const [loginActionMutation] = useLoginMutation({
+    fetchPolicy: 'no-cache',
+  });
+
+  const savePhoneAccessToken = async () => {
+    getPhoneNumber({
+      success: async (data) => {
+        let { token } = data;
+        setPhoneToken(token ?? '');
+      },
+      fail: () => {
+        savePhoneAccessToken();
+      },
+    });
+  };
+
+  const saveAccessToken = async () => {
+    const accessToken = await getAccessToken({});
+    setAccessToken(accessToken);
+  };
+
+  const handleGetToken = async () => {
+    await authorize({
+      scopes: ['scope.userInfo'],
+      success: async () => {
+        saveAccessToken();
+      },
+      fail: () => {
+        saveAccessToken();
+      },
+    });
+  };
+
+  const offSplashAndNextScreen = () => {
+    offSplash();
+    turnFooter();
+    navigate(screenUrl.selectCity);
+  };
+
+  const handleLogin = async () => {
+    const { data } = await loginActionMutation({
+      variables: { token: accessToken, tokenGetPhone: phoneToken },
+    });
+
+    if (data?.actionLogin) {
+      localStorage.setItem('token', data.actionLogin.token);
+      localStorage.setItem('userId', data.actionLogin.userId);
+      localStorage.setItem('name', data?.actionLogin.name);
+    }
+    offSplashAndNextScreen();
+  };
+
+  const handleClickButton = () => {
+    const hasToken = localStorage.getItem('token');
+    if (hasToken) return;
+
+    savePhoneAccessToken();
+    handleGetToken();
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      offSplashAndNextScreen();
+      return;
+    }
+
+    if (accessToken && phoneToken) {
+      handleLogin();
+    }
+  }, [accessToken, phoneToken]);
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-<div className="flex flex-col items-center p-4 w-full max-w-md mx-auto">
-      <h1 className="text-3xl font-bold text-blue-600 mb-2">Đặt xe du lịch</h1>
-      <div className="flex items-center mb-4">
-        <div className="flex flex-col items-start">
-          <div className="flex justify-between items-center w-full" >
-          <p className="text-gray-600 mb-2 text-left mr-4">Nhanh chóng<br />và dễ dàng!</p><div className="w-48">
-           <CarSvg /> 
+    <div>
+      <Page className="page">
+        <div className=" h-[100vh] relative">
+          <div className="absolute top-0 left-0 right-0">
+            <img src={SplashImage} alt="splash-bg" className="w-full" />
           </div>
+          <div className="w-full bg-blue-500 rounded-3xl h-[350px] absolute bottom-0 p-8">
+            <p className="font-bold text-2xl text-white">Đặt Xe Du Lịch</p>
+            <p className="text-white font-normal text-base mb-5">
+              Nhanh chóng dễ dàng với giá tốt nhất!
+            </p>
+            <div className="h-28">
+              <img src={CarImg} alt="car" />
+            </div>
+            <div className="flex justify-center">
+              <p className="text-white mt-3 text-center max-w-60">
+                Cho phép liên hệ qua số điện thoại để trải nghiệm dịch vụ tốt
+                nhất
+              </p>
+            </div>
+            <button
+              className=" w-full mt-3 flex justify-center gap-3
+                bg-white text-[#006AF5] font-bold py-4 px-6 rounded-xl
+                shadow-md transition duration-300 ease-in-out transform
+                hover:bg-white hover:shadow-lg hover:scale-105
+                active:bg-white active:scale-95
+                focus:outline-none focus:ring-4
+              "
+              onClick={handleClickButton}
+            >
+              <p> Cho phép gọi và SĐT</p> <RightArrow />
+            </button>
           </div>
         </div>
-      </div>
-      <button className="mb-6 px-4 py-2 bg-blue-600 text-white rounded-full flex items-center">
-        Khám phá thành phố mới 
-        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
-        </svg>
-      </button>
-      <ImageGallery />
-    </div>
+      </Page>
     </div>
   );
-}
+};
 
-export default SelectCityPage
+export default HomePage;

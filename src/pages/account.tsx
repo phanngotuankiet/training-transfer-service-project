@@ -19,7 +19,7 @@ const AccountPage = () => {
     try {
       await saveImageToGallery({
         imageUrl:
-          'https://res.cloudinary.com/doguzyfn7/image/upload/v1716874635/qr_ts7x9y.png',
+          'https://res.cloudinary.com/doguzyfn7/image/upload/v1717558517/dat-xe-du-lich_05-06-2024_1_ubeowa.jpg',
       });
 
       toast.success('Đã lưu thành công', {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const LocationSvg = ({ color = '#AAB9C5' }: { color?: string }) => {
   return (
@@ -22,7 +22,7 @@ const LocationSvg = ({ color = '#AAB9C5' }: { color?: string }) => {
         fill={color}
       />
     </svg>
-  )
-}
+  );
+};
 
-export default LocationSvg
+export default LocationSvg;

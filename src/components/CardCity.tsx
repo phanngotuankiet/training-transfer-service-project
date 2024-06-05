@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import { useNavigate } from 'zmp-ui';
 
 interface CardProps {
@@ -12,7 +12,7 @@ const CardCity: React.FC<CardProps> = ({ name, image }) => {
 
   const handleClick = () => {
     navigate('/bookingHistory');
-  }
+  };
      
   return (
     <div onClick={() => handleClick()} className="relative w-full h-40 rounded-lg overflow-hidden shadow-lg">

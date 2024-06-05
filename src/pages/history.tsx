@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import BookingCard from '../components/BookingCard';
 
 const HistoryPage = () => {

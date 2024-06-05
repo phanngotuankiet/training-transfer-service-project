@@ -1,5 +1,6 @@
 import React from 'react';
 import { LocationIcon } from '../../../assets/svgs';
+import { useNavigate } from 'zmp-ui';
 
 interface IProps {
   startLocation: string;
@@ -14,17 +15,30 @@ const Route: React.FC<IProps> = ({
   oneWayPrice,
   roundPrice,
 }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/booking');
+  };
+
   return (
-    <div className="p-2 w-full  mt-3 border-gray-300 rounded-xl border-solid border-2 flex transition duration-300 ease-in-out hover:bg-sky-100">
+    <button
+      className="p-2 w-full  mt-3 border-gray-300 rounded-xl items-center border-solid border-2 flex transition duration-300 ease-in-out hover:bg-sky-100"
+      onClick={handleClick}
+    >
       <div className="w-1/2 flex gap-3">
         <div className="inline-flex flex-col items-center">
-          <LocationIcon />
+          <LocationIcon color="#196CEA" />
           <div className="h-6 my-1  bg-blue-500 w-[1px]"></div>
-          <LocationIcon />
+          <LocationIcon color="#196CEA" />
         </div>
-        <div className="flex flex-col justify-between">
-          <p className="font-bold text-gray-500">{startLocation}</p>
-          <p className="font-bold text-gray-500">{endLocation}</p>
+        <div className="flex flex-col justify-between items-start">
+          <p className="font-bold text-gray-500 text-start text-sm">
+            {startLocation}
+          </p>
+          <p className="font-bold text-gray-500 text-start text-sm">
+            {endLocation}
+          </p>
         </div>
       </div>
       <div className="w-1/2 flex items-center gap-3">
@@ -34,7 +48,7 @@ const Route: React.FC<IProps> = ({
             {oneWayPrice ?? '.....'}
           </p>
         </div>
-        <div className="w-[2px] h-4/5 bg-gray-300"></div>
+        <div className="w-[2px] h-12 bg-gray-300"></div>
         <div>
           <p className="text-gray-600">Khứ hồi</p>
           <p className="text-blue-500 text-xl font-bold">
@@ -42,7 +56,7 @@ const Route: React.FC<IProps> = ({
           </p>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 

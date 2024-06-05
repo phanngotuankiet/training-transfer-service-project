@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const AccountSvg = ({ color = '#AAB9C5' }: { color?: string }) => {
   return (
@@ -16,7 +16,7 @@ const AccountSvg = ({ color = '#AAB9C5' }: { color?: string }) => {
         fill={color}
       />
     </svg>
-  )
-}
+  );
+};
 
-export default AccountSvg
+export default AccountSvg;
