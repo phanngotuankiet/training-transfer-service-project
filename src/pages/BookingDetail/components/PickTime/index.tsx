@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { ClockSvg } from '../../../../assets/svgs';
-import { format } from 'date-fns';
 
-const PickTime = ({ dateTime, onChange }) => {
+interface IProps {
+  dateTime: string;
+  onChange: (value) => void;
+}
+
+const PickTime: React.FC<IProps> = ({ dateTime, onChange }) => {
   const [time, setTime] = useState('');
 
   useEffect(() => {
     if (dateTime) {
-      const formattedDate = format(new Date(dateTime), "yyyy-MM-dd'T'HH:mm");
+      const formattedDate = dateTime.split('+')[0];
       setTime(formattedDate);
     }
   }, [dateTime]);

@@ -1,15 +1,18 @@
 import React from 'react';
 import { LocationIcon } from '../../../assets/svgs';
-import { useNavigate } from 'zmp-ui';
+import { useNavigate } from 'react-router-dom';
+import { formatCurrencyK } from '../../../utils/formatVND';
 
 interface IProps {
+  id: number;
   startLocation: string;
   endLocation: string;
-  oneWayPrice: string;
-  roundPrice: string;
+  oneWayPrice: number;
+  roundPrice: number;
 }
 
 const Route: React.FC<IProps> = ({
+  id,
   startLocation,
   endLocation,
   oneWayPrice,
@@ -18,7 +21,7 @@ const Route: React.FC<IProps> = ({
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/booking');
+    navigate(`/booking?id=${id}`);
   };
 
   return (
@@ -43,16 +46,16 @@ const Route: React.FC<IProps> = ({
       </div>
       <div className="w-1/2 flex items-center gap-3">
         <div>
-          <p className="text-gray-600">Một Chiều</p>
-          <p className="text-blue-500 text-xl font-bold">
-            {oneWayPrice ?? '.....'}
+          <p className="text-gray-600 whitespace-nowrap">Một Chiều</p>
+          <p className="text-blue-500 text-lg font-bold">
+            {formatCurrencyK(oneWayPrice) ?? '.....'}
           </p>
         </div>
         <div className="w-[2px] h-12 bg-gray-300"></div>
         <div>
           <p className="text-gray-600">Khứ hồi</p>
-          <p className="text-blue-500 text-xl font-bold">
-            {roundPrice ?? '.....'}
+          <p className="text-blue-500 text-lg font-bold">
+            {formatCurrencyK(roundPrice) ?? '.....'}
           </p>
         </div>
       </div>

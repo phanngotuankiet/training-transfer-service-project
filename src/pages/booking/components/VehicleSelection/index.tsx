@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Car4Slot, Car7Slot, Car16Slot } from '../../../../assets/svgs';
+import { useBookingStore } from '../../../../store';
 
 const listVehicleOPtion = [
   { id: 1, name: 'Xe 4 chỗ', icon: <Car4Slot /> },
@@ -8,10 +9,33 @@ const listVehicleOPtion = [
 ];
 
 const VehicleSelection = () => {
-  const [isActiveCar, setIsActiveCar] = useState(1);
+  const { listItinerary, bookingCurrent, updateBookingCurrent } =
+    useBookingStore();
 
   const handleClickCar = (id: number) => {
-    setIsActiveCar(id);
+    const newBooking = listItinerary.filter(
+      (itinerary) =>
+        id === itinerary?.idvehicleType &&
+        itinerary.idTripType === bookingCurrent?.idTripType,
+    )[0];
+
+    if (newBooking) {
+      updateBookingCurrent(newBooking);
+    }
+  };
+
+  const checkDisable = (id: number) => {
+    const newBooking = listItinerary.filter(
+      (itinerary) =>
+        id === itinerary?.idvehicleType &&
+        itinerary.idTripType === bookingCurrent?.idTripType,
+    )[0];
+
+    if (newBooking) {
+      return false;
+    }
+
+    return true;
   };
 
   return (
@@ -23,11 +47,14 @@ const VehicleSelection = () => {
           return (
             <button
               key={vehicle.id}
-              className={`w-full flex flex-col items-center justify-center gap-2 p-4 border-[1px] border-[#AAB9C5] rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105 ${isActiveCar === vehicle.id ? 'bg-[#F1F7FF] shadow-lg' : 'hover:bg-[#F1F7FF]'}`}
+              className={`w-full relative flex flex-col items-center justify-center gap-2 p-4 border-[1px] border-[#AAB9C5] rounded-xl transition-all duration-300 ease-in-out transform ${bookingCurrent?.idvehicleType === vehicle.id ? 'bg-[#F1F7FF] shadow-lg' : ':bg-[#F1F7FF]'}`}
               onClick={() => handleClickCar(vehicle.id)}
             >
               {vehicle.icon}
               <p className="text-[#505050] text-sm">{vehicle.name}</p>
+              {checkDisable(vehicle.id) && (
+                <div className="absolute top-0 left-0 right-0 bottom-0 bg-[#d3d3d399] rounded-lg"></div>
+              )}
             </button>
           );
         })}

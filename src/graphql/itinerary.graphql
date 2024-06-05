@@ -1,0 +1,22 @@
+query GetAllItineraryByIdRoute($idRoute: Int!) {
+  itinerary(where: { route_id: { _eq: $idRoute } }) {
+    id
+    price
+    option_id
+    vehicle_types_id
+    vehicle_type {
+      type
+    }
+    option {
+      round_type
+    }
+    route {
+      startlocation {
+        name
+      }
+      endlocation {
+        name
+      }
+    }
+  }
+}

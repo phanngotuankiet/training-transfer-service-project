@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BottomNavigation } from 'zmp-ui';
 import { SearchSvg, LocationSvg, AccountSvg } from '../../assets/svgs';
 import screenUrl from '../../constants/screenUrl';
+import { useLocation } from 'react-router-dom';
 
 const configBottomNavbar = [
   {
@@ -28,7 +29,18 @@ const configBottomNavbar = [
 ];
 
 const Footer = () => {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState('booking');
+
+  useEffect(() => {
+    const currentTab = configBottomNavbar.find(
+      (route) => route.to === location.pathname,
+    );
+    if (currentTab) {
+      setActiveTab(currentTab.key);
+    }
+  }, [location.pathname]);
+
   return (
     <BottomNavigation
       fixed

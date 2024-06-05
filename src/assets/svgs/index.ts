@@ -10,3 +10,4 @@ export { default as Car4Slot } from './Car4Slot';
 export { default as Car7Slot } from './Car7Slot';
 export { default as Car16Slot } from './Car16Slot';
 export { default as ClockSvg } from './ClockSvg';
+export { default as OuterRectangle2 } from './OuterRectangle2';

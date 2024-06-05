@@ -20,10 +20,11 @@ const ListRoute = () => {
         return (
           <Route
             key={route.id}
+            id={route.id}
             endLocation={route.endlocation.name}
             startLocation={route.startlocation.name}
-            oneWayPrice={route.one_way[0].price}
-            roundPrice={route.round_trip[0]?.price}
+            oneWayPrice={route.one_way[0]?.price || '....'}
+            roundPrice={route.round_trip[0]?.price || '....'}
           />
         );
       })}

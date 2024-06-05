@@ -14,7 +14,6 @@ const City: React.FC<IProps> = ({ imageUrl, name, id }) => {
   const { offFooter } = useFooterStore();
 
   const handleClick = () => {
-    offFooter();
     navigate(`${screenUrl.routeCity}?cityId=${id}`);
   };
 

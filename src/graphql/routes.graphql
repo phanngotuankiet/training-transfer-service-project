@@ -1,5 +1,7 @@
 query GetRouteByCityIdAnd4SeaterVehicle($cityId: Int!) {
-  routes(where: { from_city: { _eq: $cityId } }) {
+  routes(
+    where: { from_city: { _eq: $cityId }, _and: { isactive: { _eq: true } } }
+  ) {
     startlocation {
       name
     }
@@ -7,12 +9,24 @@ query GetRouteByCityIdAnd4SeaterVehicle($cityId: Int!) {
       name
     }
     one_way: itineraries(
-      where: { option_id: { _eq: 1 }, _and: { vehicle_types_id: { _eq: 1 } } }
+      where: {
+        option_id: { _eq: 1 }
+        _and: {
+          vehicle_types_id: { _eq: 1 }
+          _and: { isactive: { _eq: true } }
+        }
+      }
     ) {
       price
     }
     round_trip: itineraries(
-      where: { option_id: { _eq: 2 }, _and: { vehicle_types_id: { _eq: 1 } } }
+      where: {
+        option_id: { _eq: 2 }
+        _and: {
+          vehicle_types_id: { _eq: 1 }
+          _and: { isactive: { _eq: true } }
+        }
+      }
     ) {
       price
     }

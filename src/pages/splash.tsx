@@ -6,14 +6,13 @@ import { RightArrow } from '../assets/svgs';
 import CarImg from '../assets/images/car.png';
 import SplashImage from '../assets/images/SplashBg.png';
 import { useLoginMutation } from '../generated/graphql';
-import { useFooterStore, useSplashStore } from '../store';
+import { useFooterStore } from '../store';
 
-const HomePage: React.FunctionComponent = () => {
+const HomePage = () => {
+  const { offFooter } = useFooterStore();
   const [accessToken, setAccessToken] = useState('');
   const [phoneToken, setPhoneToken] = useState('');
   const navigate = useNavigate();
-  const { offSplash } = useSplashStore();
-  const { turnFooter } = useFooterStore();
   const [loginActionMutation] = useLoginMutation({
     fetchPolicy: 'no-cache',
   });
@@ -48,8 +47,6 @@ const HomePage: React.FunctionComponent = () => {
   };
 
   const offSplashAndNextScreen = () => {
-    offSplash();
-    turnFooter();
     navigate(screenUrl.selectCity);
   };
 
@@ -58,7 +55,6 @@ const HomePage: React.FunctionComponent = () => {
       const { data } = await loginActionMutation({
         variables: { token: accessToken, tokenGetPhone: phoneToken },
       });
-      console.log("dữ liệu đăng nhập: ", data);
 
       if (data?.actionLogin) {
         localStorage.setItem('token', data.actionLogin.token);
@@ -67,7 +63,7 @@ const HomePage: React.FunctionComponent = () => {
       }
       offSplashAndNextScreen();
     } catch (error) {
-      console.log("Lỗi: ", error);
+      console.log('Lỗi: ', error);
     }
   };
 
@@ -90,6 +86,10 @@ const HomePage: React.FunctionComponent = () => {
     }
   }, [accessToken, phoneToken]);
 
+  useEffect(() => {
+    offFooter();
+  }, []);
+
   return (
     <div>
       <Page className="page">
@@ -98,7 +98,9 @@ const HomePage: React.FunctionComponent = () => {
             <img src={SplashImage} alt="splash-bg" className="w-full" />
           </div>
           <div className="w-full bg-blue-600 rounded-3xl h-[350px] absolute bottom-0 p-8">
-            <p className="font-bold text-2xl text-white leading-9 poppins">Đặt Xe Du Lịch</p>
+            <p className="font-bold text-2xl text-white leading-9 poppins">
+              Đặt Xe Du Lịch
+            </p>
             <p className="text-white font-normal leading-5 roboto text-base mb-5">
               Nhanh chóng dễ dàng với giá tốt nhất!
             </p>
@@ -121,7 +123,10 @@ const HomePage: React.FunctionComponent = () => {
               "
               onClick={handleClickButton}
             >
-              <p className="font-normal roboto text-base leading-4 roboto"> Cho phép gọi và SĐT</p> <RightArrow />
+              <p className="font-normal roboto text-base leading-4 roboto">
+                Cho phép gọi và SĐT
+              </p>
+              <RightArrow />
             </button>
           </div>
         </div>

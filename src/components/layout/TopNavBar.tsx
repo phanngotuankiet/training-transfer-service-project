@@ -1,18 +1,14 @@
 import React from 'react';
 import { Header, useNavigate } from 'zmp-ui';
-import { useFooterStore } from '../../store';
 
 interface IProps {
-  footerActive: boolean;
   title: string;
 }
 
-const TopNavBar: React.FC<IProps> = ({ title, footerActive }) => {
-  const { setFooter } = useFooterStore();
+const TopNavBar: React.FC<IProps> = ({ title }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    setFooter(!footerActive);
     navigate(-1);
   };
 

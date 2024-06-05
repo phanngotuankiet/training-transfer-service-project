@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal } from 'zmp-ui';
 import { useNavigate } from 'react-router';
 import { useMutationCancelBookingMutation } from '../../../generated/graphql';
@@ -42,7 +42,7 @@ const CancellationNotice: React.FC<CancellationNoticeProps> = ({
     <div>
       <Modal
         visible={show}
-        title={<span className="text-lg font-semibold">Hủy chuyến đi</span>}
+        title={'Hủy chuyến đi'}
         onClose={onClose}
         actions={[
           {

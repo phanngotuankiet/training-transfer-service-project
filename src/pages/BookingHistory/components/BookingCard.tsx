@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'zmp-ui';
-import { FaPhoneAlt, FaTimes, FaMapMarkerAlt } from 'react-icons/fa'; // Import biểu tượng từ react-icons
-import { Icon } from 'zmp-ui';
-import { format } from 'date-fns';
+import { useNavigate, Icon } from 'zmp-ui';
+import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import CancellationNotice from '../../BookingDetail/components/CancellationNotice';
 import screenUrl from '../../../constants/screenUrl';
+import { formatDateTime } from '../../BookingDetail/components/FormatDateTime';
+import { openPhone } from 'zmp-sdk';
 
 interface BookingCardProps {
   id: number;
@@ -36,16 +36,22 @@ const BookingCard: React.FC<BookingCardProps> = ({
   const [isCancellationNoticeVisible, setIsCancellationNoticeVisible] =
     useState(false);
 
-  useEffect(() => {
-    if (dateTime) {
-      const formattedDate = format(new Date(dateTime), " HH:mm' | 'yyyy-MM-dd");
-      setTime(formattedDate);
-    }
-  }, [dateTime]);
+  const handleCallAdmin = () => {
+    openPhone({
+      phoneNumber: '0366636600',
+    });
+  };
 
   const handleClick = () => {
     navigate(`${screenUrl.bookingDetail}?bookingId=${id}`);
   };
+
+  useEffect(() => {
+    if (dateTime) {
+      const formattedDate = formatDateTime(dateTime);
+      setTime(formattedDate);
+    }
+  }, [dateTime]);
 
   return (
     <div className="shadow-lg bg-white rounded-lg p-4 mb-4">
@@ -68,7 +74,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
             </div>
           </div>
 
-          <div className="text-right flex flex-col space-y-1">
+          <div className="flex flex-col space-y-1 items-end">
             <p className="roboto leading-[22px] text-sm font-normal text-[#565656]">
               {option ? 'Khứ hồi' : 'Một chiều'}
             </p>
@@ -83,9 +89,9 @@ const BookingCard: React.FC<BookingCardProps> = ({
             </p>
 
             <span
-              className={`text-xs ${status === 'Sắp đến' ? 'bg-[#024DFF] text-white ' : 'bg-[#D0DEFF] text-[#016BF5]'} rounded-full px-2 py-1`}
+              className={`text-xs text-center ${status === 'Cancelled' ? 'bg-[#d18b21bd] text-white' : status === 'Pending' ? 'bg-[#024DFF] text-white' : 'bg-[#D0DEFF] text-[#006AF5]'} rounded-full px-2 py-1`}
             >
-              {status === 'Completed' ? 'Đã hoàn thành' : status}
+              {status}
             </span>
           </div>
         </div>
@@ -99,7 +105,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
             </p>
 
             <p className="roboto leading-[22px] text-sm text-[#565656]">
-              {option ? 'Khứ hồi' : 'Một chiều'}
+              {option}
             </p>
           </div>
 
@@ -117,7 +123,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
           <div className="text-[#7991A4] roboto font-normal leading-5 text-[14px] flex justify-between">
             <p>Ghi chú</p>
 
-            {status !== 'Đã hủy' && (
+            {status !== 'Cancelled' && (
               <Icon icon="zi-edit-text" className="text-black" />
             )}
           </div>
@@ -125,9 +131,12 @@ const BookingCard: React.FC<BookingCardProps> = ({
           <p className="mb-5 roboto font-normal leading-5">{note}</p>
         </div>
       </button>
-      {status !== 'Đã hủy' && (
+      {status === 'Pending' && (
         <div className="flex justify-between items-center mt-2">
-          <button className="text-[#006AF5] flex items-center space-x-2">
+          <button
+            className="text-[#006AF5] flex items-center space-x-2"
+            onClick={handleCallAdmin}
+          >
             <Icon icon="zi-call" />
             <p className="text-[15px] leading-5 roboto">Liên hệ tổng đài</p>
           </button>

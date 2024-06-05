@@ -1,6 +1,5 @@
-import React from 'react'
-import DaNangImg from '../../../assets/images/danang.png'
-import { LocationIcon, CarSvg } from '../../../assets/svgs'
+import React from 'react';
+import { LocationIcon, CarSvg } from '../../../assets/svgs';
 const Banner = ({
   startLocation,
   endLocation,
@@ -58,7 +57,7 @@ const Banner = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Banner
+export default Banner;

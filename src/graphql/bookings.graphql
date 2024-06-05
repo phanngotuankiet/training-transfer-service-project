@@ -145,3 +145,25 @@ query QueryBookings($where: bookings_bool_exp! = {}, $offset: Int = 0) {
     }
   }
 }
+
+mutation insertBooking(
+  $bookingDate: timestamptz!
+  $itineraryId: Int!
+  $note: String
+  $userId: Int!
+) {
+  actionInsertBooking(
+    dataInsertBooking: {
+      bookingDate: $bookingDate
+      itineraryId: $itineraryId
+      note: $note
+      userId: $userId
+    }
+  ) {
+    note
+    bookingDate
+    createdAt
+    id
+    status
+  }
+}

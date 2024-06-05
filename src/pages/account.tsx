@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Page } from 'zmp-ui';
 import CarImg from '../assets/images/carAccount.png';
 import RoundedBottom from '../assets/images/roundedBottom.png';
@@ -7,8 +7,10 @@ import { saveImageToGallery, openShareSheet } from 'zmp-sdk/apis';
 import { DownloadSvg } from '../assets/svgs';
 import { toast } from 'react-toastify';
 import { useGetNameUserByIdQuery } from '../generated/graphql';
+import { useFooterStore } from '../store';
 
 const AccountPage = () => {
+  const { turnFooter } = useFooterStore();
   const userId: string = localStorage.getItem('userId') ?? '0';
   const { data } = useGetNameUserByIdQuery({
     variables: { userId: parseInt(userId) },
@@ -43,6 +45,10 @@ const AccountPage = () => {
       });
     } catch (err) {}
   };
+
+  useEffect(() => {
+    turnFooter();
+  }, [turnFooter]);
 
   return (
     <Page>

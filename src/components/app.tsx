@@ -4,7 +4,6 @@ import { App, ZMPRouter, AnimationRoutes, SnackbarProvider } from 'zmp-ui';
 import { RecoilRoot } from 'recoil';
 import {
   AccountPage,
-  HistoryPage,
   SelectCityPage,
   SplashPage,
   BookingPage,
@@ -14,12 +13,10 @@ import {
 } from '../pages';
 import { ApolloProvider } from '@apollo/client';
 import client from '../appoloClient';
-import Footer from './layout/Footer';
 import screenUrl from '../constants/screenUrl';
-import useSplashStore from '../store/splashStore';
-import { useFooterStore } from '../store';
 import { ToastContainer } from 'react-toastify';
-import BookingHistoryPage from '../pages/bookingHistory';
+import Footer from './layout/Footer';
+import { useFooterStore } from '../store';
 
 const configRouter = [
   {
@@ -53,7 +50,6 @@ const configRouter = [
 ];
 
 const MyApp = () => {
-  const { splashActive } = useSplashStore();
   const { footerActive } = useFooterStore();
 
   return (
@@ -73,9 +69,8 @@ const MyApp = () => {
                   );
                 })}
               </AnimationRoutes>
-              {!splashActive && footerActive && <Footer />}
-              <Footer />
               <ToastContainer />
+              {footerActive && <Footer />}
             </ZMPRouter>
           </SnackbarProvider>
         </App>

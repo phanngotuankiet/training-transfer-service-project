@@ -4,7 +4,6 @@ import TopNavBar from '../../components/layout/TopNavBar';
 import ListRoute from '../RouteCity/components/ListRoute';
 import { getRouteParams } from 'zmp-sdk/apis';
 import { useGetCityByIdQuery } from '../../generated/graphql';
-import { useFooterStore } from '../../store';
 import FadeLoader from 'react-spinners/FadeLoader';
 
 const RouteCity = () => {
@@ -13,7 +12,6 @@ const RouteCity = () => {
     variables: { cityId: parseInt(cityId) },
     fetchPolicy: 'no-cache',
   });
-  const { footerActive } = useFooterStore();
 
   if (!data) {
     return (
@@ -25,7 +23,7 @@ const RouteCity = () => {
 
   return (
     <div>
-      <TopNavBar title="Đà Nẵng" footerActive={footerActive} />
+      <TopNavBar title="Đà Nẵng" />
       <Page className="page relative pb-32 mt-11">
         <div className="relative p-2">
           <img

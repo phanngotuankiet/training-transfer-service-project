@@ -1,5 +1,5 @@
-import React from 'react'
-import { LocationIcon } from '../../../../assets/svgs'
+import React from 'react';
+import { LocationIcon } from '../../../../assets/svgs';
 
 const DeparturePoint = ({ startLocation, endLocation }) => {
   return (
@@ -16,7 +16,7 @@ const DeparturePoint = ({ startLocation, endLocation }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DeparturePoint
+export default DeparturePoint;

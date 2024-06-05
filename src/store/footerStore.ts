@@ -8,9 +8,21 @@ interface FooterState {
 }
 
 const useFooterStore = create<FooterState>((set) => ({
-  footerActive: false,
-  offFooter: () => set(() => ({ footerActive: false })),
-  turnFooter: () => set(() => ({ footerActive: true })),
+  footerActive: true,
+  offFooter: () =>
+    set((state) => {
+      if (state.footerActive) {
+        return { footerActive: false };
+      }
+      return state;
+    }),
+  turnFooter: () =>
+    set((state) => {
+      if (!state.footerActive) {
+        return { footerActive: true };
+      }
+      return state;
+    }),
   setFooter: (active: boolean) => set(() => ({ footerActive: active })),
 }));
 

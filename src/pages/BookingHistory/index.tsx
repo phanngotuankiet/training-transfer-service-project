@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import BookingCard from './components/BookingCard';
-import HeaderSvg from './components/HeaderSvg';
 import { useQueryBookingsQuery } from '../../generated/graphql';
+import Header from './components/Header';
+import { useFooterStore } from '../../store';
 
 const BookingHistoryPage = () => {
+  const { turnFooter } = useFooterStore();
   const userId = localStorage.getItem('userId');
   const parsedUserId = userId ? parseInt(userId) : null;
 
@@ -22,9 +24,13 @@ const BookingHistoryPage = () => {
     refetch();
   };
 
+  useEffect(() => {
+    turnFooter();
+  }, []);
+
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <HeaderSvg />
+    <div className="bg-gray-100 min-h-screen pb-10">
+      <Header />
       <div className="p-4">
         {data?.bookings.map((booking, index) => (
           <BookingCard
