@@ -1,8 +1,9 @@
 import React from 'react';
 import { Page } from 'zmp-ui';
-import CarImg from '../../assets/images/car-shawdow.png';
 import { useGetAllCitiesQuery } from '../../generated/graphql';
-import City from './components/City';
+import CardCity from './components/CardCity';
+import CarSVGClear from '../../svgs/CarSVG-clear';
+import DanangTestImg from '../../assets/images/hue.jpeg';
 
 const SelectCityPage = () => {
   const { data } = useGetAllCitiesQuery({
@@ -10,34 +11,48 @@ const SelectCityPage = () => {
   });
 
   return (
-    <Page className="page mt-10">
-      <div className="flex justify-center">
+    <Page className="page">
+
+      <div className="flex flex-col items-center p-4 w-full max-w-md mx-auto mt-2">
+
+        <h1 className="text-[51px] -ml-4 font-bold overpass text-blue-600 leading-[48px]">
+          Đặt xe du lịch
+        </h1>
+
         <div className="flex flex-col">
-          <p className="text-blue-500 text-5xl font-bold overpas">
-            Đặt xe du lịch
-          </p>
-          <div className="mt-2 flex justify-between">
-            <p className="inline-block max-w-24 text-[#646464] text-[1rem]">
-              Nhanh chóng và dễ dàng!
-            </p>
-            <img src={CarImg} alt="car" className="w-44 inline-block" />
+
+          <div className="flex space-x-10">
+
+            <div className="text-gray-600 roboto leading-5 mb-2 text-sm font-medium mt-4 text-left mr-4">
+              Nhanh chóng
+              <br />
+              và dễ dàng!
+            </div>
+
+            <CarSVGClear />
+
           </div>
+
         </div>
+
+        <div className="flex flex-col mt-2 space-y-2 overflow-y-auto w-full">
+          {data?.cities.map((city) => {
+            if (!city.isactive) return;
+            return (
+              <CardCity
+                key={city.id}
+                image={city.img ?? ''}
+                name={city.name}
+                id={city.id}
+              />
+            );
+          })}
+        </div>
+
+        <div className="h-16"> </div>
+
       </div>
-      <div className="px-5 flex flex-col gap-4">
-        {data?.cities.map((city) => {
-          if (!city.isactive) return;
-          return (
-            <City
-              key={city.id}
-              imageUrl={city.img ?? ''}
-              name={city.name}
-              id={city.id}
-            />
-          );
-        })}
-      </div>
-    </Page>
+    </Page >
   );
 };
 

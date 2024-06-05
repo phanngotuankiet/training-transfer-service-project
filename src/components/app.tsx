@@ -18,7 +18,7 @@ import screenUrl from '../constants/screenUrl';
 import useSplashStore from '../store/splashStore';
 import { useFooterStore } from '../store';
 import { ToastContainer } from 'react-toastify';
-import RouteCity from '../pages/RouteCity';
+import BookingHistoryPage from '../pages/bookingHistory';
 
 const configRouter = [
   {
@@ -27,7 +27,7 @@ const configRouter = [
   },
   {
     path: screenUrl.history,
-    component: <HistoryPage />,
+    component: <BookingHistoryPage />,
   },
   {
     path: screenUrl.selectCity,
@@ -73,6 +73,7 @@ const MyApp = () => {
                 })}
               </AnimationRoutes>
               {!splashActive && footerActive && <Footer />}
+              <Footer />
               <ToastContainer />
             </ZMPRouter>
           </SnackbarProvider>

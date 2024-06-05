@@ -5,7 +5,7 @@
     "headerColor": "#fafafa",
     "textColor": "black",
     "textAlign": "left",
-    "statusBarColor": "#610000",
+    "statusBarColor": "#ffffff",
     "leftButton": "back",
     "statusBar": "normal",
     "actionBarHidden": true,

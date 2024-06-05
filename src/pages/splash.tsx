@@ -54,16 +54,21 @@ const HomePage: React.FunctionComponent = () => {
   };
 
   const handleLogin = async () => {
-    const { data } = await loginActionMutation({
-      variables: { token: accessToken, tokenGetPhone: phoneToken },
-    });
+    try {
+      const { data } = await loginActionMutation({
+        variables: { token: accessToken, tokenGetPhone: phoneToken },
+      });
+      console.log("dữ liệu đăng nhập: ", data);
 
-    if (data?.actionLogin) {
-      localStorage.setItem('token', data.actionLogin.token);
-      localStorage.setItem('userId', data.actionLogin.userId);
-      localStorage.setItem('name', data?.actionLogin.name);
+      if (data?.actionLogin) {
+        localStorage.setItem('token', data.actionLogin.token);
+        localStorage.setItem('userId', data.actionLogin.userId);
+        localStorage.setItem('name', data?.actionLogin.name);
+      }
+      offSplashAndNextScreen();
+    } catch (error) {
+      console.log("Lỗi: ", error);
     }
-    offSplashAndNextScreen();
   };
 
   const handleClickButton = () => {
@@ -92,16 +97,16 @@ const HomePage: React.FunctionComponent = () => {
           <div className="absolute top-0 left-0 right-0">
             <img src={SplashImage} alt="splash-bg" className="w-full" />
           </div>
-          <div className="w-full bg-blue-500 rounded-3xl h-[350px] absolute bottom-0 p-8">
-            <p className="font-bold text-2xl text-white">Đặt Xe Du Lịch</p>
-            <p className="text-white font-normal text-base mb-5">
+          <div className="w-full bg-blue-600 rounded-3xl h-[350px] absolute bottom-0 p-8">
+            <p className="font-bold text-2xl text-white leading-9 poppins">Đặt Xe Du Lịch</p>
+            <p className="text-white font-normal leading-5 roboto text-base mb-5">
               Nhanh chóng dễ dàng với giá tốt nhất!
             </p>
             <div className="h-28">
               <img src={CarImg} alt="car" />
             </div>
             <div className="flex justify-center">
-              <p className="text-white mt-3 text-center max-w-60">
+              <p className="text-white mt-3 roboto leading-[18px] text-center max-w-60">
                 Cho phép liên hệ qua số điện thoại để trải nghiệm dịch vụ tốt
                 nhất
               </p>
@@ -116,7 +121,7 @@ const HomePage: React.FunctionComponent = () => {
               "
               onClick={handleClickButton}
             >
-              <p> Cho phép gọi và SĐT</p> <RightArrow />
+              <p className="font-normal roboto text-base leading-4 roboto"> Cho phép gọi và SĐT</p> <RightArrow />
             </button>
           </div>
         </div>
