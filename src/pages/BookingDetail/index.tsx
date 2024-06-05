@@ -12,7 +12,7 @@ import {
   useGetBookingQuery,
   useMutationUpdateBookingMutation,
 } from '../../generated/graphql';
-import { useParams } from 'react-router-dom';
+import { getRouteParams } from 'zmp-sdk/apis';
 import { useNavigate } from 'react-router';
 import TopNavBar from '../../components/layout/TopNavBar';
 import ConvertVietnamTimeToUTC from './ConvertVietnamTimeToUTC';
@@ -20,14 +20,17 @@ import ConvertVietnamTimeToUTC from './ConvertVietnamTimeToUTC';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './toastStyles.css';
+import { useFooterStore } from '../../store';
+import Footer from '../../components/layout/Footer';
 
 const BookingDetail = () => {
   const [isCancellationNoticeVisible, setIsCancellationNoticeVisible] =
     useState(false);
   const navigate = useNavigate();
-  const { bookingId } = useParams();
+  const { bookingId } = getRouteParams();
+  
   const { data } = useGetBookingQuery({
-    variables: { id: 1 },
+    variables: { id: parseInt(bookingId) },
     fetchPolicy: 'no-cache',
   });
   const dataBooking = data?.bookings_by_pk?.itinerary;
@@ -44,7 +47,11 @@ const BookingDetail = () => {
   const handleUpdateBooking = async () => {
     try {
       await updateBooking({
-        variables: { id: 1, bookingDate: dateTime, note: note },
+        variables: {
+          id: parseInt(bookingId),
+          bookingDate: dateTime,
+          note: note,
+        },
       });
       toast.success('Cập nhật thành công!');
       navigate('/history');
@@ -107,6 +114,7 @@ const BookingDetail = () => {
       </div>
       <Button onClick={handleUpdateBooking} />
       <CancellationNotice
+        id={parseInt(bookingId)}
         show={isCancellationNoticeVisible}
         onClose={() => setIsCancellationNoticeVisible(false)}
       />

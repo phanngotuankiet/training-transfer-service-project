@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 
 const listTripType = [
   { id: 1, name: 'Một Chiều' },
   { id: 2, name: 'Khứ Hồi' },
-]
+];
 
 const TripType = ({ option }) => {
-  const [isActiveTrip, setIsActiveTrip] = useState(option)
-  // const handleClickTrip = (id: number) => {
-  //   setIsActiveTrip(id)
-  // }
+  const [isActiveTrip, setIsActiveTrip] = useState(option);
   useEffect(() => {
-    setIsActiveTrip(option)
-  }, [option])
+    setIsActiveTrip(option);
+  }, [option]);
 
   return (
     <div>
@@ -23,15 +20,14 @@ const TripType = ({ option }) => {
             <button
               key={trip.id}
               className={`h-ful rounded-lg w-28 flex items-center transition-all duration-300 ease-in-out justify-center ${isActiveTrip === trip.id ? 'bg-blue-500 text-white' : 'text-black'}`}
-              // onClick={() => handleClickTrip(trip.id)}
             >
               {trip.name}
             </button>
-          )
+          );
         })}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TripType
+export default TripType;

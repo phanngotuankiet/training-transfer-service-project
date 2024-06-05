@@ -10,6 +10,7 @@ import {
   BookingPage,
   RouteCityPage,
   BookingDetail,
+  BookingHistoryPage,
 } from '../pages';
 import { ApolloProvider } from '@apollo/client';
 import client from '../appoloClient';

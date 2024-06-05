@@ -1,25 +1,42 @@
-import React, { useState, useEffect } from 'react'
-import { Modal } from 'zmp-ui'
-import { useNavigate } from 'react-router'
-import { useMutationCancelBookingMutation } from '../../../generated/graphql'
-const CancellationNotice = ({ show, onClose }) => {
-  const [cancelReason, setCancelReason] = useState('')
-  const navigate = useNavigate()
+import React, { useState, useEffect } from 'react';
+import { Modal } from 'zmp-ui';
+import { useNavigate } from 'react-router';
+import { useMutationCancelBookingMutation } from '../../../generated/graphql';
+
+interface CancellationNoticeProps {
+  id: number;
+  show: boolean;
+  onClose: () => void;
+  fetchDataHistory?: () => void;
+}
+
+const CancellationNotice: React.FC<CancellationNoticeProps> = ({
+  id,
+  show,
+  onClose,
+  fetchDataHistory,
+}) => {
+  const [cancelReason, setCancelReason] = useState('');
+  const navigate = useNavigate();
 
   const [cancelBooking] = useMutationCancelBookingMutation({
     fetchPolicy: 'no-cache',
-  })
+  });
 
   const handleCancelBooking = async () => {
     try {
       await cancelBooking({
-        variables: { bookingId: 1, reason: cancelReason || ' ' },
-      })
-      navigate('/history')
+        variables: { bookingId: id, reason: cancelReason || ' ' },
+      });
+      if (fetchDataHistory) {
+        fetchDataHistory();
+      }
+      onClose();
+      navigate(`/history`, { replace: true });
     } catch (error) {
-      console.error('Lỗi khi hủy chuyến:', error)
+      console.error('Lỗi khi hủy chuyến:', error);
     }
-  }
+  };
 
   return (
     <div>
@@ -55,7 +72,7 @@ const CancellationNotice = ({ show, onClose }) => {
         </div>
       </Modal>
     </div>
-  )
-}
+  );
+};
 
-export default CancellationNotice
+export default CancellationNotice;

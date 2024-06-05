@@ -87,3 +87,61 @@ mutation MutationUpdateBooking(
     updatedAt
   }
 }
+
+query QueryBookings($where: bookings_bool_exp! = {}, $offset: Int = 0) {
+  bookings(where: $where, offset: $offset, order_by: { created_at: desc }) {
+    booking_date
+    created_at
+    deleted_at
+    id
+    itinerary_id
+    note
+    status
+    updated_at
+    itinerary {
+      created_at
+      deleted_at
+      id
+      isactive
+      note
+      price
+      provider_id
+      route_id
+      updated_at
+      vehicle_types_id
+      option {
+        round_type
+        id
+      }
+      provider {
+        name
+        note
+        phone_number
+      }
+      route {
+        city {
+          name
+          routes {
+            id
+            end_location
+            start_location
+            from_city
+            startlocation {
+              name
+            }
+            endlocation {
+              name
+            }
+          }
+        }
+      }
+      vehicle_type {
+        type
+      }
+    }
+    user {
+      name
+      phone_number
+    }
+  }
+}
