@@ -18,20 +18,29 @@ import TopNavBar from '../../components/layout/TopNavBar';
 import { formatDateTime } from './components/FormatDateTime';
 import { useFooterStore } from '../../store';
 import ConvertVietnamTimeToUTC from '../../components/ConvertVietnamTimeToUTC';
+import { isGreaterThanOrEquals15Minutes } from '../../functions/isGreaterThanOrEquals15Minutes';
+import { toast } from 'react-toastify';
 
 const BookingDetail = () => {
   const { offFooter } = useFooterStore();
+
   const [isCancellationNoticeVisible, setIsCancellationNoticeVisible] =
     useState(false);
+
   const navigate = useNavigate();
+
   const { bookingId } = getRouteParams();
+
   const { data } = useGetBookingQuery({
     variables: { id: parseInt(bookingId) },
     fetchPolicy: 'no-cache',
   });
+
   const dataBooking = data?.bookings_by_pk?.itinerary;
+
   const [dateTime, setDateTime] = useState('');
   const [note, setNote] = useState('');
+
   const [updateBooking] = useMutationUpdateBookingMutation({
     fetchPolicy: 'no-cache',
   });
@@ -44,16 +53,34 @@ const BookingDetail = () => {
 
   const handleUpdateBooking = async () => {
     try {
-      await updateBooking({
-        variables: {
-          id: parseInt(bookingId),
-          bookingDate: ConvertVietnamTimeToUTC(dateTime),
-          note: note,
-        },
-      });
-      navigate('/history');
+      // time lúc người dùng đang bấm nút Lưu thông tin
+      const timeNow = new Date().toISOString();
+      const yesAuthenticate = isGreaterThanOrEquals15Minutes(timeNow, dateTime);
+
+      if (yesAuthenticate) {
+        await updateBooking({
+          variables: {
+            id: parseInt(bookingId),
+            bookingDate: ConvertVietnamTimeToUTC(dateTime),
+            note: note,
+          },
+        });
+
+        navigate('/history');
+
+        toast.success('Cập nhật thành công!', {
+          position: 'top-center',
+        });
+      } else {
+        // hiện toast tại đây
+        toast('Bạn chọn thời gian đón cách hiện tại ít nhất 15 phút.', {
+          position: "top-center", className: 'toast-message'
+        });
+      }
     } catch (error) {
-      console.error('Lỗi khi hủy chuyến:', error);
+      toast.error('Đã có lỗi xảy ra, vui lòng thử lại', {
+        position: 'top-center',
+      });
     }
   };
 
@@ -102,8 +129,8 @@ const BookingDetail = () => {
         option={dataBooking?.option.id}
         title={
           data?.bookings_by_pk?.status === 'Completed' ||
-          data?.bookings_by_pk?.status === 'Cancelled' ||
-          data?.bookings_by_pk?.status === 'Confirmed'
+            data?.bookings_by_pk?.status === 'Cancelled' ||
+            data?.bookings_by_pk?.status === 'Confirmed'
             ? true
             : false
         }
@@ -114,8 +141,8 @@ const BookingDetail = () => {
         onChange={handleOnChangeTime}
         isDisabled={
           data?.bookings_by_pk?.status === 'Completed' ||
-          data?.bookings_by_pk?.status === 'Cancelled' ||
-          data?.bookings_by_pk?.status === 'Confirmed'
+            data?.bookings_by_pk?.status === 'Cancelled' ||
+            data?.bookings_by_pk?.status === 'Confirmed'
             ? true
             : false
         }
@@ -126,8 +153,8 @@ const BookingDetail = () => {
         onChange={handleOnChangeNoteText}
         isDisabled={
           data?.bookings_by_pk?.status === 'Cancelled' ||
-          data?.bookings_by_pk?.status === 'Completed' ||
-          data?.bookings_by_pk?.status === 'Confirmed'
+            data?.bookings_by_pk?.status === 'Completed' ||
+            data?.bookings_by_pk?.status === 'Confirmed'
             ? true
             : false
         }
@@ -142,16 +169,19 @@ const BookingDetail = () => {
             >
               <FaPhoneAlt className="mr-1" /> Liên hệ tổng đài
             </button>
+
             <button
               onClick={() => setIsCancellationNoticeVisible(true)}
               className="text-red-600 flex items-center"
             >
               <FaTimes className="mr-1" /> Hủy đặt
             </button>
+
           </div>
           <Button onClick={handleUpdateBooking} />
         </>
       )}
+
       <CancellationNotice
         id={parseInt(bookingId)}
         show={isCancellationNoticeVisible}

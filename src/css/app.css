@@ -88,3 +88,11 @@ body {
     rgba(0, 212, 255, 0.34075637090773814) 100%
   ) !important;
 }
+
+.toast-message {
+  background: darkblue;
+  color: #fff;
+  font-size: 17px;
+  width: 90%;
+  padding: 30px 10px;
+}

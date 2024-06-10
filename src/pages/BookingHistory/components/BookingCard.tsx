@@ -82,9 +82,9 @@ const BookingCard: React.FC<BookingCardProps> = ({
             <p className="text-[#016BF5] font-bold text-xl leading-6 poppins">
               {price
                 ? price.toLocaleString('vi-VN', {
-                    style: 'currency',
-                    currency: 'VND',
-                  })
+                  style: 'currency',
+                  currency: 'VND',
+                })
                 : ''}
             </p>
 
@@ -129,7 +129,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
           <div className="text-[#7991A4] roboto font-normal leading-5 text-[14px] flex justify-between">
             <p>Ghi chú</p>
 
-            {status !== 'Cancelled' && status !== 'Completed' && (
+            {status !== 'Cancelled' && status !== 'Completed' && status !== 'Confirmed' && (
               <Icon icon="zi-edit-text" className="text-black" />
             )}
           </div>

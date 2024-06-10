@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ClockSvg } from '../../../../assets/svgs';
 import { useBookingStore } from '../../../../store';
-import moment from "moment-timezone";
 
 const PickTime = () => {
   const [time, setTime] = useState(new Date().toISOString().slice(0, 16));

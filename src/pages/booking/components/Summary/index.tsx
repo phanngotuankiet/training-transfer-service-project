@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import screenUrl from '../../../../constants/screenUrl';
 import { PulseLoader } from 'react-spinners';
 import ConvertVietnamTimeToUTC from '../../../../components/ConvertVietnamTimeToUTC';
+import { isGreaterThanOrEquals15Minutes } from '../../../../functions/isGreaterThanOrEquals15Minutes';
 
 const Summary = () => {
   const { turnFooter } = useFooterStore();
@@ -20,20 +21,30 @@ const Summary = () => {
   const handleBooking = async () => {
     setIsSubmit(true);
     try {
-      if (bookingCurrent) {
-        const result = await insertBookingMutation({
-          variables: {
-            bookingDate: ConvertVietnamTimeToUTC(bookingCurrent.timeStart),
-            itineraryId: bookingCurrent.idItinerary!,
-            userId: parseInt(localStorage.getItem('userId')!),
-            note: bookingCurrent.note,
-          },
-        });
-        if (result.data?.actionInsertBooking) {
-          toast.success('Bạn đã đặt chuyến đi thành công');
+      const timeNow = new Date().toISOString();
+      const timeUserPicked = ConvertVietnamTimeToUTC(bookingCurrent?.timeStart);
+      const verifyMinimumMinutes = isGreaterThanOrEquals15Minutes(timeNow, timeUserPicked);
+
+      if (verifyMinimumMinutes) {
+        if (bookingCurrent) {
+          const result = await insertBookingMutation({
+            variables: {
+              bookingDate: ConvertVietnamTimeToUTC(bookingCurrent.timeStart),
+              itineraryId: bookingCurrent.idItinerary!,
+              userId: parseInt(localStorage.getItem('userId')!),
+              note: bookingCurrent.note,
+            },
+          });
+          if (result.data?.actionInsertBooking) {
+            toast.success('Bạn đã đặt chuyến đi thành công');
+          }
+          turnFooter();
+          navigate(screenUrl.history);
         }
-        turnFooter();
-        navigate(screenUrl.history);
+      } else {
+        toast('Bạn chọn thời gian đón cách hiện tại ít nhất 15 phút.', {
+          position: "top-center", className: 'toast-message'
+        });
       }
     } catch (error) {
       console.log(error);
