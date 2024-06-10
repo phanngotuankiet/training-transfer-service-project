@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router';
 import TopNavBar from '../../components/layout/TopNavBar';
 import { formatDateTime } from './components/FormatDateTime';
 import { useFooterStore } from '../../store';
+import ConvertVietnamTimeToUTC from '../../components/ConvertVietnamTimeToUTC';
 
 const BookingDetail = () => {
   const { offFooter } = useFooterStore();
@@ -46,7 +47,7 @@ const BookingDetail = () => {
       await updateBooking({
         variables: {
           id: parseInt(bookingId),
-          bookingDate: dateTime,
+          bookingDate: ConvertVietnamTimeToUTC(dateTime),
           note: note,
         },
       });
@@ -63,9 +64,11 @@ const BookingDetail = () => {
     setNote(value);
   };
 
-  const dateTimeString = formatDateTime(
-    data?.bookings_by_pk?.booking_date,
-  ).split('|')[0];
+  const dateTimeString = data?.bookings_by_pk?.booking_date;
+  const dateObject = new Date(dateTimeString);
+  const hours = dateObject.getHours();
+  const minutes = dateObject.getMinutes();
+  const bookingDate = ` ${hours}:${minutes}`;
 
   useEffect(() => {
     setDateTime(data?.bookings_by_pk?.booking_date);
@@ -86,7 +89,7 @@ const BookingDetail = () => {
         car={dataBooking?.vehicle_type.type}
         option={dataBooking?.option.round_type}
         price={dataBooking?.price}
-        bookingDate={dateTimeString}
+        bookingDate={bookingDate}
       />
 
       <DeparturePoint
@@ -97,19 +100,37 @@ const BookingDetail = () => {
 
       <TripType
         option={dataBooking?.option.id}
-        title={data?.bookings_by_pk?.status === 'Completed' || data?.bookings_by_pk?.status === 'Cancelled' || data?.bookings_by_pk?.status === 'Confirmed' ? true : false}
+        title={
+          data?.bookings_by_pk?.status === 'Completed' ||
+          data?.bookings_by_pk?.status === 'Cancelled' ||
+          data?.bookings_by_pk?.status === 'Confirmed'
+            ? true
+            : false
+        }
       />
 
       <PickTime
         dateTime={data?.bookings_by_pk?.booking_date}
         onChange={handleOnChangeTime}
-        isDisabled={data?.bookings_by_pk?.status === 'Completed' || data?.bookings_by_pk?.status === 'Cancelled' || data?.bookings_by_pk?.status === 'Confirmed' ? true : false}
+        isDisabled={
+          data?.bookings_by_pk?.status === 'Completed' ||
+          data?.bookings_by_pk?.status === 'Cancelled' ||
+          data?.bookings_by_pk?.status === 'Confirmed'
+            ? true
+            : false
+        }
       />
 
       <Note
         note={data?.bookings_by_pk?.note}
         onChange={handleOnChangeNoteText}
-        isDisabled={data?.bookings_by_pk?.status === 'Cancelled' || data?.bookings_by_pk?.status === 'Completed' || data?.bookings_by_pk?.status === 'Confirmed' ? true : false}
+        isDisabled={
+          data?.bookings_by_pk?.status === 'Cancelled' ||
+          data?.bookings_by_pk?.status === 'Completed' ||
+          data?.bookings_by_pk?.status === 'Confirmed'
+            ? true
+            : false
+        }
       />
 
       {data?.bookings_by_pk?.status === 'Pending' && (
