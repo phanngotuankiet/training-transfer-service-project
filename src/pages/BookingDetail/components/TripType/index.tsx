@@ -5,7 +5,7 @@ const listTripType = [
   { id: 2, name: 'Khứ Hồi' },
 ];
 
-const TripType = ({ option }) => {
+const TripType = ({ option, title }) => {
   const [isActiveTrip, setIsActiveTrip] = useState(option);
   useEffect(() => {
     setIsActiveTrip(option);
@@ -13,7 +13,7 @@ const TripType = ({ option }) => {
 
   return (
     <div>
-      <p className="font-bold text-sm mt-5 mb-3">Chọn chuyến đi</p>
+      <p className="font-bold text-sm mt-5 mb-3">{title ? "Chuyến đi" : "Chọn chuyến đi"}</p>
       <div className="border-[1px] border-[#F5F5F5] inline-flex h-10 bg-[#F5F5F5] rounded-lg">
         {listTripType.map((trip, _) => {
           return (

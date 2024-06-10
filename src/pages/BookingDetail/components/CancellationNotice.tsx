@@ -42,7 +42,6 @@ const CancellationNotice: React.FC<CancellationNoticeProps> = ({
     <div>
       <Modal
         visible={show}
-        title={'Hủy chuyến đi'}
         onClose={onClose}
         actions={[
           {
@@ -57,10 +56,16 @@ const CancellationNotice: React.FC<CancellationNoticeProps> = ({
           },
         ]}
       >
+        <div className="font-bold text-[22px] w-fit mx-auto -my-1">Hủy chuyến đi</div>
+
         <div className="py-6">
           Bạn đang hủy chuyến đi này, thông tin đặt xe sẽ bị hủy.
         </div>
-        <div>Nhập lý do hủy chuyến để ứng dụng hỗ trợ bạn tốt hơn nhé!</div>
+
+        <div>
+          Nhập lý do hủy chuyến để ứng dụng hỗ trợ bạn tốt hơn nhé!
+        </div>
+
         <div>
           <p className="mt-5 mb-3 font-bold text-sm">Lý do hủy chuyến</p>
           <textarea

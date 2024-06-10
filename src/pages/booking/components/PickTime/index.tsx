@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { ClockSvg } from '../../../../assets/svgs';
 import { useBookingStore } from '../../../../store';
+import moment from "moment-timezone";
 
 const PickTime = () => {
   const [time, setTime] = useState(new Date().toISOString().slice(0, 16));
+
   const { updateTimeStart } = useBookingStore();
   const handleOnChangeTime = (value) => {
     updateTimeStart(value);
@@ -17,6 +19,7 @@ const PickTime = () => {
         <div className="ps-3">
           <ClockSvg />
         </div>
+
         <input
           type="datetime-local"
           className="w-full d-block h-7 p-3 bg-white text-sm"
@@ -25,6 +28,7 @@ const PickTime = () => {
             handleOnChangeTime(e.target.value);
           }}
         />
+
       </div>
       <p className="mt-2 text-[#686868] text-[12px]">
         *Thời gian đón 30 phút trước khi đi

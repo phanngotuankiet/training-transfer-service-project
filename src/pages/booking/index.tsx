@@ -73,6 +73,7 @@ const BookingPage = () => {
   return (
     <div className="pb-16">
       <TopNavBar title="Đặt chuyến đi" />
+
       <Page className="page mt-11 p-4">
         <Banner />
         <DeparturePoint />
@@ -81,6 +82,7 @@ const BookingPage = () => {
         <PickTime />
         <Note />
       </Page>
+
       <Summary />
     </div>
   );

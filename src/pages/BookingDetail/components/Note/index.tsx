@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Note = ({ note, onChange }) => {
+const Note = ({ note, onChange, isDisabled }) => {
   const [noteText, setNoteText] = useState('');
 
   useEffect(() => {
@@ -23,6 +23,7 @@ const Note = ({ note, onChange }) => {
         value={noteText}
         placeholder="Nhập ghi chú về địa điểm đón, số người,..."
         className="w-full min-h-30 rounded-xl border-[1px] border-[#AAB9C5] p-3 text-xs focus:outline-none"
+        disabled={isDisabled}
       ></textarea>
     </div>
   );

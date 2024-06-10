@@ -82,16 +82,16 @@ const BookingCard: React.FC<BookingCardProps> = ({
             <p className="text-[#016BF5] font-bold text-xl leading-6 poppins">
               {price
                 ? price.toLocaleString('vi-VN', {
-                    style: 'currency',
-                    currency: 'VND',
-                  })
+                  style: 'currency',
+                  currency: 'VND',
+                })
                 : ''}
             </p>
 
             <span
-              className={`text-xs text-center ${status === 'Cancelled' ? 'bg-[#d18b21bd] text-white' : status === 'Pending' ? 'bg-[#024DFF] text-white' : 'bg-[#D0DEFF] text-[#006AF5]'} rounded-full px-2 py-1`}
+              className={`text-xs text-center ${status === 'Completed' ? 'bg-[#d18b21bd] text-white' : status === 'Confirmed' ? 'bg-[#024DFF] text-white' : status === 'Cancelled' ? 'bg-[#fcdcdb] text-[#DC1F18]' : 'bg-[#D0DEFF] text-[#006AF5]'} rounded-full px-2 py-1`}
             >
-              {status}
+              {status === 'Completed' ? 'Đã hoàn thành' : status === 'Pending' ? 'Đang chờ xác nhận' : status === 'Cancelled' ? 'Đã huỷ' : status === 'Confirmed' && 'Đang tới'}
             </span>
           </div>
         </div>
@@ -123,7 +123,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
           <div className="text-[#7991A4] roboto font-normal leading-5 text-[14px] flex justify-between">
             <p>Ghi chú</p>
 
-            {status !== 'Cancelled' && (
+            {status !== 'Cancelled' && status !== 'Completed' && (
               <Icon icon="zi-edit-text" className="text-black" />
             )}
           </div>

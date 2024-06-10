@@ -79,6 +79,7 @@ const BookingDetail = () => {
   return (
     <Page className="page p-2">
       <TopNavBar title={'Đặt chuyến đi sắp đến'} />
+
       <Banner
         startLocation={dataBooking?.route.city.routes[0].startlocation?.name}
         endLocation={dataBooking?.route.city.routes[0].endlocation?.name}
@@ -87,19 +88,30 @@ const BookingDetail = () => {
         price={dataBooking?.price}
         bookingDate={dateTimeString}
       />
+
       <DeparturePoint
         startLocation={dataBooking?.route.city.routes[0].startlocation?.name}
         endLocation={dataBooking?.route.city.routes[0].endlocation?.name}
+        status={data?.bookings_by_pk?.status}
       />
-      <TripType option={dataBooking?.option.id} />
+
+      <TripType
+        option={dataBooking?.option.id}
+        title={data?.bookings_by_pk?.status === 'Completed' || data?.bookings_by_pk?.status === 'Cancelled' || data?.bookings_by_pk?.status === 'Confirmed' ? true : false}
+      />
+
       <PickTime
         dateTime={data?.bookings_by_pk?.booking_date}
         onChange={handleOnChangeTime}
+        isDisabled={data?.bookings_by_pk?.status === 'Completed' || data?.bookings_by_pk?.status === 'Cancelled' || data?.bookings_by_pk?.status === 'Confirmed' ? true : false}
       />
+
       <Note
         note={data?.bookings_by_pk?.note}
         onChange={handleOnChangeNoteText}
+        isDisabled={data?.bookings_by_pk?.status === 'Cancelled' || data?.bookings_by_pk?.status === 'Completed' || data?.bookings_by_pk?.status === 'Confirmed' ? true : false}
       />
+
       {data?.bookings_by_pk?.status === 'Pending' && (
         <>
           <div className="flex justify-between items-center px-4 pt-3">
