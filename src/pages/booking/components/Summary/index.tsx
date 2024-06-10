@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import screenUrl from '../../../../constants/screenUrl';
 import { PulseLoader } from 'react-spinners';
+import ConvertVietnamTimeToUTC from '../../../../components/ConvertVietnamTimeToUTC';
 
 const Summary = () => {
   const { turnFooter } = useFooterStore();
@@ -22,7 +23,7 @@ const Summary = () => {
       if (bookingCurrent) {
         const result = await insertBookingMutation({
           variables: {
-            bookingDate: bookingCurrent.timeStart,
+            bookingDate: ConvertVietnamTimeToUTC(bookingCurrent.timeStart),
             itineraryId: bookingCurrent.idItinerary!,
             userId: parseInt(localStorage.getItem('userId')!),
             note: bookingCurrent.note,

@@ -3,8 +3,8 @@ import { useNavigate, Icon } from 'zmp-ui';
 import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import CancellationNotice from '../../BookingDetail/components/CancellationNotice';
 import screenUrl from '../../../constants/screenUrl';
-import { formatDateTime } from '../../BookingDetail/components/FormatDateTime';
 import { openPhone } from 'zmp-sdk';
+import { format } from 'date-fns';
 
 interface BookingCardProps {
   id: number;
@@ -48,7 +48,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
 
   useEffect(() => {
     if (dateTime) {
-      const formattedDate = formatDateTime(dateTime);
+      const formattedDate = format(new Date(dateTime), " HH:mm' | 'yyyy-MM-dd");
       setTime(formattedDate);
     }
   }, [dateTime]);
@@ -82,16 +82,22 @@ const BookingCard: React.FC<BookingCardProps> = ({
             <p className="text-[#016BF5] font-bold text-xl leading-6 poppins">
               {price
                 ? price.toLocaleString('vi-VN', {
-                  style: 'currency',
-                  currency: 'VND',
-                })
+                    style: 'currency',
+                    currency: 'VND',
+                  })
                 : ''}
             </p>
 
             <span
               className={`text-xs text-center ${status === 'Completed' ? 'bg-[#d18b21bd] text-white' : status === 'Confirmed' ? 'bg-[#024DFF] text-white' : status === 'Cancelled' ? 'bg-[#fcdcdb] text-[#DC1F18]' : 'bg-[#D0DEFF] text-[#006AF5]'} rounded-full px-2 py-1`}
             >
-              {status === 'Completed' ? 'Đã hoàn thành' : status === 'Pending' ? 'Đang chờ xác nhận' : status === 'Cancelled' ? 'Đã huỷ' : status === 'Confirmed' && 'Đang tới'}
+              {status === 'Completed'
+                ? 'Đã hoàn thành'
+                : status === 'Pending'
+                  ? 'Đang chờ xác nhận'
+                  : status === 'Cancelled'
+                    ? 'Đã huỷ'
+                    : status === 'Confirmed' && 'Đang tới'}
             </span>
           </div>
         </div>
