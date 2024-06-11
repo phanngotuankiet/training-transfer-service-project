@@ -17,6 +17,7 @@ const CancellationNotice: React.FC<CancellationNoticeProps> = ({
   fetchDataHistory,
 }) => {
   const [cancelReason, setCancelReason] = useState('');
+
   const navigate = useNavigate();
 
   const [cancelBooking] = useMutationCancelBookingMutation({
@@ -28,10 +29,13 @@ const CancellationNotice: React.FC<CancellationNoticeProps> = ({
       await cancelBooking({
         variables: { bookingId: id, reason: cancelReason || ' ' },
       });
+
       if (fetchDataHistory) {
         fetchDataHistory();
       }
+
       onClose();
+
       navigate(`/history`, { replace: true });
     } catch (error) {
       console.error('Lỗi khi hủy chuyến:', error);

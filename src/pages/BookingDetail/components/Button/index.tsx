@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
-const Button = ({ onClick }) => {
+const Button = ({ onClick, onCancel }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -30,14 +30,17 @@ const Button = ({ onClick }) => {
   return (
     <div className="flex justify-between pt-10">
       <div>
+
         <button
-          onClick={() => navigate('/history')}
+          onClick={onCancel}
           className=" w-40 h-12 rounded-lg text-blue-600 border border-blue-600"
         >
           Hủy
         </button>
+
       </div>
       <div>
+
         <button
           onClick={handleClick}
           className="relative w-40 h-12 rounded-lg text-white bg-blue-500"
@@ -51,6 +54,7 @@ const Button = ({ onClick }) => {
 
           {!isLoading && 'Lưu thông tin'}
         </button>
+
       </div>
     </div>
   );

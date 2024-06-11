@@ -12,29 +12,27 @@ import {
   useGetBookingQuery,
   useMutationUpdateBookingMutation,
 } from '../../generated/graphql';
-import { getRouteParams, openPhone } from 'zmp-sdk/apis';
-import { useNavigate } from 'react-router';
+import { openPhone } from 'zmp-sdk/apis';
 import TopNavBar from '../../components/layout/TopNavBar';
-import { formatDateTime } from './components/FormatDateTime';
 import { useFooterStore } from '../../store';
 import ConvertVietnamTimeToUTC from '../../components/ConvertVietnamTimeToUTC';
 import { isGreaterThanOrEquals15Minutes } from '../../functions/isGreaterThanOrEquals15Minutes';
 import { toast } from 'react-toastify';
 
-const BookingDetail = () => {
+const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
   const { offFooter } = useFooterStore();
 
   const [isCancellationNoticeVisible, setIsCancellationNoticeVisible] =
     useState(false);
 
-  const navigate = useNavigate();
-
-  const { bookingId } = getRouteParams();
-
-  const { data } = useGetBookingQuery({
+  const { data, refetch } = useGetBookingQuery({
     variables: { id: parseInt(bookingId) },
     fetchPolicy: 'no-cache',
   });
+
+  const reFetchData = () => {
+    refetch();
+  };
 
   const dataBooking = data?.bookings_by_pk?.itinerary;
 
@@ -47,9 +45,34 @@ const BookingDetail = () => {
 
   const handleCallAdmin = () => {
     openPhone({
-      phoneNumber: '0366636600',
+      phoneNumber: phoneNumber,
     });
   };
+
+  useEffect(() => {
+    const handleBackButton = (event) => {
+      event.preventDefault();
+      // nút back giờ làm vai trò cancel cho modal
+      onCancel();
+
+      // Đẩy trạng thái mới để ngăn điều hướng
+      window.history.pushState(null, null, window.location.pathname);
+    };
+
+    // Lắng nghe sự kiện "popstate" của window để bắt sự kiện "Back"
+    const handlePopState = (event) => {
+      handleBackButton(event);
+    };
+
+    // Đẩy trạng thái mới vào lịch sử để ngăn chặn điều hướng
+    window.history.pushState(null, null, window.location.pathname);
+    window.addEventListener("popstate", handlePopState);
+
+    // Cleanup listener khi component unmount
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
 
   const handleUpdateBooking = async () => {
     try {
@@ -66,7 +89,7 @@ const BookingDetail = () => {
           },
         });
 
-        navigate('/history');
+        onCancel();
 
         toast.success('Cập nhật thành công!', {
           position: 'top-center',
@@ -107,8 +130,8 @@ const BookingDetail = () => {
   }, []);
 
   return (
-    <Page className="page p-2">
-      <TopNavBar title={'Đặt chuyến đi sắp đến'} />
+    <Page className="page p-2 fixed bg-white z-10">
+      <TopNavBar title={'Đặt chuyến đi sắp đến'} cancel={onCancel} />
 
       <Banner
         startLocation={dataBooking?.route.city.routes[0].startlocation?.name}
@@ -178,14 +201,14 @@ const BookingDetail = () => {
             </button>
 
           </div>
-          <Button onClick={handleUpdateBooking} />
+          <Button onClick={handleUpdateBooking} onCancel={onCancel} />
         </>
       )}
 
       <CancellationNotice
         id={parseInt(bookingId)}
         show={isCancellationNoticeVisible}
-        onClose={() => setIsCancellationNoticeVisible(false)}
+        onClose={() => { setIsCancellationNoticeVisible(false), reFetchData() }}
       />
     </Page>
   );

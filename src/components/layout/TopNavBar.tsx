@@ -1,18 +1,13 @@
 import React from 'react';
-import { Header, useNavigate } from 'zmp-ui';
+import { Header } from 'zmp-ui';
 
 interface IProps {
   title: string;
+  cancel?: () => void;
 }
 
-const TopNavBar: React.FC<IProps> = ({ title }) => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate(-1);
-  };
-
-  return <Header title={title} onBackClick={handleClick} />;
+const TopNavBar: React.FC<IProps> = ({ title, cancel }) => {
+  return <Header title={title} onBackClick={cancel} />;
 };
 
 export default TopNavBar;

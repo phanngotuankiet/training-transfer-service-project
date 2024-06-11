@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Icon } from 'zmp-ui';
 import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import CancellationNotice from '../../BookingDetail/components/CancellationNotice';
-import screenUrl from '../../../constants/screenUrl';
 import { openPhone } from 'zmp-sdk';
 import { format } from 'date-fns';
 
@@ -17,6 +16,9 @@ interface BookingCardProps {
   dateTime: string;
   note: string;
   fetchData: () => void;
+  setOpenBookingDetail: () => void;
+  setIdToOpen: ({ id, phoneNumber }) => void;
+  phoneNumber: number;
 }
 
 const BookingCard: React.FC<BookingCardProps> = ({
@@ -30,20 +32,24 @@ const BookingCard: React.FC<BookingCardProps> = ({
   dateTime,
   note,
   fetchData,
+  setOpenBookingDetail,
+  setIdToOpen,
+  phoneNumber,
 }) => {
-  const navigate = useNavigate();
   const [time, setTime] = useState('');
   const [isCancellationNoticeVisible, setIsCancellationNoticeVisible] =
     useState(false);
 
   const handleCallAdmin = () => {
     openPhone({
-      phoneNumber: '0366636600',
+      phoneNumber: phoneNumber.toString(),
     });
   };
 
   const handleClick = () => {
-    navigate(`${screenUrl.bookingDetail}?bookingId=${id}`);
+    // trigger open popup BookingDetail
+    setOpenBookingDetail();
+    setIdToOpen({ id, phoneNumber });
   };
 
   useEffect(() => {
@@ -137,6 +143,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
           <p className="mb-5 roboto font-normal leading-5">{note}</p>
         </div>
       </button>
+
       {status === 'Pending' && (
         <div className="flex justify-between items-center mt-2">
           <button
@@ -156,6 +163,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
           </button>
         </div>
       )}
+
       <CancellationNotice
         id={id}
         show={isCancellationNoticeVisible}

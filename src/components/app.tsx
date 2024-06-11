@@ -17,7 +17,6 @@ import screenUrl from '../constants/screenUrl';
 import { ToastContainer } from 'react-toastify';
 import Footer from './layout/Footer';
 import { useFooterStore } from '../store';
-import CancellationNotice from '../pages/BookingDetail/components/CancellationNotice';
 
 const configRouter = [
   {

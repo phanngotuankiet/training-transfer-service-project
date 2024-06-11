@@ -23,21 +23,26 @@ const RouteCity = () => {
 
   return (
     <div>
-      <TopNavBar title="Đà Nẵng" />
+      <TopNavBar title={data?.cities[0].name} />
       <Page className="page relative pb-32 mt-11">
         <div className="relative p-2">
+
           <img
-            src={data?.cities[0].img ?? ''}
+            src={data?.cities[0]?.img ?? ''}
             className="w-full object-cover h-56 rounded-lg"
             alt="city"
           />
+
           <div className="flex gap-4 p-4 bg-[#006AF5] rounded-r-xl absolute bottom-0 left-0 w-11/12 translate-y-4">
+
             <p className="text-white font-bold min-w-[70px] text-[16px]">
               {data?.cities[0].name}
             </p>
             <p className="text-white text-[14px]">{data?.cities[0].descr}</p>
           </div>
+
         </div>
+
         <ListRoute />
       </Page>
     </div>
