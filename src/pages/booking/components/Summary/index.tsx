@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useBookingStore, useFooterStore } from '../../../../store';
 import { formatCurrency } from '../../../../utils/formatVND';
 import { useInsertBookingMutation } from '../../../../generated/graphql';
@@ -21,9 +21,12 @@ const Summary = () => {
   const handleBooking = async () => {
     setIsSubmit(true);
     try {
-      const timeNow = new Date().toISOString();
+      const timeNow = new Date();
+      const timeNow1 = ConvertVietnamTimeToUTC(timeNow);
+
       const timeUserPicked = ConvertVietnamTimeToUTC(bookingCurrent?.timeStart);
-      const verifyMinimumMinutes = isGreaterThanOrEquals15Minutes(timeNow, timeUserPicked);
+
+      const verifyMinimumMinutes = isGreaterThanOrEquals15Minutes(timeNow1, timeUserPicked);
 
       if (verifyMinimumMinutes) {
         if (bookingCurrent) {
@@ -38,6 +41,7 @@ const Summary = () => {
           if (result.data?.actionInsertBooking) {
             toast.success('Bạn đã đặt chuyến đi thành công');
           }
+
           turnFooter();
           navigate(screenUrl.history);
         }

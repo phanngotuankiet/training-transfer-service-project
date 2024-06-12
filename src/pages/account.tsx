@@ -8,6 +8,7 @@ import { DownloadSvg } from '../assets/svgs';
 import { toast } from 'react-toastify';
 import { useGetNameUserByIdQuery } from '../generated/graphql';
 import { useFooterStore } from '../store';
+import { Icon } from 'zmp-ui';
 
 const AccountPage = () => {
   const { turnFooter } = useFooterStore();
@@ -43,7 +44,7 @@ const AccountPage = () => {
           chatOnly: false,
         },
       });
-    } catch (err) {}
+    } catch (err) { }
   };
 
   useEffect(() => {
@@ -52,46 +53,62 @@ const AccountPage = () => {
 
   return (
     <Page>
-      <div className="h-36 bg-gradient-to-r from-[#3D8FFB] to-[#0C67DE] rounded-b-xl relative text-white">
+      <div className="h-32 bg-gradient-to-r from-[#0D67DF] to-[#3D8FFD] rounded-b-2xl relative text-white">
+
         <div className="absolute top-1/2 -translate-y-1/2 ms-5">
-          <p className="text-sm">Xin chào</p>
+
+          <p className="text-sm">Xin chào,</p>
           <p className="font-bold text-lg">
             {data?.users[0]?.name ?? 'Quý Khách'}
           </p>
+
         </div>
+
         <img
           src={CarImg}
           alt="car"
           className="w-28 absolute top-3 right-16 z-20"
         />
+
         <img
           src={RoundedBottom}
           alt="rounded"
-          className="w-32 absolute top-0 right-2 z-10"
+          className="w-32 absolute top-0 right-5 z-10"
         />
+
       </div>
+
       <div className="p-5 mt-10">
-        <div className="bg-[#F5F5F5] flex items-center flex-col p-5 rounded-xl">
+        <div className="bg-[#F5F5F5] flex items-center flex-col px-5 pt-5 pb-2 rounded-xl">
+
           <p className="text-center font-bold mb-3">
-            Chia sẻ mã QR này để kết bạn nhanh chóng và bảo mật{' '}
+            Chia sẻ mã QR này để giúp mọi người đặt xe dễ dàng{' '}
           </p>
+
           <img src={QR} alt="qr" className="w-72" />
-          <div className="flex gap-3 justify-between">
+
+          <div className="flex gap-3 -translate-y-5 justify-between">
+
             <button
               className="min-w-32 flex items-center gap-2 bg-white px-5 py-2 rounded-2xl mt-4 shadow-lg"
               onClick={saveImage}
             >
+
               <div className="w-5">
                 <DownloadSvg />
               </div>
+
               Tải xuống
             </button>
+
             <button
-              className="min-w-32 bg-white px-5 py-2 rounded-2xl mt-4 shadow-lg"
+              className="min-w-32 bg-white px-5 py-2 rounded-2xl mt-4 shadow-lg flex space-x-[5px]"
               onClick={showShareSheet}
             >
-              Chia sẻ
+              <Icon icon="zi-share-external-1" className="text-black" />
+              <p className="translate-y-[3px]">Chia sẻ</p>
             </button>
+
           </div>
         </div>
       </div>

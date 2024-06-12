@@ -79,7 +79,9 @@ const BookingPage = () => {
         <DeparturePoint />
         <VehicleSelection />
         <TripType />
+
         <PickTime />
+
         <Note />
       </Page>
 

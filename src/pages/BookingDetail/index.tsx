@@ -18,6 +18,7 @@ import { useFooterStore } from '../../store';
 import ConvertVietnamTimeToUTC from '../../components/ConvertVietnamTimeToUTC';
 import { isGreaterThanOrEquals15Minutes } from '../../functions/isGreaterThanOrEquals15Minutes';
 import { toast } from 'react-toastify';
+import { BarLoader } from 'react-spinners';
 
 const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
   const { offFooter } = useFooterStore();
@@ -107,13 +108,6 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
     }
   };
 
-  const handleOnChangeTime = (value) => {
-    setDateTime(value);
-  };
-  const handleOnChangeNoteText = (value) => {
-    setNote(value);
-  };
-
   const dateTimeString = data?.bookings_by_pk?.booking_date;
   const dateObject = new Date(dateTimeString);
   const hours = dateObject.getHours();
@@ -129,87 +123,103 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
     offFooter();
   }, []);
 
+  const handleOnChangeTime = (value) => {
+    setDateTime(value);
+  };
+  const handleOnChangeNoteText = (value) => {
+    setNote(value);
+  };
+
   return (
     <Page className="page p-2 fixed bg-white z-10">
-      <TopNavBar title={'Đặt chuyến đi sắp đến'} cancel={onCancel} />
+      {!data ?
 
-      <Banner
-        startLocation={dataBooking?.route.city.routes[0].startlocation?.name}
-        endLocation={dataBooking?.route.city.routes[0].endlocation?.name}
-        car={dataBooking?.vehicle_type.type}
-        option={dataBooking?.option.round_type}
-        price={dataBooking?.price}
-        bookingDate={bookingDate}
-      />
+        <div className="h-[100vh] w-[100vw] flex justify-center items-center">
+          <BarLoader color="#006AF5" />
+        </div>
 
-      <DeparturePoint
-        startLocation={dataBooking?.route.city.routes[0].startlocation?.name}
-        endLocation={dataBooking?.route.city.routes[0].endlocation?.name}
-        status={data?.bookings_by_pk?.status}
-      />
+        :
+        <div>
+          <TopNavBar title={'Đặt chuyến đi sắp đến'} cancel={onCancel} />
 
-      <TripType
-        option={dataBooking?.option.id}
-        title={
-          data?.bookings_by_pk?.status === 'Completed' ||
-            data?.bookings_by_pk?.status === 'Cancelled' ||
-            data?.bookings_by_pk?.status === 'Confirmed'
-            ? true
-            : false
-        }
-      />
+          <Banner
+            startLocation={dataBooking?.route.city.routes[0].startlocation?.name}
+            endLocation={dataBooking?.route.city.routes[0].endlocation?.name}
+            car={dataBooking?.vehicle_type.type}
+            option={dataBooking?.option.round_type}
+            price={dataBooking?.price}
+            bookingDate={bookingDate}
+          />
 
-      <PickTime
-        dateTime={data?.bookings_by_pk?.booking_date}
-        onChange={handleOnChangeTime}
-        isDisabled={
-          data?.bookings_by_pk?.status === 'Completed' ||
-            data?.bookings_by_pk?.status === 'Cancelled' ||
-            data?.bookings_by_pk?.status === 'Confirmed'
-            ? true
-            : false
-        }
-      />
+          <DeparturePoint
+            startLocation={dataBooking?.route.city.routes[0].startlocation?.name}
+            endLocation={dataBooking?.route.city.routes[0].endlocation?.name}
+            status={data?.bookings_by_pk?.status}
+          />
 
-      <Note
-        note={data?.bookings_by_pk?.note}
-        onChange={handleOnChangeNoteText}
-        isDisabled={
-          data?.bookings_by_pk?.status === 'Cancelled' ||
-            data?.bookings_by_pk?.status === 'Completed' ||
-            data?.bookings_by_pk?.status === 'Confirmed'
-            ? true
-            : false
-        }
-      />
+          <TripType
+            option={dataBooking?.option.id}
+            title={
+              data?.bookings_by_pk?.status === 'Completed' ||
+                data?.bookings_by_pk?.status === 'Cancelled' ||
+                data?.bookings_by_pk?.status === 'Confirmed'
+                ? true
+                : false
+            }
+          />
 
-      {data?.bookings_by_pk?.status === 'Pending' && (
-        <>
-          <div className="flex justify-between items-center px-4 pt-3">
-            <button
-              className="text-blue-600 flex items-center"
-              onClick={handleCallAdmin}
-            >
-              <FaPhoneAlt className="mr-1" /> Liên hệ tổng đài
-            </button>
+          <PickTime
+            dateTime={data?.bookings_by_pk?.booking_date}
+            onChange={handleOnChangeTime}
+            isDisabled={
+              data?.bookings_by_pk?.status === 'Completed' ||
+                data?.bookings_by_pk?.status === 'Cancelled' ||
+                data?.bookings_by_pk?.status === 'Confirmed'
+                ? true
+                : false
+            }
+          />
 
-            <button
-              onClick={() => setIsCancellationNoticeVisible(true)}
-              className="text-red-600 flex items-center"
-            >
-              <FaTimes className="mr-1" /> Hủy đặt
-            </button>
+          <Note
+            note={data?.bookings_by_pk?.note}
+            onChange={handleOnChangeNoteText}
+            isDisabled={
+              data?.bookings_by_pk?.status === 'Cancelled' ||
+                data?.bookings_by_pk?.status === 'Completed' ||
+                data?.bookings_by_pk?.status === 'Confirmed'
+                ? true
+                : false
+            }
+          />
 
-          </div>
-          <Button onClick={handleUpdateBooking} onCancel={onCancel} />
-        </>
-      )}
+          {data?.bookings_by_pk?.status === 'Pending' && (
+            <>
+              <div className="flex justify-between items-center px-4 pt-3">
+                <button
+                  className="text-blue-600 flex items-center"
+                  onClick={handleCallAdmin}
+                >
+                  <FaPhoneAlt className="mr-1" /> Liên hệ tổng đài
+                </button>
 
-      <CancellationNotice
-        id={parseInt(bookingId)}
-        show={isCancellationNoticeVisible}
-        onClose={() => { setIsCancellationNoticeVisible(false), reFetchData() }}
-      />
+                <button
+                  onClick={() => setIsCancellationNoticeVisible(true)}
+                  className="text-red-600 flex items-center"
+                >
+                  <FaTimes className="mr-1" /> Hủy đặt
+                </button>
+
+              </div>
+              <Button onClick={handleUpdateBooking} onCancel={onCancel} />
+            </>
+          )}
+
+          <CancellationNotice
+            id={parseInt(bookingId)}
+            show={isCancellationNoticeVisible}
+            onClose={() => { setIsCancellationNoticeVisible(false), reFetchData() }}
+          />
+        </div>}
     </Page>
   );
 };

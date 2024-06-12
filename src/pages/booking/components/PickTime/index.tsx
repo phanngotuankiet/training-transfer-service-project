@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ClockSvg } from '../../../../assets/svgs';
 import { useBookingStore } from '../../../../store';
+import { format } from 'date-fns';
 
 const PickTime = () => {
-  const [time, setTime] = useState(new Date().toISOString().slice(0, 16));
+  const [time, setTime] = useState(format(new Date(), "yyyy-MM-dd'T'HH:mm"));
 
   const { updateTimeStart } = useBookingStore();
   const handleOnChangeTime = (value) => {

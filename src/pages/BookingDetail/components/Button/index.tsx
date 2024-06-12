@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
 import { PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
 const Button = ({ onClick, onCancel }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleClick = () => {
     setIsLoading(true);

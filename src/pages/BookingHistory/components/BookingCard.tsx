@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Icon } from 'zmp-ui';
+import { Icon } from 'zmp-ui';
 import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import CancellationNotice from '../../BookingDetail/components/CancellationNotice';
 import { openPhone } from 'zmp-sdk';

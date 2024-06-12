@@ -45,7 +45,9 @@ const BookingHistoryPage = () => {
       {openBookingDetail && <BookingDetail bookingId={idToOpen.id} phoneNumber={idToOpen.phoneNumber} onCancel={() => { setOpenBookingDetail(false), fetchData() }} />}
 
       <div>
+
         <Header />
+
         <div className="p-4">
           {data?.bookings.map((booking, index) => (
             <BookingCard
