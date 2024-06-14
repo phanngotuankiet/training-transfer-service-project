@@ -22,6 +22,11 @@
 .poppins {
   font-family: 'Poppins', sans-serif;
 }
+.poppins-bold {
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
 .roboto {
   font-family: 'Roboto', sans-serif;
 }
@@ -77,16 +82,9 @@ body {
   left: 20%;
   top: 40px;
   max-width: 220px;
-  color: white !important;
-  font-weight: 600;
-  background: linear-gradient(
-    90deg,
-    rgba(230, 230, 230, 1) 0%,
-    rgba(9, 178, 235, 0.39957990031950286) 12%,
-    rgba(92, 223, 62, 0.3799720571822479) 60%,
-    rgba(118, 237, 8, 0.47521015242034315) 75%,
-    rgba(0, 212, 255, 0.34075637090773814) 100%
-  ) !important;
+  color: rgb(44, 44, 44) !important;
+  font-weight: 400;
+  background: #ffffff;
 }
 
 .toast-message {
@@ -94,5 +92,6 @@ body {
   color: #fff;
   font-size: 17px;
   width: 90%;
-  padding: 30px 10px;
+  padding: 30px 15px;
+  font-weight: 500;
 }

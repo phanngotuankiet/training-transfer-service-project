@@ -26,7 +26,10 @@ const Summary = () => {
 
       const timeUserPicked = ConvertVietnamTimeToUTC(bookingCurrent?.timeStart);
 
-      const verifyMinimumMinutes = isGreaterThanOrEquals15Minutes(timeNow1, timeUserPicked);
+      const verifyMinimumMinutes = isGreaterThanOrEquals15Minutes(
+        timeNow1,
+        timeUserPicked,
+      );
 
       if (verifyMinimumMinutes) {
         if (bookingCurrent) {
@@ -47,7 +50,8 @@ const Summary = () => {
         }
       } else {
         toast('Bạn chọn thời gian đón cách hiện tại ít nhất 15 phút.', {
-          position: "top-center", className: 'toast-message'
+          position: 'top-center',
+          className: 'toast-message poppins-bold',
         });
       }
     } catch (error) {

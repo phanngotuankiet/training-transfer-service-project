@@ -67,11 +67,11 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
 
     // Đẩy trạng thái mới vào lịch sử để ngăn chặn điều hướng
     window.history.pushState(null, null, window.location.pathname);
-    window.addEventListener("popstate", handlePopState);
+    window.addEventListener('popstate', handlePopState);
 
     // Cleanup listener khi component unmount
     return () => {
-      window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener('popstate', handlePopState);
     };
   }, []);
 
@@ -98,7 +98,8 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
       } else {
         // hiện toast tại đây
         toast('Bạn chọn thời gian đón cách hiện tại ít nhất 15 phút.', {
-          position: "top-center", className: 'toast-message'
+          position: 'top-center',
+          className: 'toast-message',
         });
       }
     } catch (error) {
@@ -132,18 +133,18 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
 
   return (
     <Page className="page p-2 fixed bg-white z-10">
-      {!data ?
-
+      {!data ? (
         <div className="h-[100vh] w-[100vw] flex justify-center items-center">
           <BarLoader color="#006AF5" />
         </div>
-
-        :
+      ) : (
         <div>
           <TopNavBar title={'Đặt chuyến đi sắp đến'} cancel={onCancel} />
 
           <Banner
-            startLocation={dataBooking?.route.city.routes[0].startlocation?.name}
+            startLocation={
+              dataBooking?.route.city.routes[0].startlocation?.name
+            }
             endLocation={dataBooking?.route.city.routes[0].endlocation?.name}
             car={dataBooking?.vehicle_type.type}
             option={dataBooking?.option.round_type}
@@ -152,7 +153,9 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
           />
 
           <DeparturePoint
-            startLocation={dataBooking?.route.city.routes[0].startlocation?.name}
+            startLocation={
+              dataBooking?.route.city.routes[0].startlocation?.name
+            }
             endLocation={dataBooking?.route.city.routes[0].endlocation?.name}
             status={data?.bookings_by_pk?.status}
           />
@@ -161,8 +164,8 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
             option={dataBooking?.option.id}
             title={
               data?.bookings_by_pk?.status === 'Completed' ||
-                data?.bookings_by_pk?.status === 'Cancelled' ||
-                data?.bookings_by_pk?.status === 'Confirmed'
+              data?.bookings_by_pk?.status === 'Cancelled' ||
+              data?.bookings_by_pk?.status === 'Confirmed'
                 ? true
                 : false
             }
@@ -173,8 +176,8 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
             onChange={handleOnChangeTime}
             isDisabled={
               data?.bookings_by_pk?.status === 'Completed' ||
-                data?.bookings_by_pk?.status === 'Cancelled' ||
-                data?.bookings_by_pk?.status === 'Confirmed'
+              data?.bookings_by_pk?.status === 'Cancelled' ||
+              data?.bookings_by_pk?.status === 'Confirmed'
                 ? true
                 : false
             }
@@ -185,14 +188,14 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
             onChange={handleOnChangeNoteText}
             isDisabled={
               data?.bookings_by_pk?.status === 'Cancelled' ||
-                data?.bookings_by_pk?.status === 'Completed' ||
-                data?.bookings_by_pk?.status === 'Confirmed'
+              data?.bookings_by_pk?.status === 'Completed' ||
+              data?.bookings_by_pk?.status === 'Confirmed'
                 ? true
                 : false
             }
           />
 
-          {data?.bookings_by_pk?.status === 'Pending' && (
+          {data?.bookings_by_pk?.status != 'Cancelled' && (
             <>
               <div className="flex justify-between items-center px-4 pt-3">
                 <button
@@ -208,7 +211,6 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
                 >
                   <FaTimes className="mr-1" /> Hủy đặt
                 </button>
-
               </div>
               <Button onClick={handleUpdateBooking} onCancel={onCancel} />
             </>
@@ -217,9 +219,12 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
           <CancellationNotice
             id={parseInt(bookingId)}
             show={isCancellationNoticeVisible}
-            onClose={() => { setIsCancellationNoticeVisible(false), reFetchData() }}
+            onClose={() => {
+              setIsCancellationNoticeVisible(false), reFetchData();
+            }}
           />
-        </div>}
+        </div>
+      )}
     </Page>
   );
 };

@@ -88,9 +88,9 @@ const BookingCard: React.FC<BookingCardProps> = ({
             <p className="text-[#016BF5] font-bold text-xl leading-6 poppins">
               {price
                 ? price.toLocaleString('vi-VN', {
-                  style: 'currency',
-                  currency: 'VND',
-                })
+                    style: 'currency',
+                    currency: 'VND',
+                  })
                 : ''}
             </p>
 
@@ -103,7 +103,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
                   ? 'Đang chờ xác nhận'
                   : status === 'Cancelled'
                     ? 'Đã huỷ'
-                    : status === 'Confirmed' && 'Đang tới'}
+                    : status === 'Confirmed' && 'Đã xác nhận'}
             </span>
           </div>
         </div>
@@ -135,16 +135,18 @@ const BookingCard: React.FC<BookingCardProps> = ({
           <div className="text-[#7991A4] roboto font-normal leading-5 text-[14px] flex justify-between">
             <p>Ghi chú</p>
 
-            {status !== 'Cancelled' && status !== 'Completed' && status !== 'Confirmed' && (
-              <Icon icon="zi-edit-text" className="text-black" />
-            )}
+            {status !== 'Cancelled' &&
+              status !== 'Completed' &&
+              status !== 'Confirmed' && (
+                <Icon icon="zi-edit-text" className="text-black" />
+              )}
           </div>
 
           <p className="mb-5 roboto font-normal leading-5">{note}</p>
         </div>
       </button>
 
-      {status === 'Pending' && (
+      {status != 'Cancelled' && (
         <div className="flex justify-between items-center mt-2">
           <button
             className="text-[#006AF5] flex items-center space-x-2"
