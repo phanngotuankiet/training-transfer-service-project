@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Car4Slot, Car7Slot, Car16Slot } from '../../../../assets/svgs';
 import { useBookingStore } from '../../../../store';
 
@@ -20,7 +20,12 @@ const VehicleSelection = () => {
     )[0];
 
     if (newBooking) {
-      updateBookingCurrent(newBooking);
+      updateBookingCurrent({
+        ...newBooking,
+        timeStart: bookingCurrent?.timeStart!,
+        idTripType: bookingCurrent?.idTripType!,
+        note: bookingCurrent?.note!,
+      });
     }
   };
 

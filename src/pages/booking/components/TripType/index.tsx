@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useBookingStore } from '../../../../store';
 
 const listTripType = [
@@ -18,7 +18,12 @@ const TripType = () => {
     )[0];
 
     if (newBooking) {
-      updateBookingCurrent(newBooking);
+      updateBookingCurrent({
+        ...newBooking,
+        idvehicleType: bookingCurrent?.idvehicleType!,
+        timeStart: bookingCurrent?.timeStart!,
+        note: bookingCurrent?.note!,
+      });
     }
   };
 
