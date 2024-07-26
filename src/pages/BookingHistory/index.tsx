@@ -41,23 +41,25 @@ const BookingHistoryPage = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen pb-10">
-
-      {openBookingDetail && <BookingDetail bookingId={idToOpen.id} phoneNumber={idToOpen.phoneNumber} onCancel={() => { setOpenBookingDetail(false), fetchData() }} />}
+      {openBookingDetail && (
+        <BookingDetail
+          bookingId={idToOpen.id}
+          phoneNumber={idToOpen.phoneNumber}
+          onCancel={() => {
+            setOpenBookingDetail(false), fetchData();
+          }}
+        />
+      )}
 
       <div>
-
         <Header />
 
         <div className="p-4">
           {data?.bookings.map((booking, index) => (
             <BookingCard
               key={index}
-              startLocation={
-                booking.itinerary.route.city.routes[0].startlocation?.name
-              }
-              endLocation={
-                booking.itinerary.route.city.routes[0].endlocation?.name
-              }
+              startLocation={booking.itinerary.route.startlocation.name}
+              endLocation={booking.itinerary.route.endlocation.name}
               option={booking.itinerary.option.round_type}
               price={booking.itinerary.price}
               status={booking.status}
@@ -68,7 +70,7 @@ const BookingHistoryPage = () => {
               fetchData={fetchData}
               setOpenBookingDetail={() => setOpenBookingDetail(true)}
               setIdToOpen={setIdToOpen}
-              phoneNumber={booking?.itinerary?.provider?.phone_number}
+              phoneNumber={booking?.itinerary.provider.phone_number!}
             />
           ))}
         </div>

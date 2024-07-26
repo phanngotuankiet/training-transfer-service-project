@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ClockSvg } from '../../../../assets/svgs';
 import { useBookingStore } from '../../../../store';
 import { format } from 'date-fns';
-
+// this component is unused
 const PickTime = () => {
   const [time, setTime] = useState(format(new Date(), "yyyy-MM-dd'T'HH:mm"));
 

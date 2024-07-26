@@ -89,7 +89,7 @@ mutation MutationUpdateBooking(
 }
 
 query QueryBookings($where: bookings_bool_exp! = {}, $offset: Int = 0) {
-  bookings(where: $where, offset: $offset, order_by: { created_at: desc }) {
+  bookings(where: $where, offset: $offset, order_by: {created_at: desc}) {
     booking_date
     created_at
     deleted_at
@@ -106,7 +106,6 @@ query QueryBookings($where: bookings_bool_exp! = {}, $offset: Int = 0) {
       note
       price
       provider_id
-      route_id
       updated_at
       vehicle_types_id
       option {
@@ -118,25 +117,21 @@ query QueryBookings($where: bookings_bool_exp! = {}, $offset: Int = 0) {
         note
         phone_number
       }
+      vehicle_type {
+        type
+      }
+      route_id
       route {
         city {
           name
-          routes {
-            id
-            end_location
-            start_location
-            from_city
-            startlocation {
-              name
-            }
-            endlocation {
-              name
-            }
-          }
         }
-      }
-      vehicle_type {
-        type
+        endlocation {
+          name
+        }
+        end_location
+        startlocation {
+          name
+        }
       }
     }
     user {
@@ -145,6 +140,7 @@ query QueryBookings($where: bookings_bool_exp! = {}, $offset: Int = 0) {
     }
   }
 }
+
 
 mutation insertBooking(
   $bookingDate: timestamptz!

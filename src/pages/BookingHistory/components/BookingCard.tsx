@@ -18,7 +18,7 @@ interface BookingCardProps {
   fetchData: () => void;
   setOpenBookingDetail: () => void;
   setIdToOpen: ({ id, phoneNumber }) => void;
-  phoneNumber: number;
+  phoneNumber: string;
 }
 
 const BookingCard: React.FC<BookingCardProps> = ({
