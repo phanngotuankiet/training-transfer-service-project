@@ -195,26 +195,27 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
             }
           />
 
-          {data?.bookings_by_pk?.status != 'Cancelled' && (
-            <>
-              <div className="flex justify-between items-center px-4 pt-3">
-                <button
-                  className="text-blue-600 flex items-center"
-                  onClick={handleCallAdmin}
-                >
-                  <FaPhoneAlt className="mr-1" /> Liên hệ tổng đài
-                </button>
+          {data?.bookings_by_pk?.status != 'Cancelled' &&
+            data?.bookings_by_pk?.status != 'Completed' && (
+              <>
+                <div className="flex justify-between items-center px-4 pt-3">
+                  <button
+                    className="text-blue-600 flex items-center"
+                    onClick={handleCallAdmin}
+                  >
+                    <FaPhoneAlt className="mr-1" /> Liên hệ tổng đài
+                  </button>
 
-                <button
-                  onClick={() => setIsCancellationNoticeVisible(true)}
-                  className="text-red-600 flex items-center"
-                >
-                  <FaTimes className="mr-1" /> Hủy đặt
-                </button>
-              </div>
-              <Button onClick={handleUpdateBooking} onCancel={onCancel} />
-            </>
-          )}
+                  <button
+                    onClick={() => setIsCancellationNoticeVisible(true)}
+                    className="text-red-600 flex items-center"
+                  >
+                    <FaTimes className="mr-1" /> Hủy đặt
+                  </button>
+                </div>
+                <Button onClick={handleUpdateBooking} onCancel={onCancel} />
+              </>
+            )}
 
           <CancellationNotice
             id={parseInt(bookingId)}

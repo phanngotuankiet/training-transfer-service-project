@@ -3,17 +3,24 @@ import DaNangImg from '../../../assets/images/danang.png';
 import { LocationIcon, CarSvg } from '../../../assets/svgs';
 import { useBookingStore } from '../../../store';
 import { formatCurrency } from '../../../utils/formatVND';
+import { getRouteParams } from 'zmp-sdk/apis';
+import { useGetCityByIdQuery } from '../../../generated/graphql';
 
 const Banner = () => {
   const { bookingCurrent } = useBookingStore();
+  const cityId = localStorage.getItem('cityID')!;
+  const { data } = useGetCityByIdQuery({
+    variables: { cityId: parseInt(cityId) },
+    fetchPolicy: 'no-cache',
+  });
 
   return (
     <div className="mb-16">
       <div className="relative">
         <img
-          src={DaNangImg}
-          alt="Da Nang"
-          className="h-36 w-full object-cover rounded-xl"
+          src={data?.cities[0]?.img ?? ''}
+          alt={data?.cities[0].name}
+          className="h-36 w-full object-fit rounded-xl"
         />
         <div className="w-full p-3 absolute translate-y-14 bottom-0">
           <div className="bg-blue-500 p-3 rounded-lg w-full shadow-2xl space-y-4">

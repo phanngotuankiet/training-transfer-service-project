@@ -10,6 +10,8 @@ const ListRoute = () => {
     fetchPolicy: 'no-cache',
   });
 
+  localStorage.setItem('cityID', cityId);
+
   return (
     <div className="translate-y-6 p-4">
       <div className="flex justify-between items-center">

@@ -146,7 +146,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
         </div>
       </button>
 
-      {status != 'Cancelled' && (
+      {status != 'Cancelled' && status != 'Completed' && (
         <div className="flex justify-between items-center mt-2">
           <button
             className="text-[#006AF5] flex items-center space-x-2"
