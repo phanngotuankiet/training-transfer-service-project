@@ -2,17 +2,13 @@ query getBooking($id: Int!) {
   bookings_by_pk(id: $id) {
     booking_date
     created_at
-    deleted_at
     id
     itinerary_id
     note
     status
     updated_at
     itinerary {
-      created_at
-      deleted_at
       id
-      isactive
       note
       price
       provider_id
@@ -31,18 +27,12 @@ query getBooking($id: Int!) {
       route {
         city {
           name
-          routes {
-            id
-            end_location
-            start_location
-            from_city
-            startlocation {
-              name
-            }
-            endlocation {
-              name
-            }
-          }
+        }
+        startlocation {
+          name
+        }
+        endlocation {
+          name
         }
       }
       vehicle_type {
@@ -55,6 +45,7 @@ query getBooking($id: Int!) {
     }
   }
 }
+
 
 mutation MutationCancelBooking($bookingId: Int!, $reason: String!) {
   cancelBooking(bookingId: $bookingId, reason: $reason) {

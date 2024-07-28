@@ -44,7 +44,7 @@ const PickTime: React.FC<IProps> = ({ dateTime, onChange, isDisabled }) => {
         />
       </div>
       <p className="mt-2 text-[#686868] text-xs">
-        *Thời gian đón 30 phút trước khi đi
+        *Thời gian đón 15 phút trước khi đi
       </p>
     </div>
   );

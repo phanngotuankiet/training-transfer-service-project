@@ -143,9 +143,9 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
 
           <Banner
             startLocation={
-              dataBooking?.route.city.routes[0].startlocation?.name
+              dataBooking?.route.startlocation.name
             }
-            endLocation={dataBooking?.route.city.routes[0].endlocation?.name}
+            endLocation={dataBooking?.route.endlocation.name}
             car={dataBooking?.vehicle_type.type}
             option={dataBooking?.option.round_type}
             price={dataBooking?.price}
@@ -154,9 +154,9 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
 
           <DeparturePoint
             startLocation={
-              dataBooking?.route.city.routes[0].startlocation?.name
+              dataBooking?.route.startlocation.name
             }
-            endLocation={dataBooking?.route.city.routes[0].endlocation?.name}
+            endLocation={dataBooking?.route.endlocation.name}
             status={data?.bookings_by_pk?.status}
           />
 
@@ -213,7 +213,7 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
                     <FaTimes className="mr-1" /> Hủy đặt
                   </button>
                 </div>
-                <Button onClick={handleUpdateBooking} onCancel={onCancel} />
+                <Button onClick={handleUpdateBooking} onCancel={onCancel} status={data?.bookings_by_pk?.status}/>
               </>
             )}
 

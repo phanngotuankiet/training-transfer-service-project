@@ -31,7 +31,7 @@ const PickTime = () => {
 
       </div>
       <p className="mt-2 text-[#686868] text-[12px]">
-        *Thời gian đón 30 phút trước khi đi
+        *Thời gian đón 15 phút trước khi đi
       </p>
     </div>
   );

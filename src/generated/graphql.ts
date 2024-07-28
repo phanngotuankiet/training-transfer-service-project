@@ -4918,7 +4918,7 @@ export type GetBookingQueryVariables = Exact<{
 }>;
 
 
-export type GetBookingQuery = { __typename?: 'query_root', bookings_by_pk?: { __typename?: 'bookings', booking_date: any, created_at?: any | null, deleted_at?: any | null, id: number, itinerary_id: number, note?: string | null, status: any, updated_at?: any | null, itinerary: { __typename?: 'itinerary', created_at?: any | null, deleted_at?: any | null, id: number, isactive?: boolean | null, note?: string | null, price: any, provider_id: number, route_id: number, updated_at?: any | null, vehicle_types_id: number, option: { __typename?: 'options', round_type: string, id: number }, provider: { __typename?: 'providers', name: string, note?: string | null, phone_number?: string | null }, route: { __typename?: 'routes', city: { __typename?: 'cities', name: string, routes: Array<{ __typename?: 'routes', id: number, end_location: number, start_location: number, from_city: number, startlocation: { __typename?: 'locations', name: string }, endlocation: { __typename?: 'locations', name: string } }> } }, vehicle_type: { __typename?: 'vehicle_types', type: string } }, user: { __typename?: 'users', name?: string | null, phone_number?: string | null } } | null };
+export type GetBookingQuery = { __typename?: 'query_root', bookings_by_pk?: { __typename?: 'bookings', booking_date: any, created_at?: any | null, id: number, itinerary_id: number, note?: string | null, status: any, updated_at?: any | null, itinerary: { __typename?: 'itinerary', id: number, note?: string | null, price: any, provider_id: number, route_id: number, updated_at?: any | null, vehicle_types_id: number, option: { __typename?: 'options', round_type: string, id: number }, provider: { __typename?: 'providers', name: string, note?: string | null, phone_number?: string | null }, route: { __typename?: 'routes', city: { __typename?: 'cities', name: string }, startlocation: { __typename?: 'locations', name: string }, endlocation: { __typename?: 'locations', name: string } }, vehicle_type: { __typename?: 'vehicle_types', type: string } }, user: { __typename?: 'users', name?: string | null, phone_number?: string | null } } | null };
 
 export type MutationCancelBookingMutationVariables = Exact<{
   bookingId: Scalars['Int']['input'];
@@ -5003,17 +5003,13 @@ export const GetBookingDocument = gql`
   bookings_by_pk(id: $id) {
     booking_date
     created_at
-    deleted_at
     id
     itinerary_id
     note
     status
     updated_at
     itinerary {
-      created_at
-      deleted_at
       id
-      isactive
       note
       price
       provider_id
@@ -5032,18 +5028,12 @@ export const GetBookingDocument = gql`
       route {
         city {
           name
-          routes {
-            id
-            end_location
-            start_location
-            from_city
-            startlocation {
-              name
-            }
-            endlocation {
-              name
-            }
-          }
+        }
+        startlocation {
+          name
+        }
+        endlocation {
+          name
         }
       }
       vehicle_type {
