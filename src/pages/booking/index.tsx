@@ -27,7 +27,11 @@ const BookingPage = () => {
     offFooter();
     if (data) {
       const itinerary4Seater = data.itinerary.filter(
-        (itinerary) => itinerary.vehicle_types_id === 1,
+        (itinerary) =>
+          itinerary.vehicle_types_id === 1
+            || itinerary.vehicle_types_id === 2
+            || itinerary.vehicle_types_id === 3
+        //hiện tại chỉ có 3 loại xe, trong tương lai ưng thì thêm vào
       )[0];
 
       const itineraries = data.itinerary.map((itinerary) => ({
