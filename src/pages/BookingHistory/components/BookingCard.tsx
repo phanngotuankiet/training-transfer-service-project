@@ -82,7 +82,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
 
           <div className="flex flex-col space-y-1 items-end">
             <p className="roboto leading-[22px] text-sm font-normal text-[#565656]">
-              {option ? 'Khứ hồi' : 'Một chiều'}
+              {option}
             </p>
 
             <p className="text-[#016BF5] font-bold text-xl leading-6 poppins">

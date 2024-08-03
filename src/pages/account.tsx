@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Page } from 'zmp-ui';
 import CarImg from '../assets/images/carAccount.png';
 import RoundedBottom from '../assets/images/roundedBottom.png';
-import QR from '../assets/images/qr.png';
+import QR from '../assets/images/qrchinh.jpg';
 import { saveImageToGallery, openShareSheet } from 'zmp-sdk/apis';
 import { DownloadSvg } from '../assets/svgs';
 import { toast } from 'react-toastify';
@@ -22,7 +22,7 @@ const AccountPage = () => {
     try {
       await saveImageToGallery({
         imageUrl:
-          'https://res.cloudinary.com/doguzyfn7/image/upload/v1717558517/dat-xe-du-lich_05-06-2024_1_ubeowa.jpg',
+          'https://naikyo.sgp1.digitaloceanspaces.com/zalo-mini-apps/z5711210664074_31acee0d36e28817ddedee35bea0d3b8.jpg',
       });
 
       toast.success('Đã lưu thành công', {
@@ -85,7 +85,7 @@ const AccountPage = () => {
             Chia sẻ mã QR này để giúp mọi người đặt xe dễ dàng{' '}
           </p>
 
-          <img src={QR} alt="qr" className="w-72" />
+          <img src={QR} alt="qr" className="w-64 mb-6" />
 
           <div className="flex gap-3 -translate-y-5 justify-between">
 
