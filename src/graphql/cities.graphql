@@ -1,6 +1,5 @@
 query GetAllCities {
-  cities {
-    img
+  cities(where: {isactive: {_eq: true}}) {
     id
     name
     isactive

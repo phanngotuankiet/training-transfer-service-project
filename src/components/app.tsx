@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import { App, ZMPRouter, AnimationRoutes, SnackbarProvider } from 'zmp-ui';
 import { RecoilRoot } from 'recoil';
@@ -17,6 +17,7 @@ import screenUrl from '../constants/screenUrl';
 import { ToastContainer } from 'react-toastify';
 import Footer from './layout/Footer';
 import { useFooterStore } from '../store';
+import { PhoneNumberProvider } from '../hooks/providers/PhoneNumberProvider';
 
 const configRouter = [
   {
@@ -55,25 +56,29 @@ const MyApp = () => {
   return (
     <RecoilRoot>
       <ApolloProvider client={client}>
-        <App>
-          <SnackbarProvider>
-            <ZMPRouter>
-              <AnimationRoutes>
-                {configRouter.map((route, index) => {
-                  return (
-                    <Route
-                      key={index}
-                      path={route.path}
-                      element={route.component}
-                    />
-                  );
-                })}
-              </AnimationRoutes>
-              <ToastContainer />
-              {footerActive && <Footer />}
-            </ZMPRouter>
-          </SnackbarProvider>
-        </App>
+        <PhoneNumberProvider>
+          <App>
+            <SnackbarProvider>
+              <ZMPRouter>
+                <AnimationRoutes>
+                  {configRouter.map((route, index) => {
+                    return (
+                      <Route
+                        key={index}
+                        path={route.path}
+                        element={route.component}
+                      />
+                    );
+                  })}
+                </AnimationRoutes>
+                <ToastContainer />
+
+                {footerActive && <Footer />}
+
+              </ZMPRouter>
+            </SnackbarProvider>
+          </App>
+        </PhoneNumberProvider>
       </ApolloProvider>
     </RecoilRoot>
   );

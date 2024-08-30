@@ -6,17 +6,30 @@ import QR from '../assets/images/qrchinh.jpg';
 import { saveImageToGallery, openShareSheet } from 'zmp-sdk/apis';
 import { DownloadSvg } from '../assets/svgs';
 import { toast } from 'react-toastify';
-import { useGetNameUserByIdQuery } from '../generated/graphql';
 import { useFooterStore } from '../store';
-import { Icon } from 'zmp-ui';
+import { Icon, useNavigate } from 'zmp-ui';
+import { FaHistory } from 'react-icons/fa';
+import screenUrl from '../constants/screenUrl';
+import useAuthStore from '../store/authStore';
+import useFollowOA from '../utils/useFollowOA';
+import useCheckFollowStatus from '../utils/useCheckFollowStatus';
+import useUnfollowOA from '../utils/useUnfollowOA';
+import naikyoLogo from '../assets/images/naikyoLogo.jpg';
+import useLogout from '../hooks/useLogout';
 
 const AccountPage = () => {
   const { turnFooter } = useFooterStore();
-  const userId: string = localStorage.getItem('userId') ?? '0';
-  const { data } = useGetNameUserByIdQuery({
-    variables: { userId: parseInt(userId) },
-    fetchPolicy: 'no-cache',
-  });
+  const { token } = useAuthStore();
+  const logout = useLogout();
+
+  const navigate = useNavigate();
+
+  const didFollowOA = useCheckFollowStatus(token);
+  const followOA = useFollowOA();
+  const unfollowOA = useUnfollowOA();
+
+  const { name } = useAuthStore();
+  const nameGot = name;
 
   const saveImage = async () => {
     try {
@@ -47,19 +60,28 @@ const AccountPage = () => {
     } catch (err) { }
   };
 
+  const moveToHistoryTrips = () => {
+    navigate(screenUrl.history);
+  }
+
   useEffect(() => {
     turnFooter();
+
+    return () => {
+      logout();
+    };
   }, [turnFooter]);
 
   return (
     <Page>
-      <div className="h-32 bg-gradient-to-r from-[#0D67DF] to-[#3D8FFD] rounded-b-2xl relative text-white">
+      <div className="h-32 poppins bg-gradient-to-r from-[#0D67DF] to-[#3D8FFD] rounded-b-2xl relative text-white">
 
         <div className="absolute top-1/2 -translate-y-1/2 ms-5">
 
           <p className="text-sm">Xin chào,</p>
           <p className="font-bold text-lg">
-            {data?.users[0]?.name ?? 'Quý Khách'}
+            {/* {data?.users[0]?.name ?? 'Quý Khách'} */}
+            {nameGot ?? 'Quý Khách'}
           </p>
 
         </div>
@@ -78,7 +100,13 @@ const AccountPage = () => {
 
       </div>
 
-      <div className="p-5 mt-10">
+      {
+        token && <div className="rounded-xl p-5 mx-5 mt-5 bg-[#F5F5F5] border border-gray-200 poppins -mb-9">
+          <div onClick={moveToHistoryTrips} className="flex space-x-2"><FaHistory className="font-light" /> <p>Lịch sử đặt chuyến</p></div>
+        </div>
+      }
+
+      <div className="p-5 mt-8">
         <div className="bg-[#F5F5F5] flex items-center flex-col px-5 pt-5 pb-2 rounded-xl">
 
           <p className="text-center font-bold mb-3">
@@ -112,7 +140,29 @@ const AccountPage = () => {
           </div>
         </div>
       </div>
-    </Page>
+      {
+        token &&
+        <div className="rounded-xl p-5 mx-5 bg-white border border-gray-200 poppins -mb-9">
+          <div className="flex justify-between">
+
+            <div className="mt-1 flex space-x-2">
+              <img src={naikyoLogo} className="w-[33px] h-[33px]" />
+
+              <p className="font-bold my-auto">Đặt xe du lịch Naikyo</p>
+            </div>
+
+            {!didFollowOA
+              ?
+              <button onClick={followOA} className="text-sm font-bold px-3 py-1 rounded-2xl text-white bg-[#176ddd] tracking-wide">Quan tâm</button>
+              :
+              <button onClick={unfollowOA} className="text-sm font-bold px-3 py-1 rounded-2xl text-white bg-gray-400 tracking-wide">Đã quan tâm</button>
+            }
+
+          </div>
+        </div>
+      }
+
+    </Page >
   );
 };
 

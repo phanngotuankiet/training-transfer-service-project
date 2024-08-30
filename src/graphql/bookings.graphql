@@ -80,7 +80,7 @@ mutation MutationUpdateBooking(
 }
 
 query QueryBookings($where: bookings_bool_exp! = {}, $offset: Int = 0) {
-  bookings(where: $where, offset: $offset, order_by: {created_at: desc}) {
+  bookings(where: $where, offset: $offset, order_by: {id: desc}) {
     booking_date
     created_at
     deleted_at
@@ -152,5 +152,17 @@ mutation insertBooking(
     createdAt
     id
     status
+  }
+}
+
+mutation InsertBookingAfterCheckoutPopup($objects: [bookings_insert_input!] = {}) {
+  insert_bookings(objects: $objects) {
+    affected_rows
+  }
+}
+
+subscription ConfirmPaymentStatusTrue($_eq: String) {
+  bookings(where: {zalo_order_id: {_eq: $_eq}}) {
+    payment_status
   }
 }

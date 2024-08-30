@@ -1,17 +1,17 @@
 import React from 'react';
-import DaNangImg from '../../../assets/images/danang.png';
 import { LocationIcon, CarSvg } from '../../../assets/svgs';
 import { useBookingStore } from '../../../store';
 import { formatCurrency } from '../../../utils/formatVND';
-import { getRouteParams } from 'zmp-sdk/apis';
 import { useGetCityByIdQuery } from '../../../generated/graphql';
+import useCityStore from '../../../store/cityStore';
 
 const Banner = () => {
   const { bookingCurrent } = useBookingStore();
-  const cityId = localStorage.getItem('cityID')!;
+  const { cityIdStore } = useCityStore();
+
   const { data } = useGetCityByIdQuery({
-    variables: { cityId: parseInt(cityId) },
-    fetchPolicy: 'no-cache',
+    variables: { cityId: parseInt(cityIdStore!) },
+    fetchPolicy: "no-cache"
   });
 
   return (

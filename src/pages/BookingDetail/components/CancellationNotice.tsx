@@ -20,14 +20,13 @@ const CancellationNotice: React.FC<CancellationNoticeProps> = ({
 
   const navigate = useNavigate();
 
-  const [cancelBooking] = useMutationCancelBookingMutation({
-    fetchPolicy: 'no-cache',
-  });
+  const [cancelBooking] = useMutationCancelBookingMutation({});
 
   const handleCancelBooking = async () => {
     try {
       await cancelBooking({
         variables: { bookingId: id, reason: cancelReason || ' ' },
+        fetchPolicy: "no-cache"
       });
 
       if (fetchDataHistory) {

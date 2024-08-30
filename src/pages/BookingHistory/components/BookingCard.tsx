@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Icon } from 'zmp-ui';
 import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import CancellationNotice from '../../BookingDetail/components/CancellationNotice';
-import { openPhone } from 'zmp-sdk';
+import { openPhone } from 'zmp-sdk/apis';
 import { format } from 'date-fns';
 
 interface BookingCardProps {
@@ -88,9 +88,9 @@ const BookingCard: React.FC<BookingCardProps> = ({
             <p className="text-[#016BF5] font-bold text-xl leading-6 poppins">
               {price
                 ? price.toLocaleString('vi-VN', {
-                    style: 'currency',
-                    currency: 'VND',
-                  })
+                  style: 'currency',
+                  currency: 'VND',
+                })
                 : ''}
             </p>
 

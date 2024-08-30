@@ -1,13 +1,20 @@
-mutation Login($token: String!, $tokenGetPhone: String) {
-  actionLogin(token: $token, tokenGetPhone: $tokenGetPhone) {
+mutation Login($token: String!) {
+  actionLogin(token: $token) {
     name
     token
     userId
+    zaloId
   }
 }
 
 query getNameUserById($userId: Int!) {
   users(where: { id: { _eq: $userId } }) {
     name
+  }
+}
+
+mutation SavePhoneNumber($accessToken: String!, $phoneToken: String!, $zaloId: String!) {
+  savePhoneNumber(accessToken: $accessToken, phoneToken: $phoneToken, zaloId: $zaloId) {
+    status
   }
 }

@@ -10,6 +10,7 @@
     url(//h5.zdn.vn/static/fonts/MaterialIcons-Regular.woff2) format('woff2'),
     url(//h5.zdn.vn/static/fonts/MaterialIcons-Regular.woff) format('woff'),
     url(//h5.zdn.vn/static/fonts/MaterialIcons-Regular.ttf) format('truetype');
+  font-display: swap;
 }
 .material-icons {
   font-family: 'Material Icons';
@@ -38,6 +39,7 @@
     url('//h5.zdn.vn/static/fonts/ZMPIcons-Regular-v2.woff2') format('woff2'),
     url('//h5.zdn.vn/static/fonts/ZMPIcons-Regular-v2.woff') format('woff'),
     url('//h5.zdn.vn/static/fonts/ZMPIcons-Regular-v2.ttf') format('truetype');
+  font-display: swap;
 }
 .zmp-icons {
   font-family: 'ZMP Icons';

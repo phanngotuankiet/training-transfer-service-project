@@ -4,23 +4,29 @@ import { useQueryBookingsQuery } from '../../generated/graphql';
 import Header from './components/Header';
 import { useFooterStore } from '../../store';
 import { BookingDetail } from '..';
+import useAuthStore from '../../store/authStore';
+import useLogout from '../../hooks/useLogout';
 
 const BookingHistoryPage = () => {
   const { turnFooter, offFooter } = useFooterStore();
-  const userId = localStorage.getItem('userId');
-  const parsedUserId = userId ? parseInt(userId) : null;
+  const { userId } = useAuthStore();
+  const logout = useLogout();
+
   const [openBookingDetail, setOpenBookingDetail] = useState(false);
   const [idToOpen, setIdToOpen] = useState({ id: 0, phoneNumber: 0 });
 
   const { data, refetch } = useQueryBookingsQuery({
-    fetchPolicy: 'no-cache',
     variables: {
       where: {
         user_id: {
-          _eq: parsedUserId,
+          _eq: userId,
         },
+        payment_status: {
+          _eq: true
+        }
       },
     },
+    fetchPolicy: "no-cache"
   });
 
   const fetchData = () => {
@@ -28,8 +34,12 @@ const BookingHistoryPage = () => {
   };
 
   useEffect(() => {
-    turnFooter(); // Ensure footer is turned on when component mounts
-  }, [turnFooter]);
+    turnFooter();
+
+    return () => {
+      logout();
+    };
+  }, []);
 
   useEffect(() => {
     if (openBookingDetail) {

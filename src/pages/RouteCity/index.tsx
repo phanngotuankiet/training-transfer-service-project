@@ -10,7 +10,7 @@ const RouteCity = () => {
   const { cityId } = getRouteParams();
   const { data } = useGetCityByIdQuery({
     variables: { cityId: parseInt(cityId) },
-    fetchPolicy: 'no-cache',
+    fetchPolicy: "no-cache"
   });
 
   if (!data) {

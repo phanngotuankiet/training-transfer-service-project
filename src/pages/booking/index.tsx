@@ -12,15 +12,21 @@ import { useGetAllItineraryByIdRouteQuery } from '../../generated/graphql';
 import { MoonLoader } from 'react-spinners';
 import { useBookingStore, useFooterStore } from '../../store';
 import { getRouteParams } from 'zmp-sdk/apis';
+import useLogout from '../../hooks/useLogout';
 
 const BookingPage = () => {
   const { offFooter } = useFooterStore();
+  const logout = useLogout();
+
   const [isLoading, setIsLoading] = useState(true);
+
   const { id } = getRouteParams();
+
   const { updateListItinerary, updateBookingCurrent } = useBookingStore();
+
   const { data } = useGetAllItineraryByIdRouteQuery({
-    fetchPolicy: 'no-cache',
     variables: { idRoute: parseInt(id) },
+    fetchPolicy: "no-cache"
   });
 
   useEffect(() => {
@@ -29,8 +35,8 @@ const BookingPage = () => {
       const itinerary4Seater = data.itinerary.filter(
         (itinerary) =>
           itinerary.vehicle_types_id === 1
-            || itinerary.vehicle_types_id === 2
-            || itinerary.vehicle_types_id === 3
+          || itinerary.vehicle_types_id === 2
+          || itinerary.vehicle_types_id === 3
         //hiện tại chỉ có 3 loại xe, trong tương lai ưng thì thêm vào
       )[0];
 
@@ -64,6 +70,10 @@ const BookingPage = () => {
       updateListItinerary(itineraries);
     }
     setIsLoading(false);
+
+    return () => {
+      logout();
+    };
   }, [data]);
 
   if (isLoading) {
@@ -90,6 +100,7 @@ const BookingPage = () => {
       </Page>
 
       <Summary />
+
     </div>
   );
 };

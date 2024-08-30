@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ClockSvg } from '../../../../assets/svgs';
 import { useBookingStore } from '../../../../store';
-import { format } from 'date-fns';
+import { format, addMinutes } from 'date-fns';
 // this component is unused
 const PickTime = () => {
-  const [time, setTime] = useState(format(new Date(), "yyyy-MM-dd'T'HH:mm"));
+  const initialTime = addMinutes(new Date(), 20);
+  const [time, setTime] = useState(format(initialTime, "yyyy-MM-dd'T'HH:mm"));
 
   const { updateTimeStart } = useBookingStore();
+
   const handleOnChangeTime = (value) => {
     updateTimeStart(value);
     setTime(value);
   };
+
+  useEffect(() => {
+    // biến time này thành bookingStore.timeStart ngay
+    setTimeout(() => {
+      updateTimeStart(time);
+    }, 800);
+  }, [time, updateTimeStart]);
 
   return (
     <div>

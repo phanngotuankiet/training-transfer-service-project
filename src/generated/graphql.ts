@@ -32,6 +32,7 @@ export type AuthOutput = {
   name: Scalars['String']['output'];
   token: Scalars['String']['output'];
   userId: Scalars['String']['output'];
+  zaloId: Scalars['String']['output'];
 };
 
 /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
@@ -83,6 +84,11 @@ export type Int_Comparison_Exp = {
   _lte?: InputMaybe<Scalars['Int']['input']>;
   _neq?: InputMaybe<Scalars['Int']['input']>;
   _nin?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
+export type SampleOutput = {
+  __typename?: 'SampleOutput';
+  status: Scalars['String']['output'];
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
@@ -145,11 +151,13 @@ export type Bookings = {
   itinerary: Itinerary;
   itinerary_id: Scalars['Int']['output'];
   note?: Maybe<Scalars['String']['output']>;
+  payment_status?: Maybe<Scalars['Boolean']['output']>;
   status: Scalars['status_type']['output'];
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
   /** An object relationship */
   user: Users;
   user_id: Scalars['Int']['output'];
+  zalo_order_id?: Maybe<Scalars['String']['output']>;
 };
 
 /** aggregated selection of "bookings" */
@@ -160,7 +168,23 @@ export type Bookings_Aggregate = {
 };
 
 export type Bookings_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Bookings_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Bookings_Aggregate_Bool_Exp_Bool_Or>;
   count?: InputMaybe<Bookings_Aggregate_Bool_Exp_Count>;
+};
+
+export type Bookings_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Bookings_Select_Column_Bookings_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Bookings_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Bookings_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Bookings_Select_Column_Bookings_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Bookings_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
 };
 
 export type Bookings_Aggregate_Bool_Exp_Count = {
@@ -242,10 +266,12 @@ export type Bookings_Bool_Exp = {
   itinerary?: InputMaybe<Itinerary_Bool_Exp>;
   itinerary_id?: InputMaybe<Int_Comparison_Exp>;
   note?: InputMaybe<String_Comparison_Exp>;
+  payment_status?: InputMaybe<Boolean_Comparison_Exp>;
   status?: InputMaybe<Status_Type_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Int_Comparison_Exp>;
+  zalo_order_id?: InputMaybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "bookings" */
@@ -270,10 +296,12 @@ export type Bookings_Insert_Input = {
   itinerary?: InputMaybe<Itinerary_Obj_Rel_Insert_Input>;
   itinerary_id?: InputMaybe<Scalars['Int']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
+  payment_status?: InputMaybe<Scalars['Boolean']['input']>;
   status?: InputMaybe<Scalars['status_type']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['Int']['input']>;
+  zalo_order_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate max on columns */
@@ -288,6 +316,7 @@ export type Bookings_Max_Fields = {
   status?: Maybe<Scalars['status_type']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
   user_id?: Maybe<Scalars['Int']['output']>;
+  zalo_order_id?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by max() on columns of table "bookings" */
@@ -301,6 +330,7 @@ export type Bookings_Max_Order_By = {
   status?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
+  zalo_order_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -315,6 +345,7 @@ export type Bookings_Min_Fields = {
   status?: Maybe<Scalars['status_type']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
   user_id?: Maybe<Scalars['Int']['output']>;
+  zalo_order_id?: Maybe<Scalars['String']['output']>;
 };
 
 /** order by min() on columns of table "bookings" */
@@ -328,6 +359,7 @@ export type Bookings_Min_Order_By = {
   status?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
+  zalo_order_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "bookings" */
@@ -355,10 +387,12 @@ export type Bookings_Order_By = {
   itinerary?: InputMaybe<Itinerary_Order_By>;
   itinerary_id?: InputMaybe<Order_By>;
   note?: InputMaybe<Order_By>;
+  payment_status?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
+  zalo_order_id?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: bookings */
@@ -381,11 +415,27 @@ export enum Bookings_Select_Column {
   /** column name */
   Note = 'note',
   /** column name */
+  PaymentStatus = 'payment_status',
+  /** column name */
   Status = 'status',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
-  UserId = 'user_id'
+  UserId = 'user_id',
+  /** column name */
+  ZaloOrderId = 'zalo_order_id'
+}
+
+/** select "bookings_aggregate_bool_exp_bool_and_arguments_columns" columns of table "bookings" */
+export enum Bookings_Select_Column_Bookings_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  PaymentStatus = 'payment_status'
+}
+
+/** select "bookings_aggregate_bool_exp_bool_or_arguments_columns" columns of table "bookings" */
+export enum Bookings_Select_Column_Bookings_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  PaymentStatus = 'payment_status'
 }
 
 /** input type for updating data in table "bookings" */
@@ -396,9 +446,11 @@ export type Bookings_Set_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   itinerary_id?: InputMaybe<Scalars['Int']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
+  payment_status?: InputMaybe<Scalars['Boolean']['input']>;
   status?: InputMaybe<Scalars['status_type']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   user_id?: InputMaybe<Scalars['Int']['input']>;
+  zalo_order_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate stddev on columns */
@@ -462,9 +514,11 @@ export type Bookings_Stream_Cursor_Value_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   itinerary_id?: InputMaybe<Scalars['Int']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
+  payment_status?: InputMaybe<Scalars['Boolean']['input']>;
   status?: InputMaybe<Scalars['status_type']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   user_id?: InputMaybe<Scalars['Int']['input']>;
+  zalo_order_id?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate sum on columns */
@@ -497,11 +551,15 @@ export enum Bookings_Update_Column {
   /** column name */
   Note = 'note',
   /** column name */
+  PaymentStatus = 'payment_status',
+  /** column name */
   Status = 'status',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
-  UserId = 'user_id'
+  UserId = 'user_id',
+  /** column name */
+  ZaloOrderId = 'zalo_order_id'
 }
 
 export type Bookings_Updates = {
@@ -1974,6 +2032,10 @@ export type Mutation_Root = {
   delete_vehicle_types?: Maybe<Vehicle_Types_Mutation_Response>;
   /** delete single row from the table: "vehicle_types" */
   delete_vehicle_types_by_pk?: Maybe<Vehicle_Types>;
+  /** delete data from the table: "xacnhan" */
+  delete_xacnhan?: Maybe<Xacnhan_Mutation_Response>;
+  /** delete single row from the table: "xacnhan" */
+  delete_xacnhan_by_pk?: Maybe<Xacnhan>;
   /** insert data into the table: "bookings" */
   insert_bookings?: Maybe<Bookings_Mutation_Response>;
   /** insert a single row into the table: "bookings" */
@@ -2010,8 +2072,14 @@ export type Mutation_Root = {
   insert_vehicle_types?: Maybe<Vehicle_Types_Mutation_Response>;
   /** insert a single row into the table: "vehicle_types" */
   insert_vehicle_types_one?: Maybe<Vehicle_Types>;
+  /** insert data into the table: "xacnhan" */
+  insert_xacnhan?: Maybe<Xacnhan_Mutation_Response>;
+  /** insert a single row into the table: "xacnhan" */
+  insert_xacnhan_one?: Maybe<Xacnhan>;
   /** loginAdmin */
   loginAdmin: AuthAdminOutput;
+  /** savePhoneNumber */
+  savePhoneNumber?: Maybe<SampleOutput>;
   updateBookingAction?: Maybe<UpdateBookingOutput>;
   /** update data of the table: "bookings" */
   update_bookings?: Maybe<Bookings_Mutation_Response>;
@@ -2067,6 +2135,12 @@ export type Mutation_Root = {
   update_vehicle_types_by_pk?: Maybe<Vehicle_Types>;
   /** update multiples rows of table: "vehicle_types" */
   update_vehicle_types_many?: Maybe<Array<Maybe<Vehicle_Types_Mutation_Response>>>;
+  /** update data of the table: "xacnhan" */
+  update_xacnhan?: Maybe<Xacnhan_Mutation_Response>;
+  /** update single row of the table: "xacnhan" */
+  update_xacnhan_by_pk?: Maybe<Xacnhan>;
+  /** update multiples rows of table: "xacnhan" */
+  update_xacnhan_many?: Maybe<Array<Maybe<Xacnhan_Mutation_Response>>>;
 };
 
 
@@ -2079,7 +2153,6 @@ export type Mutation_RootActionInsertBookingArgs = {
 /** mutation root */
 export type Mutation_RootActionLoginArgs = {
   token: Scalars['String']['input'];
-  tokenGetPhone?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -2195,6 +2268,18 @@ export type Mutation_RootDelete_Vehicle_TypesArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Vehicle_Types_By_PkArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_XacnhanArgs = {
+  where: Xacnhan_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Xacnhan_By_PkArgs = {
+  zalo_order_id: Scalars['Int']['input'];
 };
 
 
@@ -2325,9 +2410,31 @@ export type Mutation_RootInsert_Vehicle_Types_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_XacnhanArgs = {
+  objects: Array<Xacnhan_Insert_Input>;
+  on_conflict?: InputMaybe<Xacnhan_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Xacnhan_OneArgs = {
+  object: Xacnhan_Insert_Input;
+  on_conflict?: InputMaybe<Xacnhan_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootLoginAdminArgs = {
   password?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** mutation root */
+export type Mutation_RootSavePhoneNumberArgs = {
+  accessToken: Scalars['String']['input'];
+  phoneToken: Scalars['String']['input'];
+  zaloId: Scalars['String']['input'];
 };
 
 
@@ -2532,6 +2639,28 @@ export type Mutation_RootUpdate_Vehicle_Types_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Vehicle_Types_ManyArgs = {
   updates: Array<Vehicle_Types_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_XacnhanArgs = {
+  _inc?: InputMaybe<Xacnhan_Inc_Input>;
+  _set?: InputMaybe<Xacnhan_Set_Input>;
+  where: Xacnhan_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Xacnhan_By_PkArgs = {
+  _inc?: InputMaybe<Xacnhan_Inc_Input>;
+  _set?: InputMaybe<Xacnhan_Set_Input>;
+  pk_columns: Xacnhan_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Xacnhan_ManyArgs = {
+  updates: Array<Xacnhan_Updates>;
 };
 
 /** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
@@ -3223,6 +3352,12 @@ export type Query_Root = {
   vehicle_types_aggregate: Vehicle_Types_Aggregate;
   /** fetch data from the table: "vehicle_types" using primary key columns */
   vehicle_types_by_pk?: Maybe<Vehicle_Types>;
+  /** fetch data from the table: "xacnhan" */
+  xacnhan: Array<Xacnhan>;
+  /** fetch aggregated fields from the table: "xacnhan" */
+  xacnhan_aggregate: Xacnhan_Aggregate;
+  /** fetch data from the table: "xacnhan" using primary key columns */
+  xacnhan_by_pk?: Maybe<Xacnhan>;
 };
 
 
@@ -3430,6 +3565,29 @@ export type Query_RootVehicle_Types_AggregateArgs = {
 
 export type Query_RootVehicle_Types_By_PkArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type Query_RootXacnhanArgs = {
+  distinct_on?: InputMaybe<Array<Xacnhan_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Xacnhan_Order_By>>;
+  where?: InputMaybe<Xacnhan_Bool_Exp>;
+};
+
+
+export type Query_RootXacnhan_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Xacnhan_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Xacnhan_Order_By>>;
+  where?: InputMaybe<Xacnhan_Bool_Exp>;
+};
+
+
+export type Query_RootXacnhan_By_PkArgs = {
+  zalo_order_id: Scalars['Int']['input'];
 };
 
 /** columns and relationships of "routes" */
@@ -4010,6 +4168,14 @@ export type Subscription_Root = {
   vehicle_types_by_pk?: Maybe<Vehicle_Types>;
   /** fetch data from the table in a streaming manner: "vehicle_types" */
   vehicle_types_stream: Array<Vehicle_Types>;
+  /** fetch data from the table: "xacnhan" */
+  xacnhan: Array<Xacnhan>;
+  /** fetch aggregated fields from the table: "xacnhan" */
+  xacnhan_aggregate: Xacnhan_Aggregate;
+  /** fetch data from the table: "xacnhan" using primary key columns */
+  xacnhan_by_pk?: Maybe<Xacnhan>;
+  /** fetch data from the table in a streaming manner: "xacnhan" */
+  xacnhan_stream: Array<Xacnhan>;
 };
 
 
@@ -4280,6 +4446,36 @@ export type Subscription_RootVehicle_Types_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Vehicle_Types_Stream_Cursor_Input>>;
   where?: InputMaybe<Vehicle_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootXacnhanArgs = {
+  distinct_on?: InputMaybe<Array<Xacnhan_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Xacnhan_Order_By>>;
+  where?: InputMaybe<Xacnhan_Bool_Exp>;
+};
+
+
+export type Subscription_RootXacnhan_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Xacnhan_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Xacnhan_Order_By>>;
+  where?: InputMaybe<Xacnhan_Bool_Exp>;
+};
+
+
+export type Subscription_RootXacnhan_By_PkArgs = {
+  zalo_order_id: Scalars['Int']['input'];
+};
+
+
+export type Subscription_RootXacnhan_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Xacnhan_Stream_Cursor_Input>>;
+  where?: InputMaybe<Xacnhan_Bool_Exp>;
 };
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
@@ -4913,6 +5109,201 @@ export type Vehicle_Types_Variance_Fields = {
   id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** columns and relationships of "xacnhan" */
+export type Xacnhan = {
+  __typename?: 'xacnhan';
+  payment_status?: Maybe<Scalars['Boolean']['output']>;
+  zalo_order_id: Scalars['Int']['output'];
+};
+
+/** aggregated selection of "xacnhan" */
+export type Xacnhan_Aggregate = {
+  __typename?: 'xacnhan_aggregate';
+  aggregate?: Maybe<Xacnhan_Aggregate_Fields>;
+  nodes: Array<Xacnhan>;
+};
+
+/** aggregate fields of "xacnhan" */
+export type Xacnhan_Aggregate_Fields = {
+  __typename?: 'xacnhan_aggregate_fields';
+  avg?: Maybe<Xacnhan_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Xacnhan_Max_Fields>;
+  min?: Maybe<Xacnhan_Min_Fields>;
+  stddev?: Maybe<Xacnhan_Stddev_Fields>;
+  stddev_pop?: Maybe<Xacnhan_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Xacnhan_Stddev_Samp_Fields>;
+  sum?: Maybe<Xacnhan_Sum_Fields>;
+  var_pop?: Maybe<Xacnhan_Var_Pop_Fields>;
+  var_samp?: Maybe<Xacnhan_Var_Samp_Fields>;
+  variance?: Maybe<Xacnhan_Variance_Fields>;
+};
+
+
+/** aggregate fields of "xacnhan" */
+export type Xacnhan_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Xacnhan_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Xacnhan_Avg_Fields = {
+  __typename?: 'xacnhan_avg_fields';
+  zalo_order_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "xacnhan". All fields are combined with a logical 'AND'. */
+export type Xacnhan_Bool_Exp = {
+  _and?: InputMaybe<Array<Xacnhan_Bool_Exp>>;
+  _not?: InputMaybe<Xacnhan_Bool_Exp>;
+  _or?: InputMaybe<Array<Xacnhan_Bool_Exp>>;
+  payment_status?: InputMaybe<Boolean_Comparison_Exp>;
+  zalo_order_id?: InputMaybe<Int_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "xacnhan" */
+export enum Xacnhan_Constraint {
+  /** unique or primary key constraint on columns "zalo_order_id" */
+  XacnhanPkey = 'xacnhan_pkey'
+}
+
+/** input type for incrementing numeric columns in table "xacnhan" */
+export type Xacnhan_Inc_Input = {
+  zalo_order_id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** input type for inserting data into table "xacnhan" */
+export type Xacnhan_Insert_Input = {
+  payment_status?: InputMaybe<Scalars['Boolean']['input']>;
+  zalo_order_id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** aggregate max on columns */
+export type Xacnhan_Max_Fields = {
+  __typename?: 'xacnhan_max_fields';
+  zalo_order_id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** aggregate min on columns */
+export type Xacnhan_Min_Fields = {
+  __typename?: 'xacnhan_min_fields';
+  zalo_order_id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** response of any mutation on the table "xacnhan" */
+export type Xacnhan_Mutation_Response = {
+  __typename?: 'xacnhan_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Xacnhan>;
+};
+
+/** on_conflict condition type for table "xacnhan" */
+export type Xacnhan_On_Conflict = {
+  constraint: Xacnhan_Constraint;
+  update_columns?: Array<Xacnhan_Update_Column>;
+  where?: InputMaybe<Xacnhan_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "xacnhan". */
+export type Xacnhan_Order_By = {
+  payment_status?: InputMaybe<Order_By>;
+  zalo_order_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: xacnhan */
+export type Xacnhan_Pk_Columns_Input = {
+  zalo_order_id: Scalars['Int']['input'];
+};
+
+/** select columns of table "xacnhan" */
+export enum Xacnhan_Select_Column {
+  /** column name */
+  PaymentStatus = 'payment_status',
+  /** column name */
+  ZaloOrderId = 'zalo_order_id'
+}
+
+/** input type for updating data in table "xacnhan" */
+export type Xacnhan_Set_Input = {
+  payment_status?: InputMaybe<Scalars['Boolean']['input']>;
+  zalo_order_id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Xacnhan_Stddev_Fields = {
+  __typename?: 'xacnhan_stddev_fields';
+  zalo_order_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Xacnhan_Stddev_Pop_Fields = {
+  __typename?: 'xacnhan_stddev_pop_fields';
+  zalo_order_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Xacnhan_Stddev_Samp_Fields = {
+  __typename?: 'xacnhan_stddev_samp_fields';
+  zalo_order_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "xacnhan" */
+export type Xacnhan_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Xacnhan_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Xacnhan_Stream_Cursor_Value_Input = {
+  payment_status?: InputMaybe<Scalars['Boolean']['input']>;
+  zalo_order_id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Xacnhan_Sum_Fields = {
+  __typename?: 'xacnhan_sum_fields';
+  zalo_order_id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** update columns of table "xacnhan" */
+export enum Xacnhan_Update_Column {
+  /** column name */
+  PaymentStatus = 'payment_status',
+  /** column name */
+  ZaloOrderId = 'zalo_order_id'
+}
+
+export type Xacnhan_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Xacnhan_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Xacnhan_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Xacnhan_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Xacnhan_Var_Pop_Fields = {
+  __typename?: 'xacnhan_var_pop_fields';
+  zalo_order_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Xacnhan_Var_Samp_Fields = {
+  __typename?: 'xacnhan_var_samp_fields';
+  zalo_order_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Xacnhan_Variance_Fields = {
+  __typename?: 'xacnhan_variance_fields';
+  zalo_order_id?: Maybe<Scalars['Float']['output']>;
+};
+
 export type GetBookingQueryVariables = Exact<{
   id: Scalars['Int']['input'];
 }>;
@@ -4956,10 +5347,24 @@ export type InsertBookingMutationVariables = Exact<{
 
 export type InsertBookingMutation = { __typename?: 'mutation_root', actionInsertBooking?: { __typename?: 'DataInsertBookingOutput', note?: string | null, bookingDate?: any | null, createdAt?: any | null, id?: number | null, status?: string | null } | null };
 
+export type InsertBookingAfterCheckoutPopupMutationVariables = Exact<{
+  objects?: InputMaybe<Array<Bookings_Insert_Input> | Bookings_Insert_Input>;
+}>;
+
+
+export type InsertBookingAfterCheckoutPopupMutation = { __typename?: 'mutation_root', insert_bookings?: { __typename?: 'bookings_mutation_response', affected_rows: number } | null };
+
+export type ConfirmPaymentStatusTrueSubscriptionVariables = Exact<{
+  _eq?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ConfirmPaymentStatusTrueSubscription = { __typename?: 'subscription_root', bookings: Array<{ __typename?: 'bookings', payment_status?: boolean | null }> };
+
 export type GetAllCitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllCitiesQuery = { __typename?: 'query_root', cities: Array<{ __typename?: 'cities', img?: string | null, id: number, name: string, isactive?: boolean | null }> };
+export type GetAllCitiesQuery = { __typename?: 'query_root', cities: Array<{ __typename?: 'cities', id: number, name: string, isactive?: boolean | null }> };
 
 export type GetCityByIdQueryVariables = Exact<{
   cityId: Scalars['Int']['input'];
@@ -4984,11 +5389,10 @@ export type GetRouteByCityIdAnd4SeaterVehicleQuery = { __typename?: 'query_root'
 
 export type LoginMutationVariables = Exact<{
   token: Scalars['String']['input'];
-  tokenGetPhone?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type LoginMutation = { __typename?: 'mutation_root', actionLogin?: { __typename?: 'AuthOutput', name: string, token: string, userId: string } | null };
+export type LoginMutation = { __typename?: 'mutation_root', actionLogin?: { __typename?: 'AuthOutput', name: string, token: string, userId: string, zaloId: string } | null };
 
 export type GetNameUserByIdQueryVariables = Exact<{
   userId: Scalars['Int']['input'];
@@ -4996,6 +5400,15 @@ export type GetNameUserByIdQueryVariables = Exact<{
 
 
 export type GetNameUserByIdQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', name?: string | null }> };
+
+export type SavePhoneNumberMutationVariables = Exact<{
+  accessToken: Scalars['String']['input'];
+  phoneToken: Scalars['String']['input'];
+  zaloId: Scalars['String']['input'];
+}>;
+
+
+export type SavePhoneNumberMutation = { __typename?: 'mutation_root', savePhoneNumber?: { __typename?: 'SampleOutput', status: string } | null };
 
 
 export const GetBookingDocument = gql`
@@ -5162,7 +5575,7 @@ export type MutationUpdateBookingMutationResult = Apollo.MutationResult<Mutation
 export type MutationUpdateBookingMutationOptions = Apollo.BaseMutationOptions<MutationUpdateBookingMutation, MutationUpdateBookingMutationVariables>;
 export const QueryBookingsDocument = gql`
     query QueryBookings($where: bookings_bool_exp! = {}, $offset: Int = 0) {
-  bookings(where: $where, offset: $offset, order_by: {created_at: desc}) {
+  bookings(where: $where, offset: $offset, order_by: {id: desc}) {
     booking_date
     created_at
     deleted_at
@@ -5290,10 +5703,72 @@ export function useInsertBookingMutation(baseOptions?: Apollo.MutationHookOption
 export type InsertBookingMutationHookResult = ReturnType<typeof useInsertBookingMutation>;
 export type InsertBookingMutationResult = Apollo.MutationResult<InsertBookingMutation>;
 export type InsertBookingMutationOptions = Apollo.BaseMutationOptions<InsertBookingMutation, InsertBookingMutationVariables>;
+export const InsertBookingAfterCheckoutPopupDocument = gql`
+    mutation InsertBookingAfterCheckoutPopup($objects: [bookings_insert_input!] = {}) {
+  insert_bookings(objects: $objects) {
+    affected_rows
+  }
+}
+    `;
+export type InsertBookingAfterCheckoutPopupMutationFn = Apollo.MutationFunction<InsertBookingAfterCheckoutPopupMutation, InsertBookingAfterCheckoutPopupMutationVariables>;
+
+/**
+ * __useInsertBookingAfterCheckoutPopupMutation__
+ *
+ * To run a mutation, you first call `useInsertBookingAfterCheckoutPopupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertBookingAfterCheckoutPopupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertBookingAfterCheckoutPopupMutation, { data, loading, error }] = useInsertBookingAfterCheckoutPopupMutation({
+ *   variables: {
+ *      objects: // value for 'objects'
+ *   },
+ * });
+ */
+export function useInsertBookingAfterCheckoutPopupMutation(baseOptions?: Apollo.MutationHookOptions<InsertBookingAfterCheckoutPopupMutation, InsertBookingAfterCheckoutPopupMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertBookingAfterCheckoutPopupMutation, InsertBookingAfterCheckoutPopupMutationVariables>(InsertBookingAfterCheckoutPopupDocument, options);
+      }
+export type InsertBookingAfterCheckoutPopupMutationHookResult = ReturnType<typeof useInsertBookingAfterCheckoutPopupMutation>;
+export type InsertBookingAfterCheckoutPopupMutationResult = Apollo.MutationResult<InsertBookingAfterCheckoutPopupMutation>;
+export type InsertBookingAfterCheckoutPopupMutationOptions = Apollo.BaseMutationOptions<InsertBookingAfterCheckoutPopupMutation, InsertBookingAfterCheckoutPopupMutationVariables>;
+export const ConfirmPaymentStatusTrueDocument = gql`
+    subscription ConfirmPaymentStatusTrue($_eq: String) {
+  bookings(where: {zalo_order_id: {_eq: $_eq}}) {
+    payment_status
+  }
+}
+    `;
+
+/**
+ * __useConfirmPaymentStatusTrueSubscription__
+ *
+ * To run a query within a React component, call `useConfirmPaymentStatusTrueSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useConfirmPaymentStatusTrueSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useConfirmPaymentStatusTrueSubscription({
+ *   variables: {
+ *      _eq: // value for '_eq'
+ *   },
+ * });
+ */
+export function useConfirmPaymentStatusTrueSubscription(baseOptions?: Apollo.SubscriptionHookOptions<ConfirmPaymentStatusTrueSubscription, ConfirmPaymentStatusTrueSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<ConfirmPaymentStatusTrueSubscription, ConfirmPaymentStatusTrueSubscriptionVariables>(ConfirmPaymentStatusTrueDocument, options);
+      }
+export type ConfirmPaymentStatusTrueSubscriptionHookResult = ReturnType<typeof useConfirmPaymentStatusTrueSubscription>;
+export type ConfirmPaymentStatusTrueSubscriptionResult = Apollo.SubscriptionResult<ConfirmPaymentStatusTrueSubscription>;
 export const GetAllCitiesDocument = gql`
     query GetAllCities {
-  cities {
-    img
+  cities(where: {isactive: {_eq: true}}) {
     id
     name
     isactive
@@ -5488,11 +5963,12 @@ export type GetRouteByCityIdAnd4SeaterVehicleLazyQueryHookResult = ReturnType<ty
 export type GetRouteByCityIdAnd4SeaterVehicleSuspenseQueryHookResult = ReturnType<typeof useGetRouteByCityIdAnd4SeaterVehicleSuspenseQuery>;
 export type GetRouteByCityIdAnd4SeaterVehicleQueryResult = Apollo.QueryResult<GetRouteByCityIdAnd4SeaterVehicleQuery, GetRouteByCityIdAnd4SeaterVehicleQueryVariables>;
 export const LoginDocument = gql`
-    mutation Login($token: String!, $tokenGetPhone: String) {
-  actionLogin(token: $token, tokenGetPhone: $tokenGetPhone) {
+    mutation Login($token: String!) {
+  actionLogin(token: $token) {
     name
     token
     userId
+    zaloId
   }
 }
     `;
@@ -5512,7 +5988,6 @@ export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutati
  * const [loginMutation, { data, loading, error }] = useLoginMutation({
  *   variables: {
  *      token: // value for 'token'
- *      tokenGetPhone: // value for 'tokenGetPhone'
  *   },
  * });
  */
@@ -5563,3 +6038,42 @@ export type GetNameUserByIdQueryHookResult = ReturnType<typeof useGetNameUserByI
 export type GetNameUserByIdLazyQueryHookResult = ReturnType<typeof useGetNameUserByIdLazyQuery>;
 export type GetNameUserByIdSuspenseQueryHookResult = ReturnType<typeof useGetNameUserByIdSuspenseQuery>;
 export type GetNameUserByIdQueryResult = Apollo.QueryResult<GetNameUserByIdQuery, GetNameUserByIdQueryVariables>;
+export const SavePhoneNumberDocument = gql`
+    mutation SavePhoneNumber($accessToken: String!, $phoneToken: String!, $zaloId: String!) {
+  savePhoneNumber(
+    accessToken: $accessToken
+    phoneToken: $phoneToken
+    zaloId: $zaloId
+  ) {
+    status
+  }
+}
+    `;
+export type SavePhoneNumberMutationFn = Apollo.MutationFunction<SavePhoneNumberMutation, SavePhoneNumberMutationVariables>;
+
+/**
+ * __useSavePhoneNumberMutation__
+ *
+ * To run a mutation, you first call `useSavePhoneNumberMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSavePhoneNumberMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [savePhoneNumberMutation, { data, loading, error }] = useSavePhoneNumberMutation({
+ *   variables: {
+ *      accessToken: // value for 'accessToken'
+ *      phoneToken: // value for 'phoneToken'
+ *      zaloId: // value for 'zaloId'
+ *   },
+ * });
+ */
+export function useSavePhoneNumberMutation(baseOptions?: Apollo.MutationHookOptions<SavePhoneNumberMutation, SavePhoneNumberMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SavePhoneNumberMutation, SavePhoneNumberMutationVariables>(SavePhoneNumberDocument, options);
+      }
+export type SavePhoneNumberMutationHookResult = ReturnType<typeof useSavePhoneNumberMutation>;
+export type SavePhoneNumberMutationResult = Apollo.MutationResult<SavePhoneNumberMutation>;
+export type SavePhoneNumberMutationOptions = Apollo.BaseMutationOptions<SavePhoneNumberMutation, SavePhoneNumberMutationVariables>;

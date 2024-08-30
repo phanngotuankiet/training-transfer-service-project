@@ -19,16 +19,17 @@ import ConvertVietnamTimeToUTC from '../../components/ConvertVietnamTimeToUTC';
 import { isGreaterThanOrEquals15Minutes } from '../../functions/isGreaterThanOrEquals15Minutes';
 import { toast } from 'react-toastify';
 import { BarLoader } from 'react-spinners';
+import useLogout from '../../hooks/useLogout';
 
 const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
   const { offFooter } = useFooterStore();
+  const logout = useLogout();
 
   const [isCancellationNoticeVisible, setIsCancellationNoticeVisible] =
     useState(false);
 
   const { data, refetch } = useGetBookingQuery({
     variables: { id: parseInt(bookingId) },
-    fetchPolicy: 'no-cache',
   });
 
   const reFetchData = () => {
@@ -40,9 +41,7 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
   const [dateTime, setDateTime] = useState('');
   const [note, setNote] = useState('');
 
-  const [updateBooking] = useMutationUpdateBookingMutation({
-    fetchPolicy: 'no-cache',
-  });
+  const [updateBooking] = useMutationUpdateBookingMutation({});
 
   const handleCallAdmin = () => {
     openPhone({
@@ -122,6 +121,10 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
 
   useEffect(() => {
     offFooter();
+
+    return () => {
+      logout();
+    };
   }, []);
 
   const handleOnChangeTime = (value) => {
@@ -164,8 +167,8 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
             option={dataBooking?.option.id}
             title={
               data?.bookings_by_pk?.status === 'Completed' ||
-              data?.bookings_by_pk?.status === 'Cancelled' ||
-              data?.bookings_by_pk?.status === 'Confirmed'
+                data?.bookings_by_pk?.status === 'Cancelled' ||
+                data?.bookings_by_pk?.status === 'Confirmed'
                 ? true
                 : false
             }
@@ -176,8 +179,8 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
             onChange={handleOnChangeTime}
             isDisabled={
               data?.bookings_by_pk?.status === 'Completed' ||
-              data?.bookings_by_pk?.status === 'Cancelled' ||
-              data?.bookings_by_pk?.status === 'Confirmed'
+                data?.bookings_by_pk?.status === 'Cancelled' ||
+                data?.bookings_by_pk?.status === 'Confirmed'
                 ? true
                 : false
             }
@@ -188,8 +191,8 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
             onChange={handleOnChangeNoteText}
             isDisabled={
               data?.bookings_by_pk?.status === 'Cancelled' ||
-              data?.bookings_by_pk?.status === 'Completed' ||
-              data?.bookings_by_pk?.status === 'Confirmed'
+                data?.bookings_by_pk?.status === 'Completed' ||
+                data?.bookings_by_pk?.status === 'Confirmed'
                 ? true
                 : false
             }
@@ -213,7 +216,7 @@ const BookingDetail = ({ bookingId, phoneNumber, onCancel }) => {
                     <FaTimes className="mr-1" /> Hủy đặt
                   </button>
                 </div>
-                <Button onClick={handleUpdateBooking} onCancel={onCancel} status={data?.bookings_by_pk?.status}/>
+                <Button onClick={handleUpdateBooking} onCancel={onCancel} status={data?.bookings_by_pk?.status} />
               </>
             )}
 

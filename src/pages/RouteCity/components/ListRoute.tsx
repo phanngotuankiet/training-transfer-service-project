@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Route from './Rote';
 import { getRouteParams } from 'zmp-sdk/apis';
 import { useGetRouteByCityIdAnd4SeaterVehicleQuery } from '../../../generated/graphql';
+import useCityStore from '../../../store/cityStore';
 
 const ListRoute = () => {
+  const { updateCityId } = useCityStore();
   const { cityId } = getRouteParams();
   const { data } = useGetRouteByCityIdAnd4SeaterVehicleQuery({
     variables: { cityId: parseInt(cityId) },
-    fetchPolicy: 'no-cache',
+    fetchPolicy: "no-cache"
   });
 
-  localStorage.setItem('cityID', cityId);
+  useEffect(() => {
+    if (cityId) {
+      updateCityId(cityId);
+    }
+  }, [cityId]);
 
   return (
     <div className="translate-y-6 p-4">
