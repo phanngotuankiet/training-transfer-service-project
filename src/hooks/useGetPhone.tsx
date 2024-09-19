@@ -62,7 +62,7 @@ const useGetPhone = (shouldFetchPhone: boolean) => {
 
           const resultOrderZaloId = await pay(paymentData, `${bookingCurrent?.fromCity} - ${bookingCurrent?.endCity}`);
 
-          console.log('Đã hiện lên modal pay.ts (from Summary):', resultOrderZaloId);
+          console.log('Đã hiện lên modal pay.ts:', resultOrderZaloId);
 
           if (resultOrderZaloId) {
             try {
@@ -107,6 +107,7 @@ const useGetPhone = (shouldFetchPhone: boolean) => {
 
     const getPhoneToken = async () => {
       if (getToken && shouldFetchPhone) {
+
         await getPhoneNumber({
           success: async (data) => {
             setIsloadingPhoneGet(true);
@@ -120,14 +121,16 @@ const useGetPhone = (shouldFetchPhone: boolean) => {
 
 
             if (token) {
-              await savePhoneNumberMutation({
+
+              const getPhone = await savePhoneNumberMutation({
                 variables: {
                   accessToken: zaloToken!,
                   phoneToken: token,
                   zaloId: zaloId!,
-                },
-                fetchPolicy: "no-cache"
+                }
               });
+
+              console.log("ket qua", getPhone);
 
               await handlePayment();
             }

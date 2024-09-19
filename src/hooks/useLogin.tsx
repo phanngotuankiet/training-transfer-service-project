@@ -22,6 +22,7 @@ const useLogin = () => {
         success: async () => {
           try {
             const accessTokenGet = await getAccessToken({});
+            console.log("accesstoken từ zalo: ", accessTokenGet);
 
             // lưu token zalo (không phải của mình) vào global
             setZaloToken(accessTokenGet);
@@ -60,7 +61,7 @@ const useLogin = () => {
 
       if (data?.actionLogin) {
         const wannaSaveToken = data.actionLogin.token;
-        const wannaSaveUserId = data.actionLogin.userId;
+        const wannaSaveUserId = Number(data.actionLogin.userId);
         const wannaSaveZaloId = data.actionLogin.zaloId;
 
         const wannaSaveName = data.actionLogin.name;
@@ -68,7 +69,7 @@ const useLogin = () => {
         // lưu vào LS để graphql dùng
         localStorage.setItem('token', wannaSaveToken);
         localStorage.setItem('name', wannaSaveName);
-        localStorage.setItem('userId', wannaSaveUserId);
+        localStorage.setItem('userId', wannaSaveUserId.toString());
         localStorage.setItem('zaloId', wannaSaveZaloId);
 
         handleSaveUserInfoAfterLogin({ token: wannaSaveToken, userId: wannaSaveUserId, zaloId: wannaSaveZaloId, name: wannaSaveName });
